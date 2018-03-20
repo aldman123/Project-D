@@ -2,13 +2,20 @@ package pokemon;
 
 import java.util.Random;
 
+import misc.*;
+
 abstract class Pokemon {
 	final private int HP_IV, Def_IV, Atk_IV, SDef_IV, SAtk_IV, Speed_IV;
 	final protected int HP_BASE, Def_BASE, Atk_BASE, SDef_BASE, SAtk_BASE, Speed_BASE;
 	private int HP, def, atk, sDef, sAtk, speed, level;
+	final private Type typeA, typeB;
 	
-	public Pokemon(int HP_BASE, int Def_BASE, int Atk_BASE, int SDef_BASE, int SAtk_BASE, int Speed_BASE, int level) {
+	public Pokemon(int HP_BASE, int Def_BASE, int Atk_BASE, int SDef_BASE, int SAtk_BASE, int Speed_BASE,
+			int level, Type typeA, Type typeB) {
+		
 		this.level = level;
+		this.typeA = typeA;
+		this.typeB = typeB;
 		
 		this.HP_BASE = HP_BASE;
 		this.Def_BASE = Def_BASE;
@@ -28,7 +35,7 @@ abstract class Pokemon {
 		this.updateStats();
 		
 	}
-	
+
 	public void updateStats() {
 		this.calculateStat(this.HP, this.HP_BASE, this.HP_IV, this.level, true);
 		this.calculateStat(def, Def_BASE, Def_IV, level, false);

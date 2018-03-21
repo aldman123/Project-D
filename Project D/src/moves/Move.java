@@ -11,4 +11,17 @@ public abstract class Move {
 		this.name = name;
 		this.type = type;
 	}
+	
+	public Type getType() {
+		return type;
+	}
+	
+	public String toString() {
+		return name;
+	}
+	
+	public int getDamage() {
+		return damage;
+	}
+	
 }

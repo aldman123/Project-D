@@ -5,14 +5,23 @@ import java.util.Random;
 import misc.*;
 
 abstract class Pokemon {
+	final private double STAB_MODIFIER = 1.5;
+	
+	
 	final private int HP_IV, Def_IV, Atk_IV, SDef_IV, SAtk_IV, Speed_IV;
 	final protected int HP_BASE, Def_BASE, Atk_BASE, SDef_BASE, SAtk_BASE, Speed_BASE;
 	private int HP, def, atk, sDef, sAtk, speed, level;
 	final private Type typeA, typeB;
+	final private boolean twoTypes;
+	private boolean knockedOut;
+	
+	
 	
 	public Pokemon(int HP_BASE, int Def_BASE, int Atk_BASE, int SDef_BASE, int SAtk_BASE, int Speed_BASE,
 			int level, Type typeA, Type typeB) {
+		twoTypes = (typeB != null && typeA != null) && (typeB == Type.NORMAL && typeA != Type.NORMAL);
 		
+		this.knockedOut = false;
 		this.level = level;
 		this.typeA = typeA;
 		this.typeB = typeB;
@@ -54,63 +63,64 @@ abstract class Pokemon {
 		return;
 	}
 	
+	public void doDamage(Pokemon opponent, int power, Type type) {
+		double modifier = type.against(typeA);
+		if (twoTypes) {
+			modifier *= type.against(typeB);
+		}
+		
+		Random generator = new Random();
+		if (opponent.getSpeed()/2 >= generator.nextInt(256)) {
+			modifier *= 2;
+		}
+		
+		modifier *= opponent.getSTAB(type);
+		
+		int damage = (int) Math.round((((2*this.level)/5 + 2)/50 * power * opponent.atk * this.def + 2) * modifier);
+		
+		this.HP -= damage;
+		if (this.HP < 0) {
+			this.HP = 0;
+			this.knockedOut = true;
+		}
+		return;
+	}
+	
 	public int getHP() {
 		return HP;
 	}
 
-
-	public void setHP(int hP) {
-		HP = hP;
+	public boolean getKnockedOut() {
+		return this.knockedOut;
 	}
-
-
+	
 	public int getDef() {
 		return def;
-	}
-
-
-	public void setDef(int def) {
-		this.def = def;
 	}
 
 
 	public int getAtk() {
 		return atk;
 	}
-
-
-	public void setAtk(int atk) {
-		this.atk = atk;
+	
+	public double getSTAB(Type type) {
+		if ( (type == this.typeA && typeA != Type.NORMAL) || (typeB == type && typeB != Type.NORMAL) ) {
+			return STAB_MODIFIER;
+		} else {
+			return 1;
+		}
 	}
-
 
 	public int getsDef() {
 		return sDef;
 	}
 
-
-	public void setsDef(int sDef) {
-		this.sDef = sDef;
-	}
-
-
 	public int getsAtk() {
 		return sAtk;
 	}
 
-
-	public void setsAtk(int sAtk) {
-		this.sAtk = sAtk;
-	}
-
-
 	public int getSpeed() {
 		return speed;
-	}
-
-
-	public void setSpeed(int speed) {
-		this.speed = speed;
 	}
 	
 }

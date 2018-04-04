@@ -3,106 +3,105 @@ package pokemon;
 import java.util.Random;
 
 import misc.*;
+import moves.Move;
 
-abstract class Pokemon {
+public abstract class Pokemon {
 	final private double STAB_MODIFIER = 1.5;
 	
-	
-	final private int HP_IV, Def_IV, Atk_IV, SDef_IV, SAtk_IV, Speed_IV;
-	final protected int HP_BASE, Def_BASE, Atk_BASE, SDef_BASE, SAtk_BASE, Speed_BASE;
-	private int HP, def, atk, sDef, sAtk, speed, level;
 	final private Type typeA, typeB;
-	final private boolean twoTypes;
 	private boolean knockedOut;
+	private Move[] moveList;
+	private int[] ivList, baseStatList, statList;
+	private int level, accuracy, evasion;
+	private Move[] moveLearnset;
 	
-	
-	
-	public Pokemon(int HP_BASE, int Def_BASE, int Atk_BASE, int SDef_BASE, int SAtk_BASE, int Speed_BASE,
-			int level, Type typeA, Type typeB) {
-		twoTypes = (typeB != null && typeA != null) && (typeB == Type.NORMAL && typeA != Type.NORMAL);
+	/**
+	 * 
+	 * @param baseStatList: Base stats in order: HP, Atk, Def, SpAtk, SpDef, Speed
+	 * @param level: What level is the Pokemon?
+	 * @param typeA: The main or first type of the Pokemon
+	 * @param typeB: The optional secondary type of Pokemon
+	 * @param moveLearnset: What moves will this Pokemon learn?
+	 */
+	public Pokemon(int[] baseStatList,
+			int level, Type typeA, Type typeB, Move[] moveLearnset) {
+		
+		moveList = new Move[4];
+		this.moveLearnset = moveLearnset;
+		
+		
+		
+		
+		if (typeB == null) {
+			typeB = typeA;
+		}
 		
 		this.knockedOut = false;
 		this.level = level;
 		this.typeA = typeA;
 		this.typeB = typeB;
 		
-		this.HP_BASE = HP_BASE;
-		this.Def_BASE = Def_BASE;
-		this.Atk_BASE = Atk_BASE;
-		this.SDef_BASE = SDef_BASE;
-		this.SAtk_BASE = SAtk_BASE;
-		this.Speed_BASE = Speed_BASE;
+		this.baseStatList = baseStatList;
+		this.ivList = new int[6];
 		
 		Random generator = new Random();
-		this.HP_IV = generator.nextInt(16);
-		this.Def_IV = generator.nextInt(16);
-		this.Atk_IV = generator.nextInt(16);
-		this.SDef_IV = generator.nextInt(16);
-		this.SAtk_IV = generator.nextInt(16);
-		this.Speed_IV = generator.nextInt(16);
 		
-		this.updateStats();
+		for (int i = 0; i < ivList.length; i++) {
+			ivList[i] = generator.nextInt(16);
+		}
+		
+		this.resetStats();
 		
 	}
 
-	public void updateStats() {
-		this.calculateStat(this.HP, this.HP_BASE, this.HP_IV, this.level, true);
-		this.calculateStat(def, Def_BASE, Def_IV, level, false);
-		this.calculateStat(atk, Atk_BASE, Atk_IV, level, false);
-		this.calculateStat(def, Def_BASE, Def_IV, level, false);
-		this.calculateStat(sAtk, SAtk_BASE, SAtk_IV, level, false);
-		this.calculateStat(sDef, SDef_BASE, SDef_IV, level, false);
-		this.calculateStat(speed, Speed_BASE, Speed_IV, level, false);
+	public void resetStats() {
+		statList[0] = calculateStat(baseStatList[0], ivList[0], this.level, true);
+		for (int i = 1; i < statList.length; i++) {
+			statList[i] = calculateStat(baseStatList[i], ivList[i], this.level, false);
+		}
+		this.accuracy = 1;
+		this.evasion = 1;
+		
+		
 	}
 	
-	private void calculateStat(int stat, int base, int iv, int level, boolean isHP) {
-		stat = 2*(base + iv) * level / 100 + level + 5;
+	private int calculateStat(int base, int iv, int level, boolean isHP) {
+		int stat = 2*(base + iv) * level / 100 + level + 5;
 		if (isHP) {
 			stat += 5;
 		}
-		return;
+		return stat;
 	}
 	
 	public void doDamage(Pokemon opponent, int power, Type type) {
 		double modifier = type.against(typeA);
-		if (twoTypes) {
+		
+		//Get type effectiveness
+		if (typeA != typeB) {
 			modifier *= type.against(typeB);
 		}
 		
+		//Critical Hit
 		Random generator = new Random();
 		if (opponent.getSpeed()/2 >= generator.nextInt(256)) {
 			modifier *= 2;
 		}
 		
+		//Get STAB bonus
 		modifier *= opponent.getSTAB(type);
 		
-		int damage = (int) Math.round((((2*this.level)/5 + 2)/50 * power * opponent.atk * this.def + 2) * modifier);
+		//Calculate damage based on modifier and stats
+		int damage = (int) Math.round((((2*this.level)/5 + 2)/50 * power * opponent.getAtk() * this.getDef() + 2) * modifier);
 		
-		this.HP -= damage;
-		if (this.HP < 0) {
-			this.HP = 0;
+		//Apply damage
+		this.reduceHP(damage);
+		if (this.getHP() < 0) {
+			this.setHP(0);
 			this.knockedOut = true;
 		}
 		return;
 	}
-	
-	public int getHP() {
-		return HP;
-	}
 
-	public boolean getKnockedOut() {
-		return this.knockedOut;
-	}
-	
-	public int getDef() {
-		return def;
-	}
-
-
-	public int getAtk() {
-		return atk;
-	}
-	
 	public double getSTAB(Type type) {
 		if ( (type == this.typeA && typeA != Type.NORMAL) || (typeB == type && typeB != Type.NORMAL) ) {
 			return STAB_MODIFIER;
@@ -110,17 +109,109 @@ abstract class Pokemon {
 			return 1;
 		}
 	}
-
-	public int getsDef() {
-		return sDef;
+	
+	public boolean isKnockedOut() {
+		return this.knockedOut;
+	}
+	
+	public void setMove(Move move, int index) {
+		moveList[index] = move;
+	}
+	
+	public Move getMove(int index) {
+		return moveList[index];
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	public void setHP(int newValue) {
+		statList[0] = newValue;
+	}
+	
+	public void setDef(int newValue) {
+		statList[1] = newValue;
 	}
 
-	public int getsAtk() {
-		return sAtk;
+
+	public void setAtk(int newValue) {
+		statList[2] = newValue;
+	}
+
+	public void setSpDef(int newValue) {
+		statList[3] = newValue;
+	}
+
+	public void setSpAtk(int newValue) {
+		statList[4] = newValue;
+	}
+
+	public void setSpeed(int newValue) {
+		statList[5] = newValue;
+	}
+	
+	public void setAccuracy(int newValue) {
+		this.accuracy = newValue;
+	}
+	
+	public void setEvasion(int newValue) {
+		this.evasion = newValue;
+	}
+	
+	public int getHP() {
+		return statList[0];
+	}
+	
+	public int getDef() {
+		return statList[1];
+	}
+
+	public int getAtk() {
+		return statList[2];
+	}
+
+	public int getSpDef() {
+		return statList[3];
+	}
+
+	public int getSpAtk() {
+		return statList[4];
 	}
 
 	public int getSpeed() {
-		return speed;
+		return statList[5];
+	}
+	
+	public int getAccuracy() {
+		return this.accuracy;
+	}
+	
+	public int getEvasion() {
+		return this.evasion;
+	}
+	
+	public void reduceHP(int damage) {
+		this.setHP(this.getHP() - damage);
+	}
+	
+	/**
+	 * Multiples the stat by the modifier
+	 * @param statID
+	 * Stats in order: HP, Atk, Def, SpAtk, SpDef, Speed, Accuracy, Evasion
+	 * HP = 0, Evasion = 7
+	 */
+	public void modifyStat(int statID, double modifier) {
+		if (statID < 6) {
+			this.statList[statID] *= modifier;
+		} else if (statID == 6) {
+			this.accuracy *= modifier;
+		} else if (statID == 7) {
+			this.evasion *= modifier;
+		}
 	}
 	
 }

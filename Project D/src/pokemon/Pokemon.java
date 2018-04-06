@@ -14,6 +14,7 @@ public abstract class Pokemon {
 	private int[] ivList, baseStatList, statList;
 	private int level, accuracy, evasion;
 	private Move[] moveLearnset;
+	private String name;
 	
 	/**
 	 * 
@@ -51,6 +52,24 @@ public abstract class Pokemon {
 		}
 		
 		this.resetStats();
+		
+	}
+	
+	public boolean levelUp() {
+		if (this.level < 50) {
+			this.level++;
+			
+			for (Move newMove : this.moveLearnset) {
+				if (newMove.getLearnLevel() == this.level) {
+					//TODO Decide if this pokemon should learn the new move
+				}
+			}
+			
+			this.resetStats();
+			return true;
+		} else {
+			return false;
+		}
 		
 	}
 
@@ -122,8 +141,17 @@ public abstract class Pokemon {
 		return moveList[index];
 	}
 	
+	public String toString() {
+		return "[" + this.name +  "]";
+	}
 	
+	public void setName(String newName) {
+		this.name = newName;
+	}
 	
+	public String getName() {
+		return this.name;
+	}
 	
 	
 	

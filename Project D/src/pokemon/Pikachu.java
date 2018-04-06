@@ -10,8 +10,14 @@ public class Pikachu extends Pokemon{
 			new TailWhip(6)
 			};
 	
+	public Pikachu(int level) {
+		super(new int[]{35, 55, 30, 50, 50, 90}, level, Type.ELECTRIC, Type.NORMAL, moveList);
+		this.setName("PIKACHU");
+	}
+	
 	public Pikachu(int level, String name) {
 		super(new int[]{35, 55, 30, 50, 50, 90}, level, Type.ELECTRIC, Type.NORMAL, moveList);
+		this.setName(name);
 	}
 	
 }

@@ -1,7 +1,5 @@
 package moves;
 
-import java.util.Random;
-
 import misc.Type;
 import pokemon.Pokemon;
 

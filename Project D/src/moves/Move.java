@@ -1,5 +1,8 @@
 package moves;
 
+import java.util.Random;
+
+import misc.StatusEffect;
 import misc.Type;
 import pokemon.Pokemon;
 
@@ -8,6 +11,7 @@ public abstract class Move {
 	private final String name;
 	private final Type type;
 	private int pp, maxPP;
+	private Random generator = new Random();
 	
 	
 	
@@ -35,8 +39,19 @@ public abstract class Move {
 	 * @param self: Pokemon performing the move
 	 * @param foe:	Opponent Pokemon
 	 */
-	public void start(Pokemon self, Pokemon foe) {
+	public String start(Pokemon self, Pokemon foe) {
+		if (self.getStatus() == StatusEffect.SLEEP) {
+			return self.toString() + " is still Sleeping!";
+		} else if (self.getStatus() == StatusEffect.FREEZE) {
+			return self.toString() + " is frozen solid!";
+		} else if (self.getStatus() == StatusEffect.PARALYSIS) {
+			if (generator.nextInt(4) == 1) {
+				return self.toString() + " is paralyzed and unable to move!";
+			}
+		}
+		
 		self.doDamage(foe, power, type);
+		return self.getName() + " did damage to " + foe.getName() + "!";
 	}
 	
 	public int getPP() {

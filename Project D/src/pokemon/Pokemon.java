@@ -9,12 +9,12 @@ public abstract class Pokemon {
 	final private double STAB_MODIFIER = 1.5;
 	
 	final private Type typeA, typeB;
-	private boolean knockedOut;
-	private Move[] moveList;
+	private boolean knockedOut = false;
+	private Move[] moveList, moveLearnset;
 	private int[] ivList, baseStatList, statList;
 	private int level, accuracy, evasion;
-	private Move[] moveLearnset;
 	private String name;
+	private StatusEffect status = StatusEffect.NOTHING;
 	
 	/**
 	 * 
@@ -24,20 +24,29 @@ public abstract class Pokemon {
 	 * @param typeB: The optional secondary type of Pokemon
 	 * @param moveLearnset: What moves will this Pokemon learn?
 	 */
-	public Pokemon(int[] baseStatList,
-			int level, Type typeA, Type typeB, Move[] moveLearnset) {
+	public Pokemon(int[] baseStatList, int level, Type typeA, Type typeB, Move[] moveLearnset) {
 		
 		moveList = new Move[4];
 		this.moveLearnset = moveLearnset;
 		
-		
+		//Learn's it's 4 most recent moves based on level
+		int moveSlot = 0;
+		for (int i = moveLearnset.length; i > 0 && moveSlot < 4; i--) {
+			if (moveList[moveSlot] == null) {
+				 if (moveLearnset[i].getLearnLevel() <= this.level) {
+					 moveList[moveSlot] = moveLearnset[i];
+					 moveSlot++;
+				 }
+			} else {
+				moveSlot++;
+			}
+		}
 		
 		
 		if (typeB == null) {
 			typeB = typeA;
 		}
 		
-		this.knockedOut = false;
 		this.level = level;
 		this.typeA = typeA;
 		this.typeB = typeB;
@@ -114,11 +123,12 @@ public abstract class Pokemon {
 		
 		//Apply damage
 		this.reduceHP(damage);
-		if (this.getHP() < 0) {
-			this.setHP(0);
-			this.knockedOut = true;
-		}
 		return;
+	}
+	
+	public void doPoisonDamage() {
+		this.reduceHP(this.baseStatList[0] / 8);
+		
 	}
 
 	public double getSTAB(Type type) {
@@ -142,7 +152,7 @@ public abstract class Pokemon {
 	}
 	
 	public String toString() {
-		return "[" + this.name +  "]";
+		return "[" + name + ", lv:" + level + "]";
 	}
 	
 	public void setName(String newName) {
@@ -151,6 +161,14 @@ public abstract class Pokemon {
 	
 	public String getName() {
 		return this.name;
+	}
+	
+	public StatusEffect getStatus() {
+		return this.status;
+	}
+	
+	public void setStatus(StatusEffect newStatus) {
+		this.status = newStatus;
 	}
 	
 	
@@ -224,6 +242,15 @@ public abstract class Pokemon {
 	
 	public void reduceHP(int damage) {
 		this.setHP(this.getHP() - damage);
+		if (this.getHP() < 1) {
+			this.knockedOut = true;
+			this.setHP(0);
+		}
+	}
+	
+	
+	public int getMaxHP() {
+		return this.baseStatList[0];
 	}
 	
 	/**

@@ -24,7 +24,8 @@ public abstract class Pokemon {
 	 * @param typeB: The optional secondary type of Pokemon
 	 * @param moveLearnset: What moves will this Pokemon learn?
 	 */
-	public Pokemon(int[] baseStatList, int level, Type typeA, Type typeB, Move[] moveLearnset) {
+	public Pokemon(int[] baseStatList, int level, Type typeA, Type typeB, Move[] moveLearnset, String name) {
+		this.name = name;
 		
 		moveList = new Move[4];
 		this.moveLearnset = moveLearnset;
@@ -83,9 +84,8 @@ public abstract class Pokemon {
 	}
 
 	public void resetStats() {
-		statList[0] = calculateStat(baseStatList[0], ivList[0], this.level, true);
-		for (int i = 1; i < statList.length; i++) {
-			statList[i] = calculateStat(baseStatList[i], ivList[i], this.level, false);
+		for (int i = 0; i < statList.length; i++) {
+			statList[i] = calculateStat(baseStatList[i], ivList[i], this.level, i == 0);
 		}
 		this.accuracy = 1;
 		this.evasion = 1;
@@ -130,7 +130,9 @@ public abstract class Pokemon {
 		this.reduceHP(this.baseStatList[0] / 8);
 		
 	}
-
+	
+	
+	//Same Type Attack Bonus
 	public double getSTAB(Type type) {
 		if ( (type == this.typeA && typeA != Type.NORMAL) || (typeB == type && typeB != Type.NORMAL) ) {
 			return STAB_MODIFIER;

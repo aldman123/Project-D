@@ -11,13 +11,11 @@ public class Pikachu extends Pokemon{
 			};
 	
 	public Pikachu(int level) {
-		super(new int[]{35, 55, 30, 50, 50, 90}, level, Type.ELECTRIC, Type.NORMAL, moveList);
-		this.setName("PIKACHU");
+		super(new int[]{35, 55, 30, 50, 50, 90}, level, Type.ELECTRIC, null, moveList, "PIKACHU");
 	}
 	
 	public Pikachu(int level, String name) {
-		super(new int[]{35, 55, 30, 50, 50, 90}, level, Type.ELECTRIC, Type.NORMAL, moveList);
-		this.setName(name);
+		super(new int[]{35, 55, 30, 50, 50, 90}, level, Type.ELECTRIC, null, moveList, name);
 	}
 	
 }

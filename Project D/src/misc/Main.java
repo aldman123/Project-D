@@ -4,8 +4,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 import moves.Move;
-import pokemon.Pikachu;
-import pokemon.Pokemon;
+import pokemon.*;
 
 public class Main {
 
@@ -16,12 +15,31 @@ public class Main {
 
 
 	Scanner scanner = new Scanner(System.in);
-	String input;
+	String input = "";
 	Move selectedMoveUser, selectedMoveFoe;
 	public static void main(String[] args) {
 
 		Main battle = new Main();
 		battle.startMatch();
+	}
+	
+	private Main() {
+		yourPokemon = new Pokemon[] {
+				new Pikachu(1),
+				new Pikachu(2, "Shocky"),
+				new Pikachu(5, "Lightning"),
+				new Pikachu(10, "Thor"),
+				new Pikachu(20, "Zap Zap"),
+				new Pikachu(50, "Palpatine")
+		};
+		foesPokemon = new Pokemon[] {
+				new Torchic(1),
+				new Pikachu(2),
+				new Torchic(5, "Ma Lighter"),
+				new Pikachu(10),
+				new Torchic(20, "Ma Fire"),
+				new Pikachu(50)
+		};
 	}
 
 	private void startMatch() {
@@ -52,12 +70,14 @@ public class Main {
 				
 				
 				input = scanner.next();
-				input = input.trim();
+				input = input.trim().toUpperCase();
+				if (input == "END")
+				
 				if (input == "1" || input == "2" || input == "3" || input == "4") {
 					selectedMoveUser = user.getMove(Integer.parseInt(input) - 1);
 				} else {
 					for (int i = 0; i < 4; i++) {
-						if (user.getMove(i).toString().trim() == input) {
+						if (user.getMove(i).toString().trim().toUpperCase() == input) {
 							selectedMoveUser = user.getMove(i);
 						}
 					}
@@ -99,26 +119,6 @@ public class Main {
 		}
 
 		//Output results
-	}
-
-
-	private Main() {
-		yourPokemon = new Pokemon[] {
-				new Pikachu(1),
-				new Pikachu(2, "Shocky"),
-				new Pikachu(5, "Lightning"),
-				new Pikachu(10, "Thor"),
-				new Pikachu(20, "Zap Zap"),
-				new Pikachu(50, "Palpatine")
-		};
-		foesPokemon = new Pokemon[] {
-				new Pikachu(1),
-				new Pikachu(2),
-				new Pikachu(5),
-				new Pikachu(10),
-				new Pikachu(20),
-				new Pikachu(50)
-		};
 	}
 
 

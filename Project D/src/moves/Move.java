@@ -74,6 +74,10 @@ public abstract class Move {
 		return "[" + name + "]";
 	}
 	
+	public String getName() {
+		return this.name;
+	}
+	
 	public int getPower() {
 		return power;
 	}

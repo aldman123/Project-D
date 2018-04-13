@@ -27,23 +27,6 @@ public abstract class Pokemon {
 	public Pokemon(int[] baseStatList, int level, Type typeA, Type typeB, Move[] moveLearnset, String name) {
 		this.name = name;
 		
-		moveList = new Move[4];
-		this.moveLearnset = moveLearnset;
-		
-		//Learn's it's 4 most recent moves based on level
-		int moveSlot = 0;
-		for (int i = moveLearnset.length; i > 0 && moveSlot < 4; i--) {
-			if (moveList[moveSlot] == null) {
-				 if (moveLearnset[i].getLearnLevel() <= this.level) {
-					 moveList[moveSlot] = moveLearnset[i];
-					 moveSlot++;
-				 }
-			} else {
-				moveSlot++;
-			}
-		}
-		
-		
 		if (typeB == null) {
 			typeB = typeA;
 		}
@@ -53,12 +36,29 @@ public abstract class Pokemon {
 		this.typeB = typeB;
 		
 		this.baseStatList = baseStatList;
+		this.statList = new int[6];
 		this.ivList = new int[6];
 		
 		Random generator = new Random();
 		
 		for (int i = 0; i < ivList.length; i++) {
 			ivList[i] = generator.nextInt(16);
+		}
+		
+		moveList = new Move[4];
+		this.moveLearnset = moveLearnset;
+		
+		//Learn's it's 4 most recent moves based on level
+		int moveSlot = 0;
+		for (int i = moveLearnset.length - 1; i >= 0 && moveSlot < 4; i--) {
+			if (moveList[moveSlot] == null) {
+				 if (moveLearnset[i].getLearnLevel() <= this.level) {
+					 moveList[moveSlot] = moveLearnset[i];
+					 moveSlot++;
+				 }
+			} else {
+				moveSlot++;
+			}
 		}
 		
 		this.resetStats();
@@ -85,12 +85,16 @@ public abstract class Pokemon {
 
 	public void resetStats() {
 		for (int i = 0; i < statList.length; i++) {
-			statList[i] = calculateStat(baseStatList[i], ivList[i], this.level, i == 0);
+			statList[i] = calculateStat(i);
 		}
 		this.accuracy = 1;
 		this.evasion = 1;
 		
 		
+	}
+	
+	public int calculateStat(int statID) {
+		return calculateStat(this.statList[statID], this.ivList[statID], this.level, statID == 0);
 	}
 	
 	private int calculateStat(int base, int iv, int level, boolean isHP) {
@@ -154,7 +158,7 @@ public abstract class Pokemon {
 	}
 	
 	public String toString() {
-		return "[" + name + ", lv:" + level + "]";
+		return "[" + this.getName() + ", lv:" + level + "]";
 	}
 	
 	public void setName(String newName) {
@@ -162,7 +166,11 @@ public abstract class Pokemon {
 	}
 	
 	public String getName() {
-		return this.name;
+		if (name == null) {
+			return "Not Learned";
+		} else {
+			return this.name;
+		}
 	}
 	
 	public StatusEffect getStatus() {
@@ -252,7 +260,7 @@ public abstract class Pokemon {
 	
 	
 	public int getMaxHP() {
-		return this.baseStatList[0];
+		return this.calculateStat(0);
 	}
 	
 	/**

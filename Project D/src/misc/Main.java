@@ -15,7 +15,6 @@ public class Main {
 
 
 	Scanner scanner = new Scanner(System.in);
-	String input = "";
 	Move selectedMoveUser, selectedMoveFoe;
 	public static void main(String[] args) {
 
@@ -33,10 +32,10 @@ public class Main {
 				new Pikachu(50, "Palpatine")
 		};
 		foesPokemon = new Pokemon[] {
-				new Torchic(1),
+				new Torchic(1, "Johney Torch"),
 				new Pikachu(2),
 				new Torchic(5, "Ma Lighter"),
-				new Pikachu(10),
+				new Pikachu(10, "Ma Lightning"),
 				new Torchic(20, "Ma Fire"),
 				new Pikachu(50)
 		};
@@ -50,6 +49,21 @@ public class Main {
 
 		//Start game loop
 		while (!gameOver) {
+			pokemonActiveUser = 0;
+			pokemonActiveFoe = 0;
+			for (Pokemon pokemon : yourPokemon) {
+				if (pokemon.isKnockedOut() == false) {
+					pokemonActiveUser++;
+				}
+			}
+			
+			for (Pokemon pokemon : foesPokemon) {
+				if (pokemon.isKnockedOut() == false) {
+					pokemonActiveFoe++;
+				}
+			}
+			
+			
 			//Input selected move
 			selectedMoveUser = null;
 			while (selectedMoveUser == null) {
@@ -57,23 +71,35 @@ public class Main {
 				//Display Foe
 				System.out.println("FOE Pokemon");
 				System.out.println(foe.toString() + " " + foe.getStatus().toString());
-				System.out.println("[HP:" + (foe.getHP() / foe.getMaxHP()) + "%]");
+				System.out.println("[HP:" + (foe.getHP() / foe.getMaxHP() * 100) + "%]");
 				System.out.println("");
 
 				//Display User Pokemon
 				System.out.println("YOUR Pokemon");
 				System.out.println(user.toString() + " " + foe.getStatus().toString());
-				System.out.println("[HP:" + (user.getHP() / user.getMaxHP()) + "%]");
+				System.out.println("[HP:" + (user.getHP() / user.getMaxHP() * 100) + "%]");
 				
 				//Display active Pokemon's moves
-				System.out.print("[" + user.getMove(0) + ", " + user.getMove(1) + ", " + user.getMove(2) + ", " + user.getMove(3) + "]");
+				String moveList = "[";
+				for (int i = 0; i < 4; i++) {
+					if (user.getMove(i) != null) {
+						if (i > 0) {
+							moveList += ", ";
+						}
+						moveList += user.getMove(i).getName();
+					} else {
+						break;
+					}
+				}
 				
+				moveList += "]";
 				
-				input = scanner.next();
-				input = input.trim().toUpperCase();
-				if (input == "END")
+				System.out.println(moveList);
 				
-				if (input == "1" || input == "2" || input == "3" || input == "4") {
+				System.out.print("Select Move: ");
+				String input = scanner.next().trim().toUpperCase();
+				
+				if (input.equals("1") || input.equals("2") || input.equals("3") || input.equals("4")) {
 					selectedMoveUser = user.getMove(Integer.parseInt(input) - 1);
 				} else {
 					for (int i = 0; i < 4; i++) {
@@ -119,11 +145,6 @@ public class Main {
 		}
 
 		//Output results
-	}
-
-
-	private void getSelectedMoves() {
-
 	}
 
 }

@@ -1,13 +1,17 @@
 package pokemon;
 
 import misc.Type;
-import moves.*;
+import moves.Move;
+import moves.Normal.Growl;
+import moves.Normal.QuickAttack;
+import moves.Normal.Scratch;
 
 public class Torchic extends Pokemon {
 	
 	static Move[] moveLearnset = new Move[] {
 			new Growl(1),
-			new Scratch(1)
+			new Scratch(1),
+			new QuickAttack(28)
 	};
 
 	public Torchic(int level) {

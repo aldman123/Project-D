@@ -10,6 +10,7 @@ public abstract class Move {
 	private final int power, accuracy, learnLevel;
 	private final String name;
 	private final Type type;
+	private final boolean specialAttack;
 	private int pp, maxPP;
 	private Random generator = new Random();
 	
@@ -24,7 +25,7 @@ public abstract class Move {
 	 * @param type: The Type of damage
 	 * @param level: When is the move learned?
 	 */
-	public Move(int power, int pp, int accuracy, String name, Type type, int level) {
+	public Move(int power, int pp, int accuracy, String name, Type type, int level, boolean specialAttack) {
 		this.power = power;
 		this.accuracy = accuracy;
 		this.name = name;
@@ -32,6 +33,7 @@ public abstract class Move {
 		this.learnLevel = level;
 		this.maxPP = pp;
 		this.pp = pp;
+		this.specialAttack = specialAttack;
 	}
 	
 	/**
@@ -50,7 +52,7 @@ public abstract class Move {
 			}
 		}
 		
-		self.doDamage(foe, power, type);
+		self.doDamage(foe, power, type, specialAttack);
 		return self.getName() + " did damage to " + foe.getName() + "!";
 	}
 	

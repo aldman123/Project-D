@@ -46,7 +46,7 @@ public abstract class Pokemon {
 		}
 		
 		moveList = new Move[4];
-		this.moveLearnset = moveLearnset;
+		this.moveLearnset = moveLearnset.clone();
 		
 		//Learn's it's 4 most recent moves based on level
 		int moveSlot = 0;
@@ -82,6 +82,10 @@ public abstract class Pokemon {
 		}
 		
 	}
+	
+	public int getLevel() {
+		return this.level;
+	}
 
 	public void resetStats() {
 		for (int i = 0; i < statList.length; i++) {
@@ -105,7 +109,7 @@ public abstract class Pokemon {
 		return stat;
 	}
 	
-	public void doDamage(Pokemon opponent, int power, Type type) {
+	public void doDamage(Pokemon opponent, int power, Type type, boolean specialAttack) {
 		double modifier = type.against(typeA);
 		
 		//Get type effectiveness
@@ -123,8 +127,12 @@ public abstract class Pokemon {
 		modifier *= opponent.getSTAB(type);
 		
 		//Calculate damage based on modifier and stats
-		int damage = (int) Math.round((((2*this.level)/5 + 2)/50 * power * opponent.getAtk() * this.getDef() + 2) * modifier);
-		
+		int damage;
+		if (specialAttack) {
+			damage = (int) Math.round((((2*this.level)/5 + 2)/50 * power * opponent.getSpAtk() * this.getSpDef() + 2) * modifier);
+		} else {
+			damage = (int) Math.round((((2*this.level)/5 + 2)/50 * power * opponent.getAtk() * this.getDef() + 2) * modifier);
+		}
 		//Apply damage
 		this.reduceHP(damage);
 		return;

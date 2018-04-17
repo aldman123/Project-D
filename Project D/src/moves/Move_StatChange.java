@@ -10,8 +10,8 @@ public abstract class Move_StatChange extends Move{
 	
 	public Move_StatChange(
 			int damage, int pp, int accuracy, String name, Type type,
-			int level, int statToChange, int statChangeModifier, boolean onSelf	) {
-		super(damage, pp, accuracy, name, type, level);
+			int level, boolean specialAttack, int statToChange, int statChangeModifier, boolean onSelf) {
+		super(damage, pp, accuracy, name, type, level, specialAttack);
 		this.onSelf = onSelf;
 		this.statChangeModifier = statChangeModifier;
 		this.statToChange = statToChange;

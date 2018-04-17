@@ -25,18 +25,18 @@ public class Main {
 	private Main() {
 		yourPokemon = new Pokemon[] {
 				new Pikachu(1),
-				new Pikachu(2, "Shocky"),
+				new Torchic(2, "Burny"),
 				new Pikachu(5, "Lightning"),
 				new Pikachu(10, "Thor"),
-				new Pikachu(20, "Zap Zap"),
-				new Pikachu(50, "Palpatine")
+				new Combusken(20, "Flame On"),
+				new Combusken(50, "Get Burned")
 		};
 		foesPokemon = new Pokemon[] {
-				new Torchic(1, "Johney Torch"),
-				new Pikachu(2),
+				new Torchic(1),
+				new Pikachu(2, "Johney Torch"),
 				new Torchic(5, "Ma Lighter"),
 				new Pikachu(10, "Ma Lightning"),
-				new Torchic(20, "Ma Fire"),
+				new Combusken(20, "Ma Fire"),
 				new Pikachu(50)
 		};
 	}

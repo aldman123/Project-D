@@ -50,8 +50,13 @@ public abstract class Move {
 			}
 		}
 		
-		self.doDamage(foe, power, type);
-		return self.getName() + " did damage to " + foe.getName() + "!";
+		if (power > 0) {
+			self.doDamageTo(foe, power, type);
+			return self.getName() + " did damage to " + foe.getName() + "!";
+		} else {
+			return self.getName() + " didn't hurt " + foe.getName() + " all that much.";
+		}
+		
 	}
 	
 	public int getPP() {

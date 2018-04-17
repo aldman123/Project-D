@@ -105,28 +105,37 @@ public abstract class Pokemon {
 		return stat;
 	}
 	
-	public void doDamage(Pokemon opponent, int power, Type type) {
-		double modifier = type.against(typeA);
+	public void doDamageTo(Pokemon opponent, int power, Type type) {
+		double modifier = typeA.against(type);
 		
 		//Get type effectiveness
 		if (typeA != typeB) {
-			modifier *= type.against(typeB);
+			modifier *= typeB.against(type);
+		}
+		
+		if (modifier < 1) {
+			System.out.println("The move wasn't very effective.");
+		} else if (modifier > 1 && modifier <= 2) {
+			System.out.println("The move was quite effective!");
+		} else if (modifier < 4) {
+			System.out.println("The move was super effective!");
 		}
 		
 		//Critical Hit
 		Random generator = new Random();
 		if (opponent.getSpeed()/2 >= generator.nextInt(256)) {
 			modifier *= 2;
+			System.out.println("Critical Hit!");
 		}
 		
 		//Get STAB bonus
-		modifier *= opponent.getSTAB(type);
+		modifier *= this.getSTAB(type);
 		
 		//Calculate damage based on modifier and stats
 		int damage = (int) Math.round((((2*this.level)/5 + 2)/50 * power * opponent.getAtk() * this.getDef() + 2) * modifier);
 		
 		//Apply damage
-		this.reduceHP(damage);
+		opponent.reduceHP(damage);
 		return;
 	}
 	
@@ -270,6 +279,18 @@ public abstract class Pokemon {
 	 * HP = 0, Evasion = 7
 	 */
 	public void modifyStat(int statID, double modifier) {
+		if (modifier <= -2) {
+			modifier = 2/4;
+		} else if (modifier < 0) {
+			modifier = 2/3;
+		} else if (modifier == 0) {
+			modifier = 1/1;
+		} else if (modifier <= 1) {
+			modifier = 3/2;
+		}
+		
+		
+		
 		if (statID < 6) {
 			this.statList[statID] *= modifier;
 		} else if (statID == 6) {

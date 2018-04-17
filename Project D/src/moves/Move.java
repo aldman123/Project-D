@@ -52,7 +52,10 @@ public abstract class Move {
 			}
 		}
 		
-		self.doDamage(foe, power, type, specialAttack);
+		if (self.isKnockedOut() || foe.isKnockedOut()) {
+			return "";
+		}
+		foe.doDamageFrom(self, power, type, specialAttack);
 		return self.getName() + " did damage to " + foe.getName() + "!";
 	}
 	

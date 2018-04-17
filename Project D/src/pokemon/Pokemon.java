@@ -109,7 +109,7 @@ public abstract class Pokemon {
 		return stat;
 	}
 	
-	public void doDamage(Pokemon opponent, int power, Type type, boolean specialAttack) {
+	public void doDamageFrom(Pokemon opponent, int power, Type type, boolean specialAttack) {
 		double modifier = type.against(typeA);
 		
 		//Get type effectiveness
@@ -129,9 +129,9 @@ public abstract class Pokemon {
 		//Calculate damage based on modifier and stats
 		int damage;
 		if (specialAttack) {
-			damage = (int) Math.round((((2*this.level)/5 + 2)/50 * power * opponent.getSpAtk() * this.getSpDef() + 2) * modifier);
+			damage = (int) Math.round(((2.0*this.level/5.0 + 2.0)/50.0 * power * opponent.getSpAtk() / this.getSpDef() + 2.0) * modifier);
 		} else {
-			damage = (int) Math.round((((2*this.level)/5 + 2)/50 * power * opponent.getAtk() * this.getDef() + 2) * modifier);
+			damage = (int) Math.round(((2.0*this.level/5.0 + 2.0)/50.0 * power * opponent.getAtk() / this.getDef() + 2.0) * modifier);
 		}
 		//Apply damage
 		this.reduceHP(damage);
@@ -230,19 +230,19 @@ public abstract class Pokemon {
 		return statList[0];
 	}
 	
-	public int getDef() {
+	public int getAtk() {
 		return statList[1];
 	}
 
-	public int getAtk() {
+	public int getDef() {
 		return statList[2];
 	}
 
-	public int getSpDef() {
+	public int getSpAtk() {
 		return statList[3];
 	}
 
-	public int getSpAtk() {
+	public int getSpDef() {
 		return statList[4];
 	}
 
@@ -278,6 +278,18 @@ public abstract class Pokemon {
 	 * HP = 0, Evasion = 7
 	 */
 	public void modifyStat(int statID, double modifier) {
+		/*
+		 * changes stat modifier from stage multiplier to percent
+		 * ie: -1 -> 2/3, 0 -> 2/2, +1 -> 3/2 etc.
+		 */
+		if (modifier > 0) {
+			modifier = (modifier + 2) / 2;
+		} else {
+			modifier = 2 / (modifier * -1 + 2);
+		}
+		
+		
+		
 		if (statID < 6) {
 			this.statList[statID] *= modifier;
 		} else if (statID == 6) {

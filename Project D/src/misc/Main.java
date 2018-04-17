@@ -1,5 +1,6 @@
 package misc;
 
+import java.rmi.activation.Activatable;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -45,22 +46,21 @@ public class Main {
 		//Input Pokemons
 		user = yourPokemon[0];
 		foe = foesPokemon[0];
-
+		calculateActivePokemon();
 
 		//Start game loop
-		while (!gameOver) {
-			pokemonActiveUser = 0;
-			pokemonActiveFoe = 0;
-			for (Pokemon pokemon : yourPokemon) {
-				if (pokemon.isKnockedOut() == false) {
-					pokemonActiveUser++;
-				}
+		while (pokemonActiveUser > 0 && pokemonActiveFoe > 0) {
+			
+			if (user.isKnockedOut()) {
+				System.out.println(user.getName() + " was sent out!");
+				user = yourPokemon[6 - pokemonActiveUser];
+				System.out.println("Go " + user.getName() + "!");
 			}
 			
-			for (Pokemon pokemon : foesPokemon) {
-				if (pokemon.isKnockedOut() == false) {
-					pokemonActiveFoe++;
-				}
+			if (foe.isKnockedOut()) {
+				System.out.println(foe.getName() + " was knocked out!");
+				foe = foesPokemon[6 - pokemonActiveFoe];
+				System.out.println("Go " + foe.getName() + "!");
 			}
 			
 			
@@ -71,13 +71,13 @@ public class Main {
 				//Display Foe
 				System.out.println("FOE Pokemon");
 				System.out.println(foe.toString() + " " + foe.getStatus().toString());
-				System.out.println("[HP:" + (foe.getHP() / foe.getMaxHP() * 100) + "%]");
+				System.out.println("[HP:" + foe.getHP() +"/"+ foe.getMaxHP() + "]");
 				System.out.println("");
 
 				//Display User Pokemon
 				System.out.println("YOUR Pokemon");
 				System.out.println(user.toString() + " " + foe.getStatus().toString());
-				System.out.println("[HP:" + (user.getHP() / user.getMaxHP() * 100) + "%]");
+				System.out.println("[HP:" + (user.getHP() +"/"+ user.getMaxHP()) + "]");
 				
 				//Display active Pokemon's moves
 				String moveList = "[";
@@ -117,7 +117,13 @@ public class Main {
 
 			//Select move for foe Pokemon
 			Random generator = new Random();
-			selectedMoveFoe = foe.getMove(generator.nextInt(4));
+			int foesMoves = 4;
+			for (int i = 0; i < 4; i++) {
+				if (foe.getMove(i) == null) {
+					foesMoves--;
+				}
+			}
+			selectedMoveFoe = foe.getMove(generator.nextInt(foesMoves));
 			
 
 			//Run turn
@@ -128,23 +134,40 @@ public class Main {
 				System.out.println(selectedMoveFoe.start(foe, user));
 				System.out.println(selectedMoveUser.start(user, foe));
 			}
-
-
-
-			if (pokemonActiveFoe < 1) {
-				gameOver = true;
-				//Game won!
-
-				System.out.println("YOU WIN!");
-			} else if (pokemonActiveUser < 1) {
-				gameOver = true;
-				//Game lost
-				System.out.println("All your Pokemon were knocked out...");
-				System.out.println("You Lose");
-			}
+			
+			
+			calculateActivePokemon();
+			
 		}
 
 		//Output results
+		if (pokemonActiveFoe < 1) {
+			gameOver = true;
+			//Game won!
+
+			System.out.println("YOU WIN!");
+		} else if (pokemonActiveUser < 1) {
+			gameOver = true;
+			//Game lost
+			System.out.println("All your Pokemon were knocked out...");
+			System.out.println("You Lose");
+		}
+	}
+	
+	private void calculateActivePokemon() {
+		pokemonActiveUser = 0;
+		pokemonActiveFoe = 0;
+		for (Pokemon pokemon : yourPokemon) {
+			if (pokemon.isKnockedOut() == false) {
+				pokemonActiveUser++;
+			}
+		}
+		
+		for (Pokemon pokemon : foesPokemon) {
+			if (pokemon.isKnockedOut() == false) {
+				pokemonActiveFoe++;
+			}
+		}
 	}
 
 }

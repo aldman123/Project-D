@@ -19,6 +19,8 @@ public abstract class Move_StatChange extends Move{
 	}
 	
 	public String start(Pokemon self, Pokemon foe) {
+		System.out.println(super.start(self, foe));
+		
 		String output = "";
 		if (onSelf) {
 			output += self.getName();
@@ -48,8 +50,7 @@ public abstract class Move_StatChange extends Move{
 			output += "increased!";
 		}
 		
-		System.out.println(output);
-		return super.start(self, foe);
+		return output;
 	}
 
 }

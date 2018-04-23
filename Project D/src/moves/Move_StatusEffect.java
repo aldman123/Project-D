@@ -21,6 +21,7 @@ public abstract class Move_StatusEffect extends Move {
 	}
 	
 	public String start(Pokemon self, Pokemon foe) {
+		System.out.println(super.start(self, foe));
 		Pokemon target;
 		if (onSelf) {
 			target = self;
@@ -30,10 +31,10 @@ public abstract class Move_StatusEffect extends Move {
 		
 		if (new Random().nextInt(100) <= probability) {
 			target.setStatus(newStatus);
-			System.out.println(target.getName() + " was " + newStatus.getEffect() + "!");
+			return target.getName() + " was " + newStatus.getEffect() + "!";
+		} else {
+			return target.getName() + " was not " + newStatus.getEffect().toLowerCase() + "...";
 		}
-		
-		return super.start(self, foe);
 	}
 
 }

@@ -55,6 +55,9 @@ public abstract class Move {
 		if (self.isKnockedOut() || foe.isKnockedOut()) {
 			return "";
 		}
+		if (power == 0) {
+			return self.getName() + " used " + this.name + "!";
+		}
 		foe.doDamageFrom(self, power, type, specialAttack);
 		return self.getName() + " did damage to " + foe.getName() + "!";
 	}

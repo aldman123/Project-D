@@ -289,7 +289,6 @@ public abstract class Pokemon {
 		}
 		
 		
-		
 		if (statID < 6) {
 			this.statList[statID] *= modifier;
 		} else if (statID == 6) {
@@ -297,6 +296,16 @@ public abstract class Pokemon {
 		} else if (statID == 7) {
 			this.evasion *= modifier;
 		}
+	}
+
+	public int getNumberOfMoves() {
+		int moves = 4;
+		for (int i = 0; i < 4; i++) {
+			if (this.getMove(i) == null) {
+				moves--;
+			}
+		}
+		return moves;
 	}
 	
 }

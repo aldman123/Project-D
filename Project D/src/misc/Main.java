@@ -1,17 +1,18 @@
 package misc;
 
-import java.rmi.activation.Activatable;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 import moves.Move;
 import pokemon.*;
 
 public class Main {
-
+	
+	private final long WAIT_TIME = 1600;
+	
 	private Pokemon user, foe;
 	private Pokemon[] yourPokemon, foesPokemon;
-	private boolean gameOver;
 	private int pokemonActiveFoe, pokemonActiveUser;
 
 
@@ -20,15 +21,20 @@ public class Main {
 	public static void main(String[] args) {
 
 		Main battle = new Main();
-		battle.startMatch();
+		try {
+			battle.startMatch();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	private Main() {
 		yourPokemon = new Pokemon[] {
 				new Pikachu(1),
+				new Pikachu(10, "Thor"),
 				new Torchic(2, "Burny"),
 				new Pikachu(5, "Lightning"),
-				new Pikachu(10, "Thor"),
 				new Combusken(20, "Flame On"),
 				new Combusken(50, "Get Burned")
 		};
@@ -42,7 +48,7 @@ public class Main {
 		};
 	}
 
-	private void startMatch() {
+	private void startMatch() throws InterruptedException {
 		//Input Pokemons
 		user = yourPokemon[0];
 		foe = foesPokemon[0];
@@ -102,7 +108,7 @@ public class Main {
 				if (input.equals("1") || input.equals("2") || input.equals("3") || input.equals("4")) {
 					selectedMoveUser = user.getMove(Integer.parseInt(input) - 1);
 				} else {
-					for (int i = 0; i < 4; i++) {
+					for (int i = 0; i < user.getNumberOfMoves(); i++) {
 						if (user.getMove(i).toString().trim().toUpperCase() == input) {
 							selectedMoveUser = user.getMove(i);
 						}
@@ -117,37 +123,34 @@ public class Main {
 
 			//Select move for foe Pokemon
 			Random generator = new Random();
-			int foesMoves = 4;
-			for (int i = 0; i < 4; i++) {
-				if (foe.getMove(i) == null) {
-					foesMoves--;
-				}
-			}
-			selectedMoveFoe = foe.getMove(generator.nextInt(foesMoves));
+			selectedMoveFoe = foe.getMove(generator.nextInt(foe.getNumberOfMoves()));
 			
 
 			//Run turn
 			if (user.getSpeed() >= foe.getSpeed()) {
 				System.out.println(selectedMoveUser.start(user, foe));
+				TimeUnit.MILLISECONDS.sleep(WAIT_TIME);
 				System.out.println(selectedMoveFoe.start(foe, user));
+				TimeUnit.MILLISECONDS.sleep(WAIT_TIME);
 			} else {
 				System.out.println(selectedMoveFoe.start(foe, user));
+				TimeUnit.MILLISECONDS.sleep(WAIT_TIME);
 				System.out.println(selectedMoveUser.start(user, foe));
+				TimeUnit.MILLISECONDS.sleep(WAIT_TIME);
 			}
 			
 			
 			calculateActivePokemon();
-			
+			System.out.println("");
+			System.out.println("----");
+			System.out.println("");
 		}
-
 		//Output results
 		if (pokemonActiveFoe < 1) {
-			gameOver = true;
 			//Game won!
 
 			System.out.println("YOU WIN!");
 		} else if (pokemonActiveUser < 1) {
-			gameOver = true;
 			//Game lost
 			System.out.println("All your Pokemon were knocked out...");
 			System.out.println("You Lose");

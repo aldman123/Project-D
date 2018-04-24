@@ -8,6 +8,9 @@ public abstract class Move_StatChange extends Move{
 	private final int statToChange, statChangeModifier;
 	private final boolean onSelf;
 	
+	/*
+	 * @param statToChange stat index to change [HP. Atk, Def, SpAtk, SpDef, Speed, Accuracy, Evasion, CriticalHit]
+	 */
 	public Move_StatChange(
 			int damage, int pp, int accuracy, String name, Type type,
 			int level, boolean specialAttack, int statToChange, int statChangeModifier, boolean onSelf) {
@@ -40,6 +43,12 @@ public abstract class Move_StatChange extends Move{
 			output += "Special Defence";
 		} else if (statToChange == 5) {
 			output += "Speed";
+		} else if (statToChange  == 6) {
+			output += "Accuracy";
+		} else if (statToChange  == 7) {
+			output += "Evasion";
+		} else if (statToChange  == 8) {
+			output += "Critical Hit Ratio";
 		} else {
 			output += "Stat";
 		}

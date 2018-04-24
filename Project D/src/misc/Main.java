@@ -5,6 +5,8 @@ import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 import moves.Move;
+import moves.Move_fast;
+import moves.Flying.MirrorMove;
 import pokemon.*;
 
 public class Main {
@@ -14,10 +16,11 @@ public class Main {
 	private Pokemon user, foe;
 	private Pokemon[] yourPokemon, foesPokemon;
 	private int pokemonActiveFoe, pokemonActiveUser;
+	private boolean userGoesFirst;
 
 
 	Scanner scanner = new Scanner(System.in);
-	Move selectedMoveUser, selectedMoveFoe;
+	private Move selectedMoveUser, selectedMoveFoe, usersLastMove;
 	public static void main(String[] args) {
 
 		Main battle = new Main();
@@ -120,14 +123,44 @@ public class Main {
 				}
 			}
 			
+			
+			//Is someone using Mirror Move?
+			if (selectedMoveUser instanceof MirrorMove) {
+				if (selectedMoveFoe == null) {
+					System.out.println(user.getName() + " failed to use " + selectedMoveUser.getName());
+				} else {
+					selectedMoveUser = selectedMoveFoe;
+					System.out.println(user.getName() + " copied " + foe.getName() + "'s last move!");
+				}
+			}
+			if (selectedMoveFoe instanceof MirrorMove) {
+				if (usersLastMove == null) {
+					System.out.println(foe.getName() + " failed to use " + selectedMoveFoe.getName());
+				} else {
+					selectedMoveFoe = usersLastMove;
+					System.out.println(foe.getName() + " copied " + user.getName() + "'s last move!");
+				}
+			}
 
+			
 			//Select move for foe Pokemon
 			Random generator = new Random();
 			selectedMoveFoe = foe.getMove(generator.nextInt(foe.getNumberOfMoves()));
 			
+			
 
-			//Run turn
-			if (user.getSpeed() >= foe.getSpeed()) {
+			//Who goes first?
+			if (selectedMoveUser instanceof Move_fast && !(selectedMoveFoe instanceof Move_fast)) {
+				userGoesFirst = true;
+			} else if (selectedMoveFoe instanceof Move_fast && !(selectedMoveUser instanceof Move_fast)) {
+				userGoesFirst = false;
+			} else {
+				userGoesFirst = user.getSpeed() >= foe.getSpeed();
+			}
+			
+			
+			//Run Turn
+			if (userGoesFirst) {
 				System.out.println(selectedMoveUser.start(user, foe));
 				TimeUnit.MILLISECONDS.sleep(WAIT_TIME);
 				System.out.println(selectedMoveFoe.start(foe, user));
@@ -145,6 +178,7 @@ public class Main {
 			System.out.println("----");
 			System.out.println("");
 		}
+		
 		//Output results
 		if (pokemonActiveFoe < 1) {
 			//Game won!

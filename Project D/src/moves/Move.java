@@ -12,6 +12,7 @@ public abstract class Move {
 	private final Type type;
 	private final boolean specialAttack;
 	private int pp, maxPP;
+	private boolean highCriticalHit;
 	private Random generator = new Random();
 	
 	
@@ -34,6 +35,7 @@ public abstract class Move {
 		this.maxPP = pp;
 		this.pp = pp;
 		this.specialAttack = specialAttack;
+		this.highCriticalHit = false;
 	}
 	
 	/**
@@ -58,7 +60,7 @@ public abstract class Move {
 		if (power == 0) {
 			return self.getName() + " used " + this.name + "!";
 		}
-		foe.doDamageFrom(self, power, type, specialAttack);
+		foe.doDamageFrom(self, this);
 		return self.getName() + " did damage to " + foe.getName() + "!";
 	}
 	
@@ -98,4 +100,15 @@ public abstract class Move {
 		return learnLevel;
 	}
 	
+	public void setHighCriticalHit(boolean highCriticalHit) {
+		this.highCriticalHit = highCriticalHit;
+	}
+	
+	public boolean getHighCriticalHit() {
+		return highCriticalHit;
+	}
+
+	public boolean getSpecialAttack() {
+		return specialAttack;
+	}
 }

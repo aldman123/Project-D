@@ -13,6 +13,7 @@ public abstract class Pokemon {
 	private Move[] moveList, moveLearnset;
 	private int[] ivList, baseStatList, statList;
 	private int level, accuracy, evasion;
+	private double criticalHit;
 	private String name;
 	private StatusEffect status = StatusEffect.NOTHING;
 	
@@ -93,11 +94,17 @@ public abstract class Pokemon {
 		}
 		this.accuracy = 1;
 		this.evasion = 1;
+		this.criticalHit = 1;
 		
 		
 	}
 	
 	public int calculateStat(int statID) {
+		if (statID == 6) {
+			
+		} else if (statID == 7) {
+			
+		}
 		return calculateStat(this.statList[statID], this.ivList[statID], this.level, statID == 0);
 	}
 	
@@ -109,7 +116,9 @@ public abstract class Pokemon {
 		return stat;
 	}
 	
-	public void doDamageFrom(Pokemon opponent, int power, Type type, boolean specialAttack) {
+	public void doDamageFrom(Pokemon opponent, Move move) {
+		Type type = move.getType();
+		int power = move.getPower();
 		double modifier = type.against(typeA);
 		
 		//Get type effectiveness
@@ -119,7 +128,12 @@ public abstract class Pokemon {
 		
 		//Critical Hit
 		Random generator = new Random();
-		if (opponent.getSpeed()/2 >= generator.nextInt(256)) {
+		double criticalHitMod = 1/2 * this.getCriticalHit();
+		if (move.getHighCriticalHit()) {
+			criticalHitMod *= 8;
+		}
+		
+		if (opponent.getSpeed() * criticalHitMod >= generator.nextInt(256)) {
 			modifier *= 2;
 		}
 		
@@ -128,7 +142,7 @@ public abstract class Pokemon {
 		
 		//Calculate damage based on modifier and stats
 		int damage;
-		if (specialAttack) {
+		if (move.getSpecialAttack()) {
 			damage = (int) Math.round(((2.0*this.level/5.0 + 2.0)/50.0 * power * opponent.getSpAtk() / this.getSpDef() + 2.0) * modifier);
 		} else {
 			damage = (int) Math.round(((2.0*this.level/5.0 + 2.0)/50.0 * power * opponent.getAtk() / this.getDef() + 2.0) * modifier);
@@ -137,7 +151,7 @@ public abstract class Pokemon {
 		this.reduceHP(damage);
 		return;
 	}
-	
+
 	public void doPoisonDamage() {
 		this.reduceHP(this.baseStatList[0] / 8);
 		
@@ -188,7 +202,6 @@ public abstract class Pokemon {
 	public void setStatus(StatusEffect newStatus) {
 		this.status = newStatus;
 	}
-	
 	
 	
 	
@@ -258,6 +271,10 @@ public abstract class Pokemon {
 		return this.evasion;
 	}
 	
+	public double getCriticalHit() {
+		return this.criticalHit;
+	}
+	
 	public void reduceHP(int damage) {
 		this.setHP(this.getHP() - damage);
 		if (this.getHP() < 1) {
@@ -295,6 +312,8 @@ public abstract class Pokemon {
 			this.accuracy *= modifier;
 		} else if (statID == 7) {
 			this.evasion *= modifier;
+		} else if (statID == 8) {
+			this.criticalHit *= modifier;
 		}
 	}
 

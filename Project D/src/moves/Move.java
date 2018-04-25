@@ -44,6 +44,13 @@ public abstract class Move {
 	 * @param foe:	Opponent Pokemon
 	 */
 	public String start(Pokemon self, Pokemon foe) {
+		
+		if (self.isKnockedOut() || foe.isKnockedOut()) {
+			return "";
+		} else if (!(this instanceof Move_MultyStrike)) {
+			pp--;
+		}
+		
 		if (self.getStatus() == StatusEffect.SLEEP) {
 			return self.toString() + " is still Sleeping!";
 		} else if (self.getStatus() == StatusEffect.FREEZE) {
@@ -52,10 +59,6 @@ public abstract class Move {
 			if (generator.nextInt(4) == 1) {
 				return self.toString() + " is paralyzed and unable to move!";
 			}
-		}
-		
-		if (self.isKnockedOut() || foe.isKnockedOut()) {
-			return "";
 		}
 		if (power == 0) {
 			return self.getName() + " used " + this.name + "!";

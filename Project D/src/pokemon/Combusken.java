@@ -2,9 +2,11 @@ package pokemon;
 
 import misc.Type;
 import moves.*;
+import moves.Fighting.DoubleKick;
 import moves.Fire.Ember;
 import moves.Flying.MirrorMove;
 import moves.Flying.Peck;
+import moves.Ground.SandAttack;
 import moves.Normal.Growl;
 import moves.Normal.QuickAttack;
 import moves.Normal.Scratch;
@@ -18,9 +20,9 @@ public class Combusken extends Pokemon {
 			new Scratch(1),
 //			new FocusEnergy(7),
 			new Ember(13),
-//			new DoubleKick(16),
+			new DoubleKick(16),
 			new Peck(17),
-//			new SandAttack(21),
+			new SandAttack(21),
 //			new BulkUp(28),
 			new QuickAttack(32),
 			new Slash(39),

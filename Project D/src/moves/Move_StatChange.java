@@ -5,7 +5,23 @@ import pokemon.Pokemon;
 
 public abstract class Move_StatChange extends Move{
 	
-	private final int statToChange, statChangeModifier;
+	private int statToChange, statChangeModifier;
+	public int getStatToChange() {
+		return statToChange;
+	}
+
+	public void setStatToChange(int statToChange) {
+		this.statToChange = statToChange;
+	}
+
+	public int getStatChangeModifier() {
+		return statChangeModifier;
+	}
+
+	public void setStatChangeModifier(int statChangeModifier) {
+		this.statChangeModifier = statChangeModifier;
+	}
+
 	private final boolean onSelf;
 	
 	/*

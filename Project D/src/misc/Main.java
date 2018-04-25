@@ -27,7 +27,6 @@ public class Main {
 		try {
 			battle.startMatch();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -38,15 +37,15 @@ public class Main {
 				new Pikachu(10, "Thor"),
 				new Torchic(2, "Burny"),
 				new Pikachu(5, "Lightning"),
-				new Combusken(20, "Flame On"),
-				new Combusken(50, "Get Burned")
+				new Combusken(20),
+				new Blaziken(50)
 		};
 		foesPokemon = new Pokemon[] {
 				new Torchic(1),
 				new Pikachu(2, "Johney Torch"),
-				new Torchic(5, "Ma Lighter"),
+				new Combusken(5),
 				new Pikachu(10, "Ma Lightning"),
-				new Combusken(20, "Ma Fire"),
+				new Blaziken(20),
 				new Pikachu(50)
 		};
 	}

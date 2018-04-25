@@ -16,8 +16,8 @@ import moves.Psychic.Agility;
 public class Pikachu extends Pokemon{
 	static int[] baseStats = new int[]{35, 55, 30, 50, 50, 90};
 	static Move[] learnSet = new Move[]{
-			new ThunderShock(1),
-			new Growl(1),
+			new ThunderShock(0),
+			new Growl(0),
 			new TailWhip(6),
 			new ThunderWave(8),
 			new QuickAttack(11),

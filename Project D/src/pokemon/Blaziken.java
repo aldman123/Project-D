@@ -4,8 +4,9 @@ import misc.Type;
 import moves.*;
 import moves.Fighting.BulkUp;
 import moves.Fighting.DoubleKick;
-import moves.Fighting.SkyUppercut;
+import moves.Fire.BlazeKick;
 import moves.Fire.Ember;
+import moves.Fire.FirePunch;
 import moves.Flying.MirrorMove;
 import moves.Flying.Peck;
 import moves.Ground.SandAttack;
@@ -15,12 +16,13 @@ import moves.Normal.QuickAttack;
 import moves.Normal.Scratch;
 import moves.Normal.Slash;
 
-public class Combusken extends Pokemon {
+public class Blaziken extends Pokemon {
 	
-	static int[] baseStatList = new int[]{60, 85, 60, 85, 60, 55};
+	static int[] baseStatList = new int[]{80, 120, 70, 110, 70, 80};
 	static Move[] moveLearnset = new Move[] {
-			new Growl(0),
+			new FirePunch(0),
 			new Scratch(0),
+			new Growl(0),
 			new FocusEnergy(7),
 			new Ember(13),
 			new DoubleKick(16),
@@ -28,21 +30,21 @@ public class Combusken extends Pokemon {
 			new SandAttack(21),
 			new BulkUp(28),
 			new QuickAttack(32),
-			new Slash(39),
-			new MirrorMove(43),
-			new SkyUppercut(50)
+			new BlazeKick(36),
+			new Slash(42),
+			new MirrorMove(49)
 			};
 	
-	public Combusken(int level) {
+	public Blaziken(int level) {
 		super(baseStatList, level, Type.FIRE, Type.FIGHT, moveLearnset, "COMBUSKEN");
 	}
 	
-	public Combusken(int level, String name) {
+	public Blaziken(int level, String name) {
 		super(baseStatList, level, Type.FIRE, Type.FIGHT, moveLearnset, name);
 	}
 	
-	public Combusken(Pokemon torchic) {
-		super(baseStatList, torchic.getLevel(), Type.FIRE, Type.FIGHT, moveLearnset, torchic.getName());
+	public Blaziken(Pokemon combusken) {
+		super(baseStatList, combusken.getLevel(), Type.FIRE, Type.FIGHT, moveLearnset, combusken.getName());
 	}
 
 }

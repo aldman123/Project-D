@@ -15,8 +15,8 @@ import moves.Normal.Slash;
 public class Torchic extends Pokemon {
 	
 	static Move[] moveLearnset = new Move[] {
-			new Growl(1),
-			new Scratch(1),
+			new Growl(0),
+			new Scratch(0),
 			new Ember(10),
 			new Peck(16),
 			new SandAttack(19),

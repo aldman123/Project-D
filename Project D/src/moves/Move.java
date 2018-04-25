@@ -12,6 +12,7 @@ public abstract class Move {
 	private final Type type;
 	private final boolean specialAttack;
 	private int pp, maxPP;
+	private boolean highCriticalHit;
 	private Random generator = new Random();
 	
 	
@@ -34,6 +35,7 @@ public abstract class Move {
 		this.maxPP = pp;
 		this.pp = pp;
 		this.specialAttack = specialAttack;
+		this.highCriticalHit = false;
 	}
 	
 	/**
@@ -42,6 +44,13 @@ public abstract class Move {
 	 * @param foe:	Opponent Pokemon
 	 */
 	public String start(Pokemon self, Pokemon foe) {
+		
+		if (self.isKnockedOut() || foe.isKnockedOut()) {
+			return "";
+		} else if (!(this instanceof Move_MultyStrike)) {
+			pp--;
+		}
+		
 		if (self.getStatus() == StatusEffect.SLEEP) {
 			return self.toString() + " is still Sleeping!";
 		} else if (self.getStatus() == StatusEffect.FREEZE) {
@@ -51,13 +60,13 @@ public abstract class Move {
 				return self.toString() + " is paralyzed and unable to move!";
 			}
 		}
-		
-		if (power > 0) {
-			self.doDamageTo(foe, power, type, specialAttack);
-			return self.getName() + " did damage to " + foe.getName() + "!";
-		} else {
-			return self.getName() + " didn't hurt " + foe.getName() + " all that much.";
+
+		if (power == 0) {
+			return self.getName() + " used " + this.name + "!";
 		}
+		foe.doDamageFrom(self, this);
+		return self.getName() + " did damage to " + foe.getName() + "!";
+
 	}
 	
 	public int getPP() {
@@ -96,4 +105,15 @@ public abstract class Move {
 		return learnLevel;
 	}
 	
+	public void setHighCriticalHit(boolean highCriticalHit) {
+		this.highCriticalHit = highCriticalHit;
+	}
+	
+	public boolean getHighCriticalHit() {
+		return highCriticalHit;
+	}
+
+	public boolean getSpecialAttack() {
+		return specialAttack;
+	}
 }

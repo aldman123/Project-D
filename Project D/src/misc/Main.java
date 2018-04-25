@@ -2,32 +2,42 @@ package misc;
 
 import java.util.Random;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 import moves.Move;
+import moves.Move_fast;
+import moves.Flying.MirrorMove;
 import pokemon.*;
 
 public class Main {
-
+	
+	private final long WAIT_TIME = 1600;
+	
 	private Pokemon user, foe;
 	private Pokemon[] yourPokemon, foesPokemon;
-	private boolean gameOver;
 	private int pokemonActiveFoe, pokemonActiveUser;
+	private boolean userGoesFirst;
 
 
 	Scanner scanner = new Scanner(System.in);
-	Move selectedMoveUser, selectedMoveFoe;
+	private Move selectedMoveUser, selectedMoveFoe, usersLastMove;
 	public static void main(String[] args) {
 
 		Main battle = new Main();
-		battle.startMatch();
+		try {
+			battle.startMatch();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	private Main() {
 		yourPokemon = new Pokemon[] {
 				new Pikachu(1),
+				new Pikachu(10, "Thor"),
 				new Torchic(2, "Burny"),
 				new Pikachu(5, "Lightning"),
-				new Pikachu(10, "Thor"),
 				new Combusken(20, "Flame On"),
 				new Combusken(50, "Get Burned")
 		};
@@ -41,26 +51,25 @@ public class Main {
 		};
 	}
 
-	private void startMatch() {
+	private void startMatch() throws InterruptedException {
 		//Input Pokemons
 		user = yourPokemon[0];
 		foe = foesPokemon[0];
-
+		calculateActivePokemon();
 
 		//Start game loop
-		while (!gameOver) {
-			pokemonActiveUser = 0;
-			pokemonActiveFoe = 0;
-			for (Pokemon pokemon : yourPokemon) {
-				if (pokemon.isKnockedOut() == false) {
-					pokemonActiveUser++;
-				}
+		while (pokemonActiveUser > 0 && pokemonActiveFoe > 0) {
+			
+			if (user.isKnockedOut()) {
+				System.out.println(user.getName() + " was sent out!");
+				user = yourPokemon[6 - pokemonActiveUser];
+				System.out.println("Go " + user.getName() + "!");
 			}
 			
-			for (Pokemon pokemon : foesPokemon) {
-				if (pokemon.isKnockedOut() == false) {
-					pokemonActiveFoe++;
-				}
+			if (foe.isKnockedOut()) {
+				System.out.println(foe.getName() + " was knocked out!");
+				foe = foesPokemon[6 - pokemonActiveFoe];
+				System.out.println("Go " + foe.getName() + "!");
 			}
 			
 			
@@ -71,13 +80,13 @@ public class Main {
 				//Display Foe
 				System.out.println("FOE Pokemon");
 				System.out.println(foe.toString() + " " + foe.getStatus().toString());
-				System.out.println("[HP:" + (foe.getHP() + "/" + foe.getMaxHP()) + "]");
+				System.out.println("[HP:" + foe.getHP() +"/"+ foe.getMaxHP() + "]");
 				System.out.println("");
 
 				//Display User Pokemon
 				System.out.println("YOUR Pokemon");
 				System.out.println(user.toString() + " " + foe.getStatus().toString());
-				System.out.println("[HP:" + (user.getHP() + "/" + user.getMaxHP()) + "]");
+				System.out.println("[HP:" + (user.getHP() +"/"+ user.getMaxHP()) + "]");
 				
 				//Display active Pokemon's moves
 				String moveList = "[";
@@ -102,7 +111,7 @@ public class Main {
 				if (input.equals("1") || input.equals("2") || input.equals("3") || input.equals("4")) {
 					selectedMoveUser = user.getMove(Integer.parseInt(input) - 1);
 				} else {
-					for (int i = 0; i < 4; i++) {
+					for (int i = 0; i < user.getNumberOfMoves(); i++) {
 						if (user.getMove(i).toString().trim().toUpperCase() == input) {
 							selectedMoveUser = user.getMove(i);
 						}
@@ -114,73 +123,88 @@ public class Main {
 				}
 			}
 			
+			
+			//Is someone using Mirror Move?
+			if (selectedMoveUser instanceof MirrorMove) {
+				if (selectedMoveFoe == null) {
+					System.out.println(user.getName() + " failed to use " + selectedMoveUser.getName());
+				} else {
+					selectedMoveUser = selectedMoveFoe;
+					System.out.println(user.getName() + " copied " + foe.getName() + "'s last move!");
+				}
+			}
+			if (selectedMoveFoe instanceof MirrorMove) {
+				if (usersLastMove == null) {
+					System.out.println(foe.getName() + " failed to use " + selectedMoveFoe.getName());
+				} else {
+					selectedMoveFoe = usersLastMove;
+					System.out.println(foe.getName() + " copied " + user.getName() + "'s last move!");
+				}
+			}
 
+			
 			//Select move for foe Pokemon
 			Random generator = new Random();
-			int foesMoves = 0;
-			for (int i = 0; i < 4; i++) {
-				if (foe.getMove(i) != null) {
-					foesMoves++;
-				}
-			}
-			selectedMoveFoe = foe.getMove(generator.nextInt(foesMoves));
+			selectedMoveFoe = foe.getMove(generator.nextInt(foe.getNumberOfMoves()));
+			
 			
 
-			//Run turn
-			if (user.getSpeed() >= foe.getSpeed()) {
-				if (user.isKnockedOut() == false) {
-					System.out.println(user.getName() + " used " + selectedMoveUser.getName() + "!");
-					System.out.println(selectedMoveUser.start(user, foe));
-				}
-				if (foe.isKnockedOut() == false) {
-					System.out.println(foe.getName() + " used " + selectedMoveFoe.getName() + "!");
-					System.out.println(selectedMoveFoe.start(foe, user));
-				}
+			//Who goes first?
+			if (selectedMoveUser instanceof Move_fast && !(selectedMoveFoe instanceof Move_fast)) {
+				userGoesFirst = true;
+			} else if (selectedMoveFoe instanceof Move_fast && !(selectedMoveUser instanceof Move_fast)) {
+				userGoesFirst = false;
 			} else {
-				if (foe.isKnockedOut() == false) {
-					System.out.println(foe.getName() + " used " + selectedMoveFoe.getName() + "!");
-					System.out.println(selectedMoveFoe.start(foe, user));
-				}
-				if (user.isKnockedOut() == false) {
-					System.out.println(user.getName() + " used " + selectedMoveUser.getName() + "!");
-					System.out.println(selectedMoveUser.start(user, foe));
-				}
-			}
-
-			
-			//Is anyone knocked out?
-			if (user.isKnockedOut()) {
-				System.out.println(user.getName() + " fainted!");
-				pokemonActiveUser--;
-				user = yourPokemon[6 - pokemonActiveUser];
-				user.resetStats();
-				System.out.println(user.getName() + " was sent out!");
+				userGoesFirst = user.getSpeed() >= foe.getSpeed();
 			}
 			
-			if (foe.isKnockedOut()) {
-				System.out.println(foe.getName() + " fainted!");
-				pokemonActiveFoe--;
-				foe = foesPokemon[6 - pokemonActiveFoe];
-				foe.resetStats();
-				System.out.println(foe.getName() + " was sent out!");
+			
+			//Run Turn
+			if (userGoesFirst) {
+				System.out.println(selectedMoveUser.start(user, foe));
+				TimeUnit.MILLISECONDS.sleep(WAIT_TIME);
+				System.out.println(selectedMoveFoe.start(foe, user));
+				TimeUnit.MILLISECONDS.sleep(WAIT_TIME);
+			} else {
+				System.out.println(selectedMoveFoe.start(foe, user));
+				TimeUnit.MILLISECONDS.sleep(WAIT_TIME);
+				System.out.println(selectedMoveUser.start(user, foe));
+				TimeUnit.MILLISECONDS.sleep(WAIT_TIME);
 			}
 			
+			
+			calculateActivePokemon();
 			System.out.println("");
-			
-			if (pokemonActiveFoe < 1) {
-				gameOver = true;
-				//Game won!
+			System.out.println("----");
+			System.out.println("");
+		}
+		
+		//Output results
+		if (pokemonActiveFoe < 1) {
+			//Game won!
 
-				System.out.println("YOU WIN!");
-			} else if (pokemonActiveUser < 1) {
-				gameOver = true;
-				//Game lost
-				System.out.println("All your Pokemon were knocked out...");
-				System.out.println("You Lose");
+			System.out.println("YOU WIN!");
+		} else if (pokemonActiveUser < 1) {
+			//Game lost
+			System.out.println("All your Pokemon were knocked out...");
+			System.out.println("You Lose");
+		}
+	}
+	
+	private void calculateActivePokemon() {
+		pokemonActiveUser = 0;
+		pokemonActiveFoe = 0;
+		for (Pokemon pokemon : yourPokemon) {
+			if (pokemon.isKnockedOut() == false) {
+				pokemonActiveUser++;
 			}
 		}
-
-		//Output results
+		
+		for (Pokemon pokemon : foesPokemon) {
+			if (pokemon.isKnockedOut() == false) {
+				pokemonActiveFoe++;
+			}
+		}
 	}
 
 }

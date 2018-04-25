@@ -123,7 +123,15 @@ public abstract class Pokemon {
 		
 		//Get type effectiveness
 		if (typeA != typeB) {
-			modifier *= type.against(typeB);
+			modifier *= typeB.against(type);
+		}
+		
+		if (modifier < 1) {
+			System.out.println("The move wasn't very effective.");
+		} else if (modifier > 1 && modifier <= 2) {
+			System.out.println("The move was quite effective!");
+		} else if (modifier < 4) {
+			System.out.println("The move was super effective!");
 		}
 		
 		//Critical Hit
@@ -135,10 +143,11 @@ public abstract class Pokemon {
 		
 		if (opponent.getSpeed() * criticalHitMod >= generator.nextInt(256)) {
 			modifier *= 2;
+			System.out.println("Critical Hit!");
 		}
 		
 		//Get STAB bonus
-		modifier *= opponent.getSTAB(type);
+		modifier *= this.getSTAB(type);
 		
 		//Calculate damage based on modifier and stats
 		int damage;
@@ -148,7 +157,7 @@ public abstract class Pokemon {
 			damage = (int) Math.round(((2.0*this.level/5.0 + 2.0)/50.0 * power * opponent.getAtk() / this.getDef() + 2.0) * modifier);
 		}
 		//Apply damage
-		this.reduceHP(damage);
+		opponent.reduceHP(damage);
 		return;
 	}
 
@@ -304,8 +313,7 @@ public abstract class Pokemon {
 		} else {
 			modifier = 2 / (modifier * -1 + 2);
 		}
-		
-		
+	
 		if (statID < 6) {
 			this.statList[statID] *= modifier;
 		} else if (statID == 6) {

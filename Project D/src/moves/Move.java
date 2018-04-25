@@ -60,11 +60,13 @@ public abstract class Move {
 				return self.toString() + " is paralyzed and unable to move!";
 			}
 		}
+
 		if (power == 0) {
 			return self.getName() + " used " + this.name + "!";
 		}
 		foe.doDamageFrom(self, this);
 		return self.getName() + " did damage to " + foe.getName() + "!";
+
 	}
 	
 	public int getPP() {

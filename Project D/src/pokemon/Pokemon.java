@@ -1,6 +1,7 @@
 package pokemon;
 
 import java.util.Random;
+import java.util.Scanner;
 
 import misc.*;
 import moves.Move;
@@ -66,20 +67,17 @@ public abstract class Pokemon {
 		
 	}
 	
-	public boolean levelUp() {
+	private void levelUp() {
 		if (this.level < 50) {
 			this.level++;
 			
 			for (Move newMove : this.moveLearnset) {
 				if (newMove.getLearnLevel() == this.level) {
-					//TODO Decide if this pokemon should learn the new move
+					learnMove(newMove);
 				}
 			}
 			
 			this.resetStats();
-			return true;
-		} else {
-			return false;
 		}
 		
 	}
@@ -95,6 +93,39 @@ public abstract class Pokemon {
 		this.accuracy = 1;
 		this.evasion = 1;
 		this.criticalHit = 1;
+		
+	}
+	
+	protected void learnMove(Move move) {
+		for (int i = 0; i < 4; i++) {
+			if (moveList[i] == null) {
+				moveList[i] = move;
+				System.out.println(this.name.toUpperCase() + " leaned " + move.getName().toUpperCase() + "!");
+				return;
+			}
+		}
+		
+		System.out.println(this.getName() + " has already learned four moves!");
+		Scanner input = new Scanner(System.in);
+		
+		boolean invalidInput = true;
+		int selectedMoveToDelete = -1;
+		while (invalidInput) {
+			System.out.println(moveList);
+			System.out.println("Please Select a Move to replace");
+			System.out.println("To stop learning " + move.getName().toUpperCase() + ", input: 0");
+			if (input.hasNextInt()) {
+				selectedMoveToDelete = input.nextInt();
+				for (int i = 0; i < 5; i++) {
+					if (i == selectedMoveToDelete) {
+						invalidInput = false;
+					}
+				}
+			}
+		}
+		input.close();
+		System.out.println(this.getName() + " forgot " + this.moveList[selectedMoveToDelete - 1].getName() + ", and learned " + move.getName() + "!");
+		this.moveList[selectedMoveToDelete - 1] = move;
 		
 		
 	}

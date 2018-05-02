@@ -7,13 +7,13 @@ import misc.*;
 import moves.Move;
 
 public abstract class Pokemon {
-	final private double STAB_MODIFIER = 1.5;
-	
-	final private Type typeA, typeB;
+	private final double STAB_MODIFIER = 1.5;
+	private final Type typeA, typeB;
+	private final Experience experienceType;
 	private boolean knockedOut = false;
 	private Move[] moveList, moveLearnset;
 	private int[] ivList, baseStatList, statList;
-	private int level, accuracy, evasion;
+	private int level, accuracy, evasion, experiencePoints;
 	private double criticalHit;
 	private String name;
 	private StatusEffect status = StatusEffect.NOTHING;
@@ -25,10 +25,11 @@ public abstract class Pokemon {
 	 * @param typeA: The main or first type of the Pokemon
 	 * @param typeB: The optional secondary type of Pokemon
 	 * @param moveLearnset: What moves will this Pokemon learn?
+	 * @param experienceType: How quickly does this Pokemon level up?
 	 */
-	public Pokemon(int[] baseStatList, int level, Type typeA, Type typeB, Move[] moveLearnset, String name) {
+	public Pokemon(int[] baseStatList, int level, Type typeA, Type typeB, Move[] moveLearnset, String name, Experience experienceType) {
 		this.name = name;
-		
+		this.experienceType = experienceType;
 		if (typeB == null) {
 			typeB = typeA;
 		}
@@ -65,6 +66,13 @@ public abstract class Pokemon {
 		
 		this.resetStats();
 		
+	}
+	
+	public void addExperience(int experiencePoints) {
+		this.experiencePoints += experiencePoints;
+		if (this.experiencePoints > this.experienceType.getExperienceToLevelUp(this.level+1)) {
+			this.levelUp();
+		}
 	}
 	
 	private void levelUp() {

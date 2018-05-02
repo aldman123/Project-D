@@ -1,5 +1,6 @@
 package pokemon;
 
+import misc.Experience;
 import misc.Type;
 import moves.*;
 import moves.Electric.Thunder;
@@ -29,11 +30,11 @@ public class Pikachu extends Pokemon{
 			};
 	
 	public Pikachu(int level) {
-		super(baseStats, level, Type.ELECTRIC, null, learnSet, "PIKACHU");
+		super(baseStats, level, Type.ELECTRIC, null, learnSet, "PIKACHU", Experience.MEDIUM_FAST);
 	}
 	
 	public Pikachu(int level, String name) {
-		super(baseStats, level, Type.ELECTRIC, null, learnSet, name);
+		super(baseStats, level, Type.ELECTRIC, null, learnSet, name, Experience.MEDIUM_FAST);
 	}
 	
 }

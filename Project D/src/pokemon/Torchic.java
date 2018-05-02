@@ -1,5 +1,6 @@
 package pokemon;
 
+import misc.Experience;
 import misc.Type;
 import moves.Move;
 import moves.Fire.Ember;
@@ -28,11 +29,11 @@ public class Torchic extends Pokemon {
 	};
 
 	public Torchic(int level) {
-		super(new int[] {45, 60, 40, 70, 50, 45}, level, Type.FIRE, Type.NORMAL, moveLearnset, "TORCHIC");
+		super(new int[] {45, 60, 40, 70, 50, 45}, level, Type.FIRE, Type.NORMAL, moveLearnset, "TORCHIC", Experience.MEDIUM_SLOW);
 	}
 	
 	public Torchic(int level, String name) {
-		super(new int[] {45, 60, 40, 70, 50, 45}, level, Type.FIRE, Type.NORMAL, moveLearnset, name);
+		super(new int[] {45, 60, 40, 70, 50, 45}, level, Type.FIRE, Type.NORMAL, moveLearnset, name, Experience.MEDIUM_SLOW);
 	}
 
 }

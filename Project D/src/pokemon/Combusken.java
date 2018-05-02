@@ -1,5 +1,6 @@
 package pokemon;
 
+import misc.Experience;
 import misc.Type;
 import moves.*;
 import moves.Fighting.BulkUp;
@@ -34,15 +35,15 @@ public class Combusken extends Pokemon {
 			};
 	
 	public Combusken(int level) {
-		super(baseStatList, level, Type.FIRE, Type.FIGHT, moveLearnset, "COMBUSKEN");
+		super(baseStatList, level, Type.FIRE, Type.FIGHT, moveLearnset, "COMBUSKEN", Experience.MEDIUM_SLOW);
 	}
 	
 	public Combusken(int level, String name) {
-		super(baseStatList, level, Type.FIRE, Type.FIGHT, moveLearnset, name);
+		super(baseStatList, level, Type.FIRE, Type.FIGHT, moveLearnset, name, Experience.MEDIUM_SLOW);
 	}
 	
 	public Combusken(Pokemon torchic) {
-		super(baseStatList, torchic.getLevel(), Type.FIRE, Type.FIGHT, moveLearnset, torchic.getName());
+		super(baseStatList, torchic.getLevel(), Type.FIRE, Type.FIGHT, moveLearnset, torchic.getName(), Experience.MEDIUM_SLOW);
 	}
 
 }

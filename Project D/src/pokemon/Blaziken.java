@@ -1,5 +1,6 @@
 package pokemon;
 
+import misc.Experience;
 import misc.Type;
 import moves.*;
 import moves.Fighting.BulkUp;
@@ -36,15 +37,15 @@ public class Blaziken extends Pokemon {
 			};
 	
 	public Blaziken(int level) {
-		super(baseStatList, level, Type.FIRE, Type.FIGHT, moveLearnset, "COMBUSKEN");
+		super(baseStatList, level, Type.FIRE, Type.FIGHT, moveLearnset, "COMBUSKEN", Experience.MEDIUM_SLOW);
 	}
 	
 	public Blaziken(int level, String name) {
-		super(baseStatList, level, Type.FIRE, Type.FIGHT, moveLearnset, name);
+		super(baseStatList, level, Type.FIRE, Type.FIGHT, moveLearnset, name, Experience.MEDIUM_SLOW);
 	}
 	
 	public Blaziken(Pokemon combusken) {
-		super(baseStatList, combusken.getLevel(), Type.FIRE, Type.FIGHT, moveLearnset, combusken.getName());
+		super(baseStatList, combusken.getLevel(), Type.FIRE, Type.FIGHT, moveLearnset, combusken.getName(),Experience.MEDIUM_SLOW);
 	}
 
 }

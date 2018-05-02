@@ -1,5 +1,6 @@
 package pokemon;
 
+import misc.Experience;
 import misc.Type;
 import moves.*;
 import moves.Electric.ThunderBolt;
@@ -18,15 +19,15 @@ public class Raichu extends Pokemon {
 			};
 	
 	public Raichu(int level) {
-		super(baseStatList, level, Type.ELECTRIC, null, moveLearnset, "Raichu");
+		super(baseStatList, level, Type.ELECTRIC, null, moveLearnset, "Raichu", Experience.MEDIUM_FAST);
 	}
 	
 	public Raichu(int level, String name) {
-		super(baseStatList, level, Type.ELECTRIC, null, moveLearnset, name);
+		super(baseStatList, level, Type.ELECTRIC, null, moveLearnset, name, Experience.MEDIUM_FAST);
 	}
 	
 	public Raichu(Pokemon lastEvolution) {
-		super(baseStatList, lastEvolution.getLevel(), Type.ELECTRIC, null, moveLearnset, lastEvolution.getName());
+		super(baseStatList, lastEvolution.getLevel(), Type.ELECTRIC, null, moveLearnset, lastEvolution.getName(), Experience.MEDIUM_FAST);
 	}
 
 }

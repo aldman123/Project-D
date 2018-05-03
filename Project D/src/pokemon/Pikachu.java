@@ -14,7 +14,8 @@ import moves.Normal.Slam;
 import moves.Normal.TailWhip;
 import moves.Psychic.Agility;
 
-public class Pikachu extends Pokemon{
+public class Pikachu extends EvolveablePokemon{
+	static int evolveLevel = 42;
 	static int[] baseStats = new int[]{35, 55, 30, 50, 50, 90};
 	static Move[] learnSet = new Move[]{
 			new ThunderShock(0),
@@ -30,11 +31,11 @@ public class Pikachu extends Pokemon{
 			};
 	
 	public Pikachu(int level) {
-		super(baseStats, level, Type.ELECTRIC, null, learnSet, "PIKACHU", Experience.MEDIUM_FAST);
+		super(baseStats, level, Type.ELECTRIC, null, learnSet, "PIKACHU", Experience.MEDIUM_FAST, Raichu.class, evolveLevel);
 	}
 	
 	public Pikachu(int level, String name) {
-		super(baseStats, level, Type.ELECTRIC, null, learnSet, name, Experience.MEDIUM_FAST);
+		super(baseStats, level, Type.ELECTRIC, null, learnSet, name, Experience.MEDIUM_FAST, Raichu.class, evolveLevel);
 	}
 	
 }

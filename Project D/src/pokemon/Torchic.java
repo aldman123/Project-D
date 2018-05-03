@@ -15,6 +15,11 @@ import moves.Normal.Slash;
 
 public class Torchic extends Pokemon {
 	
+	static final Type typeA = Type.FIRE;
+	static final Type typeB = null;
+	static final String name = "Torchic";
+	static final Experience experience = Experience.MEDIUM_SLOW;
+	static final int[] statList = new int[] {45, 60, 40, 70, 50, 45};
 	static Move[] moveLearnset = new Move[] {
 			new Growl(0),
 			new Scratch(0),
@@ -29,11 +34,11 @@ public class Torchic extends Pokemon {
 	};
 
 	public Torchic(int level) {
-		super(new int[] {45, 60, 40, 70, 50, 45}, level, Type.FIRE, Type.NORMAL, moveLearnset, "TORCHIC", Experience.MEDIUM_SLOW);
+		super(statList, level, typeA, typeB, moveLearnset, name, experience);
 	}
 	
 	public Torchic(int level, String name) {
-		super(new int[] {45, 60, 40, 70, 50, 45}, level, Type.FIRE, Type.NORMAL, moveLearnset, name, Experience.MEDIUM_SLOW);
+		super(statList, level, typeA, typeB, moveLearnset, name, experience);
 	}
 
 }

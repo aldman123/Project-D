@@ -16,9 +16,15 @@ import moves.Normal.QuickAttack;
 import moves.Normal.Scratch;
 import moves.Normal.Slash;
 
-public class Combusken extends Pokemon {
+public class Combusken extends EvolveablePokemon{
 	
 	static int[] baseStatList = new int[]{60, 85, 60, 85, 60, 55};
+	static final Type typeA = Type.FIRE;
+	static final Type typeB = Type.FIGHT;
+	static final String name = "Combusken";
+	static final Experience experience = Experience.MEDIUM_SLOW;
+	static final int evolutionLevel = 0;
+	
 	static Move[] moveLearnset = new Move[] {
 			new Growl(0),
 			new Scratch(0),
@@ -35,15 +41,15 @@ public class Combusken extends Pokemon {
 			};
 	
 	public Combusken(int level) {
-		super(baseStatList, level, Type.FIRE, Type.FIGHT, moveLearnset, "COMBUSKEN", Experience.MEDIUM_SLOW);
+		super(baseStatList, level, typeA, typeB, moveLearnset, name, experience, Blaziken.class, evolutionLevel);
 	}
 	
 	public Combusken(int level, String name) {
-		super(baseStatList, level, Type.FIRE, Type.FIGHT, moveLearnset, name, Experience.MEDIUM_SLOW);
+		super(baseStatList, level, typeA, typeB, moveLearnset, name, experience, Blaziken.class, evolutionLevel);
 	}
 	
 	public Combusken(Pokemon torchic) {
-		super(baseStatList, torchic.getLevel(), Type.FIRE, Type.FIGHT, moveLearnset, torchic.getName(), Experience.MEDIUM_SLOW);
+		super(baseStatList, torchic.getLevel(), typeA, typeB, moveLearnset, torchic.getName(), experience, Blaziken.class, evolutionLevel);
 	}
 
 }

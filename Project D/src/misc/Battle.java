@@ -27,7 +27,7 @@ public class Battle {
 				new Pikachu(1),
 				new Pikachu(10, "Thor"),
 				new Torchic(2, "Burny"),
-				new Pikachu(5, "Lightning"),
+				new Raichu(5, "Raichu"),
 				new Combusken(20),
 				new Blaziken(50)
 		};
@@ -35,7 +35,7 @@ public class Battle {
 				new Torchic(1),
 				new Pikachu(2, "Johney Torch"),
 				new Combusken(5),
-				new Pikachu(10, "Ma Lightning"),
+				new Raichu(10, "Raichu"),
 				new Blaziken(20),
 				new Pikachu(50)
 		};
@@ -167,7 +167,14 @@ public class Battle {
 				TimeUnit.MILLISECONDS.sleep(WAIT_TIME);
 			}
 			
-			
+			//Distribute experience
+			if (foe.isKnockedOut() && user.isKnockedOut() == false) {
+				System.out.println("Foe's Pokemon " + foe.getName() + " was knocked out!");
+				user = user.addExperience((int) (foe.getBaseExperienceYield() * 1.5 * foe.getLevel()));
+			} else if (user.isKnockedOut() && foe.isKnockedOut() == false) {
+				System.out.println("Your Pokemon " + user.getName() + " was knocked out!");
+				 foe = foe.addExperience((int) (user.getBaseExperienceYield() * 1.5 * user.getLevel()));
+			}
 			calculateActivePokemon();
 			System.out.println("");
 			System.out.println("----");

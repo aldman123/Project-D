@@ -31,4 +31,8 @@ public class Move_MultyStrike extends Move {
 		
 	}
 
+	public Move clone() {
+		return new Move_MultyStrike(this.getPower(), this.getPP(), this.getAccuracy(), this.getName(), this.getType(), this.getLearnLevel(), this.getSpecialAttack());
+	}
+
 }

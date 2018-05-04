@@ -6,14 +6,14 @@ import misc.StatusEffect;
 import misc.Type;
 import pokemon.Pokemon;
 
-public abstract class Move {
+public class Move {
 	private final int power, accuracy, learnLevel;
 	private final String name;
 	private final Type type;
 	private final boolean specialAttack;
 	private int pp, maxPP;
-	private boolean highCriticalHit;
-	private Random generator = new Random();
+	private boolean highCriticalHit, isFast;
+	private static Random generator = new Random();
 	
 	
 	
@@ -36,6 +36,7 @@ public abstract class Move {
 		this.pp = pp;
 		this.specialAttack = specialAttack;
 		this.highCriticalHit = false;
+		this.isFast = false;
 	}
 	
 	/**
@@ -68,6 +69,10 @@ public abstract class Move {
 		return self.getName() + " did damage to " + foe.getName() + "!";
 
 	}
+	
+	public Move clone() {
+		return new Move(power, pp, accuracy, name, type, learnLevel, specialAttack);
+	};
 	
 	public int getPP() {
 		return pp;
@@ -115,5 +120,13 @@ public abstract class Move {
 
 	public boolean getSpecialAttack() {
 		return specialAttack;
+	}
+	
+	protected void setFast(boolean isFast) {
+		this.isFast = isFast;
+	}
+	
+	public boolean isFast() {
+		return this.isFast;
 	}
 }

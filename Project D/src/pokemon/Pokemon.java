@@ -49,14 +49,14 @@ public abstract class Pokemon {
 		}
 
 		moveList = new Move[4];
-		this.moveLearnset = moveLearnset.clone();
+		this.moveLearnset = moveLearnset;
 
 		//Learn's it's 4 most recent moves based on level
 		int moveSlot = 0;
 		for (int i = moveLearnset.length - 1; i >= 0 && moveSlot < 4; i--) {
 			if (moveList[moveSlot] == null) {
 				if (moveLearnset[i].getLearnLevel() <= this.level) {
-					moveList[moveSlot] = moveLearnset[i];
+					moveList[moveSlot] = moveLearnset[i].clone();
 					moveSlot++;
 				}
 			} else {
@@ -261,6 +261,40 @@ public abstract class Pokemon {
 	public Move getMove(int index) {
 		return moveList[index];
 	}
+	
+	public String getMoveList() {
+		String moveList = "[";
+		for (int i = 0; i < 4; i++) {
+			if (this.getMove(i) != null) {
+				if (i > 0) {
+					moveList += ", ";
+				}
+				moveList += this.getMove(i).getName() + " [" + this.getMove(i).getPP() + "]";
+			} else {
+				break;
+			}
+		}
+		
+		moveList += "]";
+		
+		return moveList;
+	}
+	
+	public String getStatList() {
+		String output = "[";
+		for (int i = 0; i <= 8; i++) {
+			if (this.getStat(i) != -1) {
+				if (i > 0) {
+					output += ", ";
+				}
+				output += this.getStat(i);
+			} else {
+				break;
+			}
+		}
+		
+		return output;
+	}
 
 	public String toString() {
 		return "[" + this.getName() + ", lv:" + level + "]";
@@ -396,6 +430,25 @@ public abstract class Pokemon {
 			this.evasion *= modifier;
 		} else if (statID == 8) {
 			this.criticalHit *= modifier;
+		}
+	}
+	
+	/**
+	 * 
+	 * @param statID The number from 0-8 of the desired stat
+	 * @return The stat, or if invalid StatID, returns -1
+	 */
+	public double getStat(int statID) {
+		if (statID < 6) {
+			return this.statList[statID];
+		} else if (statID == 6) {
+			return this.accuracy;
+		} else if (statID == 7) {
+			return this.evasion;
+		} else if (statID == 8) {
+			return this.criticalHit;
+		} else {
+			return -1;
 		}
 	}
 

@@ -3,7 +3,7 @@ package moves;
 import misc.Type;
 import pokemon.Pokemon;
 
-public abstract class Move_StatChange extends Move{
+public class Move_StatChange extends Move{
 	
 	private int statToChange, statChangeModifier;
 	public int getStatToChange() {
@@ -77,5 +77,9 @@ public abstract class Move_StatChange extends Move{
 		
 		return output;
 	}
-
+	
+	public Move clone() {
+		return new Move_StatChange(this.getPower(), this.getPP(), this.getAccuracy(), this.getName(), this.getType(),
+				this.getLearnLevel(), this.getSpecialAttack(), this.getStatToChange(), this.getStatChangeModifier(), this.onSelf);
+	}
 }

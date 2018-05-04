@@ -5,7 +5,6 @@ import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 import moves.Move;
-import moves.Move_fast;
 import moves.Flying.MirrorMove;
 import pokemon.*;
 
@@ -27,7 +26,7 @@ public class Battle {
 				new Pikachu(1),
 				new Pikachu(10, "Thor"),
 				new Torchic(2, "Burny"),
-				new Raichu(5, "Raichu"),
+				new Raichu(5),
 				new Combusken(20),
 				new Blaziken(50)
 		};
@@ -35,10 +34,11 @@ public class Battle {
 				new Torchic(1),
 				new Pikachu(2, "Johney Torch"),
 				new Combusken(5),
-				new Raichu(10, "Raichu"),
+				new Raichu(10),
 				new Blaziken(20),
 				new Pikachu(50)
 		};
+		
 	}
 	
 	public Battle(Pokemon[] yourPokemon, Pokemon[] foePokemon) {
@@ -74,31 +74,17 @@ public class Battle {
 				
 				//Display Foe
 				System.out.println("FOE Pokemon");
-				System.out.println(foe.toString() + " " + foe.getStatus().toString());
-				System.out.println("[HP:" + foe.getHP() +"/"+ foe.getMaxHP() + "]");
-				System.out.println("");
+				displayPokemon(foe);
+				System.out.println(foe.getStatList());
+				
 
 				//Display User Pokemon
 				System.out.println("YOUR Pokemon");
-				System.out.println(user.toString() + " " + foe.getStatus().toString());
-				System.out.println("[HP:" + (user.getHP() +"/"+ user.getMaxHP()) + "]");
+				displayPokemon(user);
 				
 				//Display active Pokemon's moves
-				String moveList = "[";
-				for (int i = 0; i < 4; i++) {
-					if (user.getMove(i) != null) {
-						if (i > 0) {
-							moveList += ", ";
-						}
-						moveList += user.getMove(i).getName();
-					} else {
-						break;
-					}
-				}
-				
-				moveList += "]";
-				
-				System.out.println(moveList);
+				System.out.println(user.getMoveList());
+				System.out.println(user.getStatList());
 				
 				System.out.print("Select Move: ");
 				String input = scanner.next().trim().toUpperCase();
@@ -113,8 +99,18 @@ public class Battle {
 					}
 				}
 				
+				//Uses lazy evaluation
+				if (selectedMoveUser != null && selectedMoveUser.getPP() < 1) {
+					System.out.println("");
+					System.out.println("That move is out of PP!");
+					selectedMoveUser = null;
+					TimeUnit.MILLISECONDS.sleep(WAIT_TIME);
+				}
+				
 				if (selectedMoveUser == null) {
+					System.out.println("");
 					System.out.println("Please enter valid input");
+					TimeUnit.MILLISECONDS.sleep(WAIT_TIME);
 				}
 			}
 			
@@ -145,9 +141,9 @@ public class Battle {
 			
 
 			//Who goes first?
-			if (selectedMoveUser instanceof Move_fast && !(selectedMoveFoe instanceof Move_fast)) {
+			if (selectedMoveUser.isFast() && !(selectedMoveFoe.isFast())) {
 				userGoesFirst = true;
-			} else if (selectedMoveFoe instanceof Move_fast && !(selectedMoveUser instanceof Move_fast)) {
+			} else if (selectedMoveFoe.isFast() && !(selectedMoveUser.isFast())) {
 				userGoesFirst = false;
 			} else {
 				userGoesFirst = user.getSpeed() >= foe.getSpeed();
@@ -207,6 +203,13 @@ public class Battle {
 				pokemonActiveFoe++;
 			}
 		}
+	}
+	
+	
+	private void displayPokemon(Pokemon pokemon) {
+		System.out.println(pokemon.toString() + " " + pokemon.getStatus().toString());
+		System.out.println("[HP:" + pokemon.getHP() +"/"+ pokemon.getMaxHP() + "]");
+		System.out.println("");
 	}
 
 }

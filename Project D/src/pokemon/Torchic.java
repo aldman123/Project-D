@@ -13,12 +13,13 @@ import moves.Normal.QuickAttack;
 import moves.Normal.Scratch;
 import moves.Normal.Slash;
 
-public class Torchic extends Pokemon {
+public class Torchic extends EvolveablePokemon {
 	
 	static final Type typeA = Type.FIRE;
 	static final Type typeB = null;
 	static final String name = "Torchic";
 	static final Experience experience = Experience.MEDIUM_SLOW;
+	static final int evolutionLevel = 16;
 	static final int[] statList = new int[] {45, 60, 40, 70, 50, 45};
 	static Move[] moveLearnset = new Move[] {
 			new Growl(0),
@@ -34,11 +35,11 @@ public class Torchic extends Pokemon {
 	};
 
 	public Torchic(int level) {
-		super(statList, level, typeA, typeB, moveLearnset, name, experience);
+		super(statList, level, typeA, typeB, moveLearnset, name, experience, Combusken.class, evolutionLevel);
 	}
 	
 	public Torchic(int level, String name) {
-		super(statList, level, typeA, typeB, moveLearnset, name, experience);
+		super(statList, level, typeA, typeB, moveLearnset, name, experience, Combusken.class, evolutionLevel);
 	}
 
 }

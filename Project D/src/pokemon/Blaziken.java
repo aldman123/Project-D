@@ -17,7 +17,7 @@ import moves.Normal.QuickAttack;
 import moves.Normal.Scratch;
 import moves.Normal.Slash;
 
-public class Blaziken extends Pokemon{
+public class Blaziken extends Pokemon {
 	
 	static final int[] baseStatList = new int[]{80, 120, 70, 110, 70, 80};
 	static final Type typeA = Type.FIRE;

@@ -6,7 +6,7 @@ import java.util.Scanner;
 import misc.*;
 import moves.Move;
 
-public abstract class Pokemon {
+public abstract class Pokemon implements Cloneable{
 	private final double STAB_MODIFIER = 1.5;
 	private final Type typeA, typeB;
 	private final Experience experienceType;
@@ -74,6 +74,10 @@ public abstract class Pokemon {
 
 	public int getBaseExperienceYield() {
 		return this.baseExperienceYield;
+	}
+	
+	public int getExperience() {
+		return this.experiencePoints;
 	}
 
 	public Pokemon addExperience(int experiencePoints) {
@@ -174,16 +178,18 @@ public abstract class Pokemon {
 	}
 
 	public int calculateStat(int statID) {
-		if (statID == 6) {
-
-		} else if (statID == 7) {
-
+		if (statID == 6) {			//Accuracy
+			return 1;
+		} else if (statID == 7) {	//Evasion
+			return 1;
+		} else if (statID == 8) {	//Critical Hit
+			return 1;
 		}
 		return calculateStat(this.statList[statID], this.ivList[statID], this.level, statID == 0);
 	}
 
 	private int calculateStat(int base, int iv, int level, boolean isHP) {
-		int stat = 2*(base + iv) * level / 100 + level + 5;
+		int stat = (int) (2.0*(base + iv) * level / 100.0 + level + 5.0);
 		if (isHP) {
 			stat += 5;
 		}
@@ -402,13 +408,13 @@ public abstract class Pokemon {
 
 
 	public int getMaxHP() {
-		return this.calculateStat(0);
+		return calculateStat(0);
 	}
 
 	/**
 	 * Multiples the stat by the modifier
 	 * @param statID
-	 * Stats in order: HP, Atk, Def, SpAtk, SpDef, Speed, Accuracy, Evasion
+	 * Stats in order: HP, Atk, Def, SpAtk, SpDef, Speed, Accuracy, Evasion, Critical Hit
 	 * HP = 0, Evasion = 7
 	 */
 	public void modifyStat(int statID, double modifier) {

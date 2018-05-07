@@ -23,7 +23,7 @@ public class Combusken extends EvolveablePokemon{
 	static final Type typeB = Type.FIGHT;
 	static final String name = "Combusken";
 	static final Experience experience = Experience.MEDIUM_SLOW;
-	static final int evolutionLevel = 0;
+	static final int evolutionLevel = 36;
 	
 	static Move[] moveLearnset = new Move[] {
 			new Growl(0),

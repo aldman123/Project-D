@@ -22,20 +22,20 @@ public class Battle {
 	private Move selectedMoveUser, selectedMoveFoe, usersLastMove;
 	
 	public Battle() {
-		yourPokemon = new Pokemon[] {
-				new Pikachu(1),
+		foesPokemon = new Pokemon[] {
+				new Pikachu(15),
 				new Pikachu(10, "Thor"),
 				new Torchic(2, "Burny"),
 				new Raichu(5),
 				new Combusken(20),
 				new Blaziken(50)
 		};
-		foesPokemon = new Pokemon[] {
-				new Torchic(1),
+		yourPokemon = new Pokemon[] {
+				new Torchic(15),
 				new Pikachu(2, "Johney Torch"),
-				new Combusken(5),
-				new Raichu(10),
-				new Blaziken(20),
+				new Combusken(18),
+				new Raichu(27),
+				new Blaziken(29),
 				new Pikachu(50)
 		};
 		
@@ -59,12 +59,14 @@ public class Battle {
 				System.out.println(user.getName() + " was sent out!");
 				user = yourPokemon[6 - pokemonActiveUser];
 				System.out.println("Go " + user.getName() + "!");
+				user.resetStats();
 			}
 			
 			if (foe.isKnockedOut()) {
 				System.out.println(foe.getName() + " was knocked out!");
 				foe = foesPokemon[6 - pokemonActiveFoe];
 				System.out.println("Go " + foe.getName() + "!");
+				foe.resetStats();
 			}
 			
 			
@@ -76,7 +78,7 @@ public class Battle {
 				System.out.println("FOE Pokemon");
 				displayPokemon(foe);
 				System.out.println(foe.getStatList());
-				
+				System.out.println("");
 
 				//Display User Pokemon
 				System.out.println("YOUR Pokemon");
@@ -177,6 +179,12 @@ public class Battle {
 			System.out.println("");
 		}
 		
+		//---------------------
+		if (user instanceof EvolveablePokemon) {
+			user = user.addExperience(1000);
+		}
+		//---------------------
+		
 		//Output results
 		if (pokemonActiveFoe < 1) {
 			//Game won!
@@ -208,8 +216,7 @@ public class Battle {
 	
 	private void displayPokemon(Pokemon pokemon) {
 		System.out.println(pokemon.toString() + " " + pokemon.getStatus().toString());
-		System.out.println("[HP:" + pokemon.getHP() +"/"+ pokemon.getMaxHP() + "]");
-		System.out.println("");
+		System.out.println("[HP:" + pokemon.getHP() +"/"+ pokemon.getMaxHP() + ", " + pokemon.getExperience() + "]");
 	}
 
 }

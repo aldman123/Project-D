@@ -1,12 +1,14 @@
 package pokemon;
 
+import java.lang.reflect.InvocationTargetException;
+
 import misc.Experience;
 import misc.Type;
 import moves.Move;
 
-public class EvolveablePokemon extends Pokemon {
+public abstract class EvolveablePokemon extends Pokemon {
 	private int evolveLevel;
-	private Class evolution;
+	private final Class evolution;
 	
 	public EvolveablePokemon(int[] baseStatList, int level, Type typeA, Type typeB, Move[] moveLearnset, String name,
 			Experience experienceType, Class evolution, int evolveLevel) {
@@ -23,6 +25,26 @@ public class EvolveablePokemon extends Pokemon {
 		return evolution;
 		
 	}
+	
+	protected Pokemon levelUp() {
+		EvolveablePokemon me = (EvolveablePokemon) this;
+		if (me.getEvolveLevel() <= me.getLevel() + 1) {
+			System.out.println(me.getName() + " is evolving!");
+			
+			try {
+				me = (EvolveablePokemon) me.getEvolution().getDeclaredConstructor(int.class).newInstance(me.getLevel());
+			} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
+					| InvocationTargetException | NoSuchMethodException | SecurityException e) {
+				System.out.println("Error in evolution");
+				e.printStackTrace();
+				return this;
+			}
+			
+			System.out.println("The Pokemon evolved into " + me.getName() + "!");
+		}
+		return (Pokemon) super.levelUp();
+	}
+	
 	protected void inputInheritedTraits(int level, Move[] moveLearnset, String name, int experience) {
 		this.setLevel(level);
 		for (int i = 0; i < moveLearnset.length; i++) {

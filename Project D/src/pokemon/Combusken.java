@@ -21,9 +21,10 @@ public class Combusken extends EvolveablePokemon{
 	static int[] baseStatList = new int[]{60, 85, 60, 85, 60, 55};
 	static final Type typeA = Type.FIRE;
 	static final Type typeB = Type.FIGHT;
-	static final String name = "Combusken";
+	static final String speciesName = "Combusken";
 	static final Experience experience = Experience.MEDIUM_SLOW;
 	static final int evolutionLevel = 36;
+	static final int baseExperienceYield = 142;
 	
 	static Move[] moveLearnset = new Move[] {
 			new Growl(0),
@@ -41,15 +42,17 @@ public class Combusken extends EvolveablePokemon{
 			};
 	
 	public Combusken(int level) {
-		super(baseStatList, level, typeA, typeB, moveLearnset, name, experience, Blaziken.class, evolutionLevel);
+		super(baseStatList, level, typeA, typeB, moveLearnset, speciesName, experience, Blaziken.class, evolutionLevel);
+		this.setBaseExperienceYield(baseExperienceYield);
 	}
 	
 	public Combusken(int level, String name) {
 		super(baseStatList, level, typeA, typeB, moveLearnset, name, experience, Blaziken.class, evolutionLevel);
+		this.setBaseExperienceYield(baseExperienceYield);
 	}
-	
-	public Combusken(Pokemon torchic) {
-		super(baseStatList, torchic.getLevel(), typeA, typeB, moveLearnset, torchic.getName(), experience, Blaziken.class, evolutionLevel);
+
+	public String getSpeciesName() {
+		return speciesName;
 	}
 
 }

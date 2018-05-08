@@ -17,6 +17,7 @@ public abstract class Pokemon implements Cloneable{
 	private double criticalHit;
 	private String name;
 	private StatusEffect status = StatusEffect.NOTHING;
+	
 
 	/**
 	 * 
@@ -75,7 +76,7 @@ public abstract class Pokemon implements Cloneable{
 	public int getBaseExperienceYield() {
 		return this.baseExperienceYield;
 	}
-	
+
 	public int getExperience() {
 		return this.experiencePoints;
 	}
@@ -86,7 +87,7 @@ public abstract class Pokemon implements Cloneable{
 		if (this.experiencePoints >= this.experienceType.getExperienceToLevelUp(this.level+1)) {
 			return this.levelUp();
 		}
-		
+
 		return this;
 	}
 	/**
@@ -94,27 +95,11 @@ public abstract class Pokemon implements Cloneable{
 	 * I need to do it this way. It makes me sad. -Alexander
 	 * @return A new version of the Pokemon
 	 */
-	private Pokemon levelUp() {
+	protected Pokemon levelUp() {
 		if (this.level < 50) {
 			this.level++;
-			
+
 			if (this instanceof EvolveablePokemon) {
-				EvolveablePokemon me = (EvolveablePokemon) this;
-				if (me.getEvolveLevel() <= level) {
-					try {
-						me = (EvolveablePokemon) me.getEvolution().newInstance();
-						me.inputInheritedTraits(this.level, this.moveList, this.name, this.experiencePoints);
-						return (Pokemon) me;
-					} catch (InstantiationException e) {
-						System.out.println("Error in evolution");
-						System.out.println(e.getMessage());
-						e.printStackTrace();
-					} catch (IllegalAccessException e) {
-						System.out.println("Error in evolution");
-						System.out.println(e.getMessage());
-						e.printStackTrace();
-					}
-				}
 			}
 
 			for (Move newMove : this.moveLearnset) {
@@ -177,7 +162,7 @@ public abstract class Pokemon implements Cloneable{
 
 	}
 
-	public int calculateStat(int statID) {
+	private int calculateStat(int statID) {
 		if (statID == 6) {			//Accuracy
 			return 1;
 		} else if (statID == 7) {	//Evasion
@@ -185,7 +170,7 @@ public abstract class Pokemon implements Cloneable{
 		} else if (statID == 8) {	//Critical Hit
 			return 1;
 		}
-		return calculateStat(this.statList[statID], this.ivList[statID], this.level, statID == 0);
+		return calculateStat(baseStatList[statID], ivList[statID], level, statID == 0);
 	}
 
 	private int calculateStat(int base, int iv, int level, boolean isHP) {
@@ -196,7 +181,7 @@ public abstract class Pokemon implements Cloneable{
 		return stat;
 	}
 
-	public void doDamageFrom(Pokemon opponent, Move move) {
+	public void receiveDamageFrom(Pokemon pokemonAttacking, Move move) {
 		Type type = move.getType();
 		int power = move.getPower();
 		double modifier = type.against(typeA);
@@ -221,7 +206,7 @@ public abstract class Pokemon implements Cloneable{
 			criticalHitMod *= 8;
 		}
 
-		if (opponent.getSpeed() * criticalHitMod >= generator.nextInt(256)) {
+		if (pokemonAttacking.getSpeed() * criticalHitMod >= generator.nextInt(256)) {
 			modifier *= 2;
 			System.out.println("Critical Hit!");
 		}
@@ -232,12 +217,13 @@ public abstract class Pokemon implements Cloneable{
 		//Calculate damage based on modifier and stats
 		int damage;
 		if (move.getSpecialAttack()) {
-			damage = (int) Math.round(((2.0*this.level/5.0 + 2.0)/50.0 * power * opponent.getSpAtk() / this.getSpDef() + 2.0) * modifier);
+			damage = (int) Math.round(((2.0*pokemonAttacking.level/5.0 + 2.0)/50.0 * power * pokemonAttacking.getSpAtk() / this.getSpDef() + 2.0) * modifier);
 		} else {
-			damage = (int) Math.round(((2.0*this.level/5.0 + 2.0)/50.0 * power * opponent.getAtk() / this.getDef() + 2.0) * modifier);
+			damage = (int) Math.round(((2.0*pokemonAttacking.level/5.0 + 2.0)/50.0 * power * pokemonAttacking.getAtk() / this.getDef() + 2.0) * modifier);
 		}
+
 		//Apply damage
-		opponent.reduceHP(damage);
+		this.reduceHP(damage);
 		return;
 	}
 
@@ -267,7 +253,7 @@ public abstract class Pokemon implements Cloneable{
 	public Move getMove(int index) {
 		return moveList[index];
 	}
-	
+
 	public String getMoveList() {
 		String moveList = "[";
 		for (int i = 0; i < 4; i++) {
@@ -280,12 +266,12 @@ public abstract class Pokemon implements Cloneable{
 				break;
 			}
 		}
-		
+
 		moveList += "]";
-		
+
 		return moveList;
 	}
-	
+
 	public String getStatList() {
 		String output = "[";
 		for (int i = 0; i <= 8; i++) {
@@ -298,7 +284,7 @@ public abstract class Pokemon implements Cloneable{
 				break;
 			}
 		}
-		
+
 		return output;
 	}
 
@@ -438,7 +424,7 @@ public abstract class Pokemon implements Cloneable{
 			this.criticalHit *= modifier;
 		}
 	}
-	
+
 	/**
 	 * 
 	 * @param statID The number from 0-8 of the desired stat
@@ -467,15 +453,17 @@ public abstract class Pokemon implements Cloneable{
 		}
 		return moves;
 	}
-	
+
 	protected void setExperience(int experience) {
 		this.experiencePoints = experience;
-		
+
 	}
 
 	protected void setLevel(int level) {
 		this.level = level;
-		
-	}
 
+	}
+	
+	
+	public abstract String getSpeciesName();
 }

@@ -22,8 +22,9 @@ public class Blaziken extends Pokemon {
 	static final int[] baseStatList = new int[]{80, 120, 70, 110, 70, 80};
 	static final Type typeA = Type.FIRE;
 	static final Type typeB = Type.FIGHT;
-	static final String name = "Blaziken";
+	static final String speciesName = "Blaziken";
 	static final Experience experience = Experience.MEDIUM_SLOW;
+	static final int baseExperienceYield = 209;
 	static final Move[] moveLearnset = new Move[] {
 			new FirePunch(0),
 			new Scratch(0),
@@ -41,15 +42,17 @@ public class Blaziken extends Pokemon {
 			};
 	
 	public Blaziken(int level) {
-		super(baseStatList, level, typeA, typeB, moveLearnset, name, experience);
+		super(baseStatList, level, typeA, typeB, moveLearnset, speciesName, experience);
+		this.setBaseExperienceYield(baseExperienceYield);
 	}
 	
 	public Blaziken(int level, String name) {
 		super(baseStatList, level, typeA, typeB, moveLearnset, name, experience);
+		this.setBaseExperienceYield(baseExperienceYield);
 	}
-	
-	public Blaziken(Pokemon combusken) {
-		super(baseStatList, combusken.getLevel(), typeA, typeB, moveLearnset, combusken.getName(), experience);
+
+	public String getSpeciesName() {
+		return speciesName;
 	}
 
 }

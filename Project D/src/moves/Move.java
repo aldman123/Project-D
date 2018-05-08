@@ -65,7 +65,7 @@ public class Move {
 		if (power == 0) {
 			return self.getName() + " used " + this.name + "!";
 		}
-		foe.doDamageFrom(self, this);
+		foe.receiveDamageFrom(self, this);
 		return self.getName() + " did damage to " + foe.getName() + "!";
 
 	}

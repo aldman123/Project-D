@@ -11,6 +11,8 @@ import moves.Normal.TailWhip;
 public class Raichu extends Pokemon {
 	
 	static int[] baseStatList = new int[]{60, 90, 55, 90, 80, 100};
+	static final String speciesName = "Raichu";
+	static final int baseExperienceYield = 122;
 	static Move[] moveLearnset = new Move[] {
 			new ThunderShock(0),
 			new TailWhip(0),
@@ -19,15 +21,17 @@ public class Raichu extends Pokemon {
 			};
 	
 	public Raichu(int level) {
-		super(baseStatList, level, Type.ELECTRIC, null, moveLearnset, "Raichu", Experience.MEDIUM_FAST);
+		super(baseStatList, level, Type.ELECTRIC, null, moveLearnset, speciesName, Experience.MEDIUM_FAST);
+		this.setBaseExperienceYield(baseExperienceYield);
 	}
 	
 	public Raichu(int level, String name) {
 		super(baseStatList, level, Type.ELECTRIC, null, moveLearnset, name, Experience.MEDIUM_FAST);
+		this.setBaseExperienceYield(baseExperienceYield);
 	}
-	
-	public Raichu(Pokemon lastEvolution) {
-		super(baseStatList, lastEvolution.getLevel(), Type.ELECTRIC, null, moveLearnset, lastEvolution.getName(), Experience.MEDIUM_FAST);
+
+	public String getSpeciesName() {
+		return speciesName;
 	}
 
 }

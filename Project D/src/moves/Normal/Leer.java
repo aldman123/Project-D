@@ -1,4 +1,4 @@
-package pokemon;
+package moves.Normal;
 
 import misc.Type;
 import moves.Move_StatChange;

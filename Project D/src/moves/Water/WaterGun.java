@@ -1,4 +1,4 @@
-package pokemon;
+package moves.Water;
 
 import misc.Type;
 import moves.Move;
@@ -6,8 +6,7 @@ import moves.Move;
 public class WaterGun extends Move {
 
 	public WaterGun(int learnLevel) {
-		super(power, pp, accuracy, name, type, level, specialAttack);
-		// TODO Auto-generated constructor stub
+		super(40, 25, 100, "Water Gun", Type.WATER, learnLevel, true);
 	}
 
 }

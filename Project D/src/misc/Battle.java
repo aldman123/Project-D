@@ -5,8 +5,15 @@ import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 import moves.Move;
+import moves.Dark.Rage;
 import moves.Flying.MirrorMove;
 import pokemon.*;
+import pokemon.Fire.Blaziken;
+import pokemon.Fire.Combusken;
+import pokemon.Fire.Torchic;
+import pokemon.Water.Croconaw;
+import pokemon.Water.Feraligatr;
+import pokemon.Water.Totodile;
 
 public class Battle {
 	
@@ -24,19 +31,19 @@ public class Battle {
 	public Battle() {
 		foesPokemon = new Pokemon[] {
 				new Pikachu(15),
-				new Pikachu(10, "Thor"),
-				new Torchic(2, "Burny"),
+				new Totodile(15),
+				new Torchic(2),
 				new Raichu(5),
 				new Combusken(20),
 				new Blaziken(50)
 		};
 		yourPokemon = new Pokemon[] {
 				new Torchic(15),
-				new Pikachu(2, "Johney Torch"),
+				new Croconaw(25),
 				new Combusken(18),
 				new Raichu(27),
 				new Blaziken(29),
-				new Pikachu(50)
+				new Feraligatr(50)
 		};
 		
 	}
@@ -133,6 +140,14 @@ public class Battle {
 					selectedMoveFoe = usersLastMove;
 					System.out.println(foe.getName() + " copied " + user.getName() + "'s last move!");
 				}
+			}
+			
+			//Is a Pokemon using Rage?
+			if (selectedMoveFoe instanceof Rage) {
+				((Rage) selectedMoveUser).increaseRage();
+			}
+			if (selectedMoveFoe instanceof Rage) {
+				((Rage) selectedMoveUser).increaseRage();
 			}
 
 			

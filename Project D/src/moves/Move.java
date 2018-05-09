@@ -7,11 +7,11 @@ import misc.Type;
 import pokemon.Pokemon;
 
 public class Move {
-	private final int power, accuracy, learnLevel;
+	private final int accuracy, learnLevel;
 	private final String name;
 	private final Type type;
 	private final boolean specialAttack;
-	private int pp, maxPP;
+	private int power, pp, maxPP;
 	private boolean highCriticalHit, isFast;
 	private static Random generator = new Random();
 	
@@ -53,12 +53,12 @@ public class Move {
 		}
 		
 		if (self.getStatus() == StatusEffect.SLEEP) {
-			return self.toString() + " is still Sleeping!";
+			return self.getName() + " is still Sleeping!";
 		} else if (self.getStatus() == StatusEffect.FREEZE) {
-			return self.toString() + " is frozen solid!";
+			return self.getName() + " is frozen solid!";
 		} else if (self.getStatus() == StatusEffect.PARALYSIS) {
 			if (generator.nextInt(4) == 1) {
-				return self.toString() + " is paralyzed and unable to move!";
+				return self.getName() + " is paralyzed and unable to move!";
 			}
 		}
 
@@ -128,5 +128,9 @@ public class Move {
 	
 	public boolean isFast() {
 		return this.isFast;
+	}
+	
+	public void setPower(int newPower) {
+		this.power = newPower;
 	}
 }

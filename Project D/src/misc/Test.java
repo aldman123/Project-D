@@ -1,7 +1,7 @@
 package misc;
 
 import pokemon.Pokemon;
-import pokemon.Torchic;
+import pokemon.Fire.Torchic;
 
 public class Test {
 	public static void main(String args[]) {

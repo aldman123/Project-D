@@ -1,10 +1,18 @@
-package pokemon;
+package pokemon.Water;
 
 import misc.Experience;
 import misc.Type;
 import moves.Move;
+import moves.Dark.Bite;
+import moves.Dark.Rage;
+import moves.Normal.Leer;
+import moves.Normal.ScaryFace;
 import moves.Normal.Scratch;
+import moves.Normal.Screech;
 import moves.Normal.Slash;
+import moves.Water.HydroPump;
+import moves.Water.WaterGun;
+import pokemon.EvolveablePokemon;
 
 public class Totodile extends EvolveablePokemon {
 	
@@ -14,9 +22,9 @@ public class Totodile extends EvolveablePokemon {
 	static final String speciesName = "Totodile";
 	static final Experience experienceType = Experience.MEDIUM_SLOW;
 	static final int baseExperienceYield = 66;
-	static final Class evolution = null;
+	static final Class evolution = Croconaw.class;
 	static final int evolutionLevel = 18;
-	static final Move[] moveList = new Move[]{
+	static final Move[] moveLearnset = new Move[]{
 		new Scratch(1),
 		new Leer(1),
 		new Rage(7),

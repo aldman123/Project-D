@@ -1,4 +1,4 @@
-package pokemon;
+package pokemon.Fire;
 
 import misc.Experience;
 import misc.Type;
@@ -16,6 +16,7 @@ import moves.Normal.Growl;
 import moves.Normal.QuickAttack;
 import moves.Normal.Scratch;
 import moves.Normal.Slash;
+import pokemon.Pokemon;
 
 public class Blaziken extends Pokemon {
 	

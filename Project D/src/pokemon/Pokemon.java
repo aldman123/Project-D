@@ -132,7 +132,7 @@ public abstract class Pokemon implements Cloneable{
 		for (int i = 0; i < 4; i++) {
 			if (moveList[i] == null) {
 				moveList[i] = move;
-				System.out.println(this.name.toUpperCase() + " leaned " + move.getName().toUpperCase() + "!");
+				System.out.println(this.name.toUpperCase() + " learned " + move.getName().toUpperCase() + "!");
 				return;
 			}
 		}

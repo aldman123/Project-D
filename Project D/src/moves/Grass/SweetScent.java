@@ -1,6 +1,7 @@
-package moves;
+package moves.Grass;
 
 import misc.Type;
+import moves.Move_StatChange;
 
 public class SweetScent extends Move_StatChange {
 

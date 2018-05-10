@@ -1,16 +1,20 @@
 package misc;
 
+import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 import moves.Move;
+import moves.Move_Recurring;
 import moves.Dark.Rage;
 import moves.Flying.MirrorMove;
 import pokemon.*;
 import pokemon.Fire.Blaziken;
 import pokemon.Fire.Combusken;
 import pokemon.Fire.Torchic;
+import pokemon.Grass.Ivysaur;
+import pokemon.Grass.Venausaur;
 import pokemon.Water.Croconaw;
 import pokemon.Water.Feraligatr;
 import pokemon.Water.Totodile;
@@ -21,10 +25,10 @@ public class Battle {
 	
 	private Pokemon user, foe;
 	private Pokemon[] yourPokemon, foesPokemon;
+	private ArrayList<Move_Recurring> moveEffectsUser = new ArrayList<Move_Recurring>();
+	private ArrayList<Move_Recurring> moveEffectsFoe = new ArrayList<Move_Recurring>();
 	private int pokemonActiveFoe, pokemonActiveUser;
 	private boolean userGoesFirst;
-
-
 	Scanner scanner = new Scanner(System.in);
 	private Move selectedMoveUser, selectedMoveFoe, usersLastMove;
 	
@@ -32,15 +36,15 @@ public class Battle {
 		foesPokemon = new Pokemon[] {
 				new Pikachu(15),
 				new Totodile(15),
-				new Torchic(2),
-				new Raichu(5),
+				new Torchic(15),
+				new Raichu(25),
 				new Combusken(20),
-				new Blaziken(50)
+				new Venausaur(50)
 		};
 		yourPokemon = new Pokemon[] {
+				new Ivysaur(18),
 				new Torchic(15),
 				new Croconaw(25),
-				new Combusken(18),
 				new Raichu(27),
 				new Blaziken(29),
 				new Feraligatr(50)
@@ -100,6 +104,7 @@ public class Battle {
 				
 				if (input.equals("1") || input.equals("2") || input.equals("3") || input.equals("4")) {
 					selectedMoveUser = user.getMove(Integer.parseInt(input) - 1);
+					System.out.println(user.getMove(Integer.parseInt(input) - 1) instanceof Move_Recurring);
 				} else {
 					for (int i = 0; i < user.getNumberOfMoves(); i++) {
 						if (user.getMove(i).toString().trim().toUpperCase() == input) {
@@ -141,14 +146,6 @@ public class Battle {
 					System.out.println(foe.getName() + " copied " + user.getName() + "'s last move!");
 				}
 			}
-			
-			//Is a Pokemon using Rage?
-			if (selectedMoveFoe instanceof Rage) {
-				((Rage) selectedMoveUser).increaseRage();
-			}
-			if (selectedMoveFoe instanceof Rage) {
-				((Rage) selectedMoveUser).increaseRage();
-			}
 
 			
 			//Select move for foe Pokemon
@@ -180,6 +177,21 @@ public class Battle {
 				TimeUnit.MILLISECONDS.sleep(WAIT_TIME);
 			}
 			
+			//Is there any moves that have lasting effects?
+			if (selectedMoveUser instanceof Move_Recurring) {
+				moveEffectsUser.add((Move_Recurring) selectedMoveUser);
+			}
+			if (selectedMoveFoe instanceof Move_Recurring) {
+				moveEffectsFoe.add((Move_Recurring) selectedMoveFoe);
+			}
+			
+			for (Move_Recurring effect: moveEffectsUser) {
+				System.out.println(effect.periodicEffect(user, foe));
+			}
+			for (Move_Recurring effect: moveEffectsFoe) {
+				System.out.println(effect.periodicEffect(foe, user));
+			}
+			
 			//Distribute experience
 			if (foe.isKnockedOut() && user.isKnockedOut() == false) {
 				System.out.println("Foe's Pokemon " + foe.getName() + " was knocked out!");
@@ -193,12 +205,6 @@ public class Battle {
 			System.out.println("----");
 			System.out.println("");
 		}
-		
-		//---------------------
-		if (user instanceof EvolveablePokemon) {
-			user = user.addExperience(1000);
-		}
-		//---------------------
 		
 		//Output results
 		if (pokemonActiveFoe < 1) {

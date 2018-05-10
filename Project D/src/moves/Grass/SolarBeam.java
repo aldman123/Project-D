@@ -1,11 +1,10 @@
 package moves.Grass;
 
 import misc.Type;
-import moves.Move;
+import moves.Move_Recurring;
+import pokemon.Pokemon;
 
-public class SolarBeam extends Move {
-	
-	private boolean firstTurn;
+public class SolarBeam extends Move_Recurring {
 	
 	
 	/**
@@ -13,15 +12,16 @@ public class SolarBeam extends Move {
 	 * does a high amount of damage to the opponent.
 	 */
 	public SolarBeam(int learnLevel) {
-		super(120, 10, 100, "Solar Beam", Type.GRASS, learnLevel, true);
-		firstTurn = true;
+		super(0, 10, 100, "Solar Beam", Type.GRASS, learnLevel, true, 2);
 	}
-	
-	public void setFirstTurn(boolean isFirstTurn) {
-		this.firstTurn = isFirstTurn;
+
+	protected String effect(Pokemon self, Pokemon foe) {
+		if (this.getTurnNumber() == 1) {
+			return "The solar beam is charging!";
+		} else {
+			this.setPower(120);
+			return this.start(self, foe);
+		}
 	}
-	
-	error
-	fix this
 	
 }

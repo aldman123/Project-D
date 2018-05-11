@@ -5,7 +5,7 @@ import java.util.Random;
 import misc.Type;
 import pokemon.Pokemon;
 
-public class Move_MultyStrike extends Move {
+public abstract class Move_MultyStrike extends Move {
 	
 	private int numberOfRepeatsMin = 2;	//Standard Value
 	private int numberOfRepeatsMax = 5;	//Standard Value
@@ -29,10 +29,6 @@ public class Move_MultyStrike extends Move {
 		
 		return self.getName() + " hit " + foe.getName() + " " + numberOfStrikes + " times!";
 		
-	}
-
-	public Move clone() {
-		return new Move_MultyStrike(this.getPower(), this.getPP(), this.getAccuracy(), this.getName(), this.getType(), this.getLearnLevel(), this.getSpecialAttack());
 	}
 
 }

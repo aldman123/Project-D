@@ -104,7 +104,6 @@ public class Battle {
 				
 				if (input.equals("1") || input.equals("2") || input.equals("3") || input.equals("4")) {
 					selectedMoveUser = user.getMove(Integer.parseInt(input) - 1);
-					System.out.println(user.getMove(Integer.parseInt(input) - 1) instanceof Move_Recurring);
 				} else {
 					for (int i = 0; i < user.getNumberOfMoves(); i++) {
 						if (user.getMove(i).toString().trim().toUpperCase() == input) {

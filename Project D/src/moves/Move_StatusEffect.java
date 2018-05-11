@@ -6,7 +6,7 @@ import misc.StatusEffect;
 import misc.Type;
 import pokemon.Pokemon;
 
-public class Move_StatusEffect extends Move {
+public abstract class Move_StatusEffect extends Move {
 	
 	private boolean onSelf = false;
 	private StatusEffect newStatus;
@@ -35,13 +35,6 @@ public class Move_StatusEffect extends Move {
 		} else {
 			return target.getName() + " was not " + newStatus.getEffect().toLowerCase() + "...";
 		}
-	}
-
-	public Move clone() {
-		return new Move_StatusEffect(
-				this.getPower(), this.getPP(), this.getAccuracy(), this.getName(), this.getType(),
-				this.getLearnLevel(), this.getSpecialAttack(), newStatus, probability, onSelf
-				);
 	}
 
 }

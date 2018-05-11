@@ -1,12 +1,13 @@
 package moves;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Random;
 
 import misc.StatusEffect;
 import misc.Type;
 import pokemon.Pokemon;
 
-public class Move {
+public abstract class Move {
 	private final int accuracy, learnLevel;
 	private final String name;
 	private final Type type;
@@ -70,9 +71,15 @@ public class Move {
 
 	}
 	
-	public Move clone() {
-		return new Move(power, pp, accuracy, name, type, learnLevel, specialAttack);
-	};
+	public final Move clone() {
+		try {
+			return this.getClass().getDeclaredConstructor(int.class).newInstance(this.getLearnLevel());
+		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
+				| NoSuchMethodException | SecurityException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 	
 	public int getPP() {
 		return pp;

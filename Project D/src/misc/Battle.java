@@ -9,6 +9,7 @@ import moves.Move;
 import moves.Move_Recurring;
 import moves.Dark.Rage;
 import moves.Flying.MirrorMove;
+import moves.Grass.LeechSeed;
 import pokemon.*;
 import pokemon.Fire.Blaziken;
 import pokemon.Fire.Combusken;
@@ -67,17 +68,31 @@ public class Battle {
 		while (pokemonActiveUser > 0 && pokemonActiveFoe > 0) {
 			
 			if (user.isKnockedOut()) {
+				moveEffectsUser = new ArrayList<Move_Recurring>();
 				System.out.println(user.getName() + " was sent out!");
 				user = yourPokemon[6 - pokemonActiveUser];
 				System.out.println("Go " + user.getName() + "!");
 				user.resetStats();
+				
+				for (int i = 0; i < moveEffectsFoe.size(); i++) {
+					if (moveEffectsFoe.get(i) instanceof LeechSeed) {
+						moveEffectsFoe.remove(i);
+					}
+				}
 			}
 			
 			if (foe.isKnockedOut()) {
+				moveEffectsFoe = new ArrayList<Move_Recurring>();
 				System.out.println(foe.getName() + " was knocked out!");
 				foe = foesPokemon[6 - pokemonActiveFoe];
 				System.out.println("Go " + foe.getName() + "!");
 				foe.resetStats();
+				
+				for (int i = 0; i < moveEffectsUser.size(); i++) {
+					if (moveEffectsUser.get(i) instanceof LeechSeed) {
+						moveEffectsUser.remove(i);
+					}
+				}
 			}
 			
 			
@@ -190,6 +205,9 @@ public class Battle {
 			for (Move_Recurring effect: moveEffectsFoe) {
 				System.out.println(effect.periodicEffect(foe, user));
 			}
+			
+			user.getStatus().endOfTurn(user);
+			foe.getStatus().endOfTurn(foe);
 			
 			//Distribute experience
 			if (foe.isKnockedOut() && user.isKnockedOut() == false) {

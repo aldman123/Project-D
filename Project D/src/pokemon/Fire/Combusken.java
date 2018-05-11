@@ -28,8 +28,8 @@ public class Combusken extends EvolveablePokemon{
 	static final int baseExperienceYield = 142;
 	
 	static Move[] moveLearnset = new Move[] {
-			new Growl(0),
-			new Scratch(0),
+			new Growl(1),
+			new Scratch(1),
 			new FocusEnergy(7),
 			new Ember(13),
 			new DoubleKick(16),

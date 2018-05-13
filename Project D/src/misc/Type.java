@@ -21,12 +21,17 @@ public enum Type {
 	DRAGON,
 	GHOST;
 	
+	/**
+	 * @param p2
+	 * @return The modifier for the damage from this onto p2
+	 */
 	public double against(Type p2) {
 		Type p1 = this;
 		
 		double output = 1;
 		
-		if (p1 == GRASS) {
+		switch (p1) {
+		case GRASS:
 			
 			//Weakness
 			for (Type t : new Type[]{FIRE, ICE, POISON, FLYING, BUG}) {
@@ -42,7 +47,7 @@ public enum Type {
 				}
 			}
 			
-		} else if (p1 == ROCK) {
+		case ROCK:
 			//Weakness
 			for (Type t : new Type[]{WATER, GRASS, FIGHT, GROUND, STEEL}) {
 				if (p2 == t) {
@@ -56,7 +61,7 @@ public enum Type {
 					output = 2;
 				}
 			}
-		} else if (p1 == ICE) {
+		case ICE:
 			//Weakness
 			for (Type t : new Type[]{FIRE, FIGHT, ROCK, STEEL}) {
 				if (p2 == t) {
@@ -70,7 +75,7 @@ public enum Type {
 					output = 2;
 				}
 			}
-		} else if (p1 == DRAGON) {
+		case DRAGON:
 			//Weakness
 			if (p2 == ICE) {
 				output = 1/2;
@@ -81,7 +86,7 @@ public enum Type {
 				output = 2;
 			}
 			
-		} else if (p1 == DARK) {
+		case DARK:
 			//Weakness
 			for (Type t : new Type[]{FIGHT, BUG}) {
 				if (p2 == t) {
@@ -95,7 +100,7 @@ public enum Type {
 					output = 2;
 				}
 			}
-		} else if (p1 == PSYCHIC) {
+		case PSYCHIC:
 			//Weakness
 			for (Type t : new Type[]{BUG, GHOST, DARK}) {
 				if (p2 == t) {
@@ -110,7 +115,7 @@ public enum Type {
 				}
 			}
 			
-		} else if (p1 == BUG) {
+		case BUG:
 			//Weakness
 			for (Type t : new Type[]{FIRE, FLYING, ROCK}) {
 				if (p2 == t) {
@@ -124,7 +129,7 @@ public enum Type {
 					output = 2;
 				}
 			}
-		} else if (p1 == FLYING) {
+		case FLYING:
 			//Weakness
 			for (Type t : new Type[]{ELECTRIC, ICE, ROCK}) {
 				if (p2 == t) {
@@ -139,7 +144,7 @@ public enum Type {
 				}
 			}
 			
-		} else if (p1 == STEEL) {
+		case STEEL:
 			//Weakness
 			for (Type t : new Type[]{FIRE, FIGHT, GROUND}) {
 				if (p2 == t) {
@@ -154,7 +159,7 @@ public enum Type {
 				}
 			}
 			
-		} else if (p1 == FIRE) {
+		case FIRE:
 			//Weakness
 			for (Type t : new Type[]{WATER, GROUND, ROCK}) {
 				if (p2 == t) {
@@ -169,7 +174,7 @@ public enum Type {
 				}
 			}
 			
-		} else if (p1 == FIGHT) {
+		case FIGHT:
 			//Weakness
 			for (Type t : new Type[]{FLYING, PSYCHIC}) {
 				if (p2 == t) {
@@ -184,7 +189,7 @@ public enum Type {
 				}
 			}
 			
-		} else if (p1 == GROUND) {
+		case GROUND:
 			//Weakness
 			for (Type t : new Type[]{WATER, GRASS, ICE}) {
 				if (p2 == t) {
@@ -199,7 +204,7 @@ public enum Type {
 				}
 			}
 			
-		} else if (p1 == GHOST) {
+		case GHOST:
 			//Weakness
 			if (p2 == DARK) {
 				output = 1/2;
@@ -212,7 +217,7 @@ public enum Type {
 				}
 			}
 			
-		} else if (p1 == POISON) {
+		case POISON:
 			//Weakness
 			for (Type t : new Type[]{GROUND, PSYCHIC}) {
 				if (p2 == t) {
@@ -225,7 +230,7 @@ public enum Type {
 				output = 2;
 			}
 			
-		} else if (p1 == WATER) {
+		case WATER:
 			//Weakness
 			for (Type t : new Type[]{ELECTRIC, GRASS}) {
 				if (p2 == t) {
@@ -239,7 +244,7 @@ public enum Type {
 					output = 2;
 				}
 			}
-		} else if (p1 == ELECTRIC) {
+		case ELECTRIC:
 			//Weakness
 			if (p2 == GROUND) {
 				output = 1/2;
@@ -251,7 +256,7 @@ public enum Type {
 					output = 2;
 				}
 			}
-		} else if (p1 == NORMAL) {
+		case NORMAL:
 			if (p2 == FIGHT) {
 				output = 1/2;
 			}

@@ -11,41 +11,44 @@ public enum StatusEffect {
 	POISON,
 	SLEEP,
 	NOTHING;
-	
-	
+
+
 	/**
 	 * @return The 3 char shorthand for the effect
 	 */
 	public String toString() {
-		if (this == BURN) {
+		switch (this) {
+		case BURN:
 			return "BRN";
-		} else if (this == FREEZE) {
+		case FREEZE:
 			return "FRZ";
-		} else if (this == PARALYSIS) {
+		case PARALYSIS:
 			return "PAR";
-		} else if (this == POISON) {
+		case POISON:
 			return "PSN";
-		} else if (this == SLEEP) {
+		case SLEEP:
 			return "SLP";
-		} else {
+		default:
 			return "";
+
 		}
 	}
 	/**
 	 * @return The pokemon was ___
 	 */
 	public String getEffect() {
-		if (this == BURN) {
+		switch (this) {
+		case BURN:
 			return "BURNED";
-		} else if (this == FREEZE) {
+		case FREEZE:
 			return "FROZEN";
-		} else if (this == PARALYSIS) {
+		case PARALYSIS:
 			return "PARALYSED";
-		} else if (this == POISON) {
+		case POISON:
 			return "POISONED";
-		} else if (this == SLEEP) {
+		case SLEEP:
 			return "PUT TO SLEEP";
-		} else {
+		default:
 			return "LEFT THE SAME";
 		}
 	}
@@ -53,44 +56,48 @@ public enum StatusEffect {
 	 * @return The name of the effect
 	 */
 	public String getName() {
-		if (this == BURN) {
+		switch (this) {
+		case BURN:
 			return "BURN";
-		} else if (this == FREEZE) {
+		case FREEZE:
 			return "FREEZE";
-		} else if (this == PARALYSIS) {
+		case PARALYSIS:
 			return "PARALYSIS";
-		} else if (this == POISON) {
+		case POISON:
 			return "POISON";
-		} else if (this == SLEEP) {
+		case SLEEP:
 			return "SLEEP";
-		} else {
+		default:
 			return "NOTHING";
 		}
 	}
-	
+
 	/**
 	 * Calculate the effects of the move at the end of the turn
 	 * @param self
 	 * @param foe
 	 */
 	public void endOfTurn(Pokemon self) {
-		if (this == BURN) {
+		switch (this) {
+		case BURN:
 			System.out.println(self.getName() + " was hurt by the BURN!");
 			self.reduceHP(self.getMaxHP() / 8);
 			wearOff(self, 5);
-		} else if (this == FREEZE) {
+		case FREEZE:
 			wearOff(self, 10);
-		} else if (this == PARALYSIS) {
+		case PARALYSIS:
 			wearOff(self, 5);
-		} else if (this == POISON) {
+		case POISON:
 			System.out.println(self.getName() + " was hurt by the POISON!");
 			self.reduceHP(self.getMaxHP() / 8);
 			wearOff(self, 5);
-		} else if (this == SLEEP) {
+		case SLEEP:
 			wearOff(self, 15);
+		default:
+			break;
 		}
 	}
-	
+
 	/**
 	 * Calculate whether the effect wears off or not
 	 * @param self
@@ -107,5 +114,5 @@ public enum StatusEffect {
 			}
 		}
 	}
-	
+
 }

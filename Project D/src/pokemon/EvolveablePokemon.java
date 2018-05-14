@@ -29,6 +29,7 @@ public abstract class EvolveablePokemon extends Pokemon {
 	protected Pokemon levelUp() {
 		EvolveablePokemon me = (EvolveablePokemon) this;
 		if (me.getEvolveLevel() <= me.getLevel() + 1) {
+			me.setLevel(me.getLevel() + 1);
 			System.out.println(me.getName() + " is evolving!");
 			
 			try {
@@ -37,12 +38,12 @@ public abstract class EvolveablePokemon extends Pokemon {
 					| InvocationTargetException | NoSuchMethodException | SecurityException e) {
 				System.out.println("Error in evolution");
 				e.printStackTrace();
-				return this;
+				return me;
 			}
 			
 			System.out.println("The Pokemon evolved into " + me.getName() + "!");
 		}
-		return (Pokemon) super.levelUp();
+		return (Pokemon) me;
 	}
 	
 	protected void inputInheritedTraits(int level, Move[] moveLearnset, String name, int experience) {

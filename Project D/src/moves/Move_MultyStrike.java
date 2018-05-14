@@ -23,8 +23,12 @@ public abstract class Move_MultyStrike extends Move {
 	
 	protected void start(Pokemon self, Pokemon foe) {
 		Random generator = new Random();
-		
-		int numberOfStrikes = generator.nextInt(numberOfRepeatsMax - numberOfRepeatsMin) + numberOfRepeatsMin;
+		int numberOfStrikes;
+		if (numberOfRepeatsMax - numberOfRepeatsMin < 1) {
+			numberOfStrikes = numberOfRepeatsMin;
+		} else {
+			numberOfStrikes = generator.nextInt(numberOfRepeatsMax - numberOfRepeatsMin) + numberOfRepeatsMin;
+		}
 		for (int i = 0; i < numberOfStrikes; i++) {
 			super.start(self, foe);
 			System.out.println(individualAttackDescription);

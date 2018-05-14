@@ -7,6 +7,7 @@ import moves.Fighting.BulkUp;
 import moves.Fighting.DoubleKick;
 import moves.Fighting.SkyUppercut;
 import moves.Fire.Ember;
+import moves.Fire.FireSpin;
 import moves.Flying.MirrorMove;
 import moves.Flying.Peck;
 import moves.Ground.SandAttack;
@@ -30,6 +31,7 @@ public class Combusken extends EvolveablePokemon{
 	static Move[] moveLearnset = new Move[] {
 			new Growl(1),
 			new Scratch(1),
+			new FireSpin(1),
 			new FocusEnergy(7),
 			new Ember(13),
 			new DoubleKick(16),

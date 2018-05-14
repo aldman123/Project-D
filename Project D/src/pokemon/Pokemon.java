@@ -1,7 +1,6 @@
 package pokemon;
 
 import java.util.Random;
-import java.util.Scanner;
 
 import misc.*;
 import moves.Move;
@@ -64,7 +63,7 @@ public abstract class Pokemon implements Cloneable{
 				moveSlot++;
 			}
 		}
-
+		this.experiencePoints = experienceType.getExperienceToLevelUp(this.getLevel());
 		this.resetStats();
 
 	}
@@ -84,7 +83,7 @@ public abstract class Pokemon implements Cloneable{
 	public Pokemon addExperience(int experiencePoints) {
 		System.out.println(this.name + " gained " + experiencePoints + " xp!");
 		this.experiencePoints += experiencePoints;
-		if (this.experiencePoints >= this.experienceType.getExperienceToLevelUp(this.level+1)) {
+		while (this.experiencePoints >= this.experienceType.getExperienceToLevelUp(this.level+1)) {
 			return this.levelUp();
 		}
 
@@ -96,11 +95,9 @@ public abstract class Pokemon implements Cloneable{
 	 * @return A new version of the Pokemon
 	 */
 	protected Pokemon levelUp() {
+		System.out.println(this.getName() + " leveled up!");
 		if (this.level < 50) {
 			this.level++;
-
-			if (this instanceof EvolveablePokemon) {
-			}
 
 			for (Move newMove : this.moveLearnset) {
 				if (newMove.getLearnLevel() == this.level) {
@@ -128,37 +125,22 @@ public abstract class Pokemon implements Cloneable{
 
 	}
 
-	protected void learnMove(Move move) {
+	private void learnMove(Move move) {
+		int oldestMoveIndex = 0;
 		for (int i = 0; i < 4; i++) {
 			if (moveList[i] == null) {
 				moveList[i] = move;
 				System.out.println(this.name.toUpperCase() + " learned " + move.getName().toUpperCase() + "!");
 				return;
+			} else if (moveList[oldestMoveIndex].getLearnLevel() > moveList[i].getLearnLevel()) {
+				oldestMoveIndex = i;
 			}
 		}
 
 		System.out.println(this.getName() + " has already learned four moves!");
-		Scanner input = new Scanner(System.in);
 
-		boolean invalidInput = true;
-		int selectedMoveToDelete = -1;
-		while (invalidInput) {
-			System.out.println(moveList);
-			System.out.println("Please Select a Move to replace");
-			System.out.println("To stop learning " + move.getName().toUpperCase() + ", input: 0");
-			if (input.hasNextInt()) {
-				selectedMoveToDelete = input.nextInt();
-				for (int i = 0; i < 5; i++) {
-					if (i == selectedMoveToDelete) {
-						invalidInput = false;
-					}
-				}
-			}
-		}
-		input.close();
-		System.out.println(this.getName() + " forgot " + this.moveList[selectedMoveToDelete - 1].getName() + ", and learned " + move.getName() + "!");
-		this.moveList[selectedMoveToDelete - 1] = move;
-
+		System.out.println(this.getName() + " forgot " + this.moveList[oldestMoveIndex].getName() + ", and learned " + move.getName() + "!");
+		this.moveList[oldestMoveIndex] = move;
 
 	}
 
@@ -313,6 +295,11 @@ public abstract class Pokemon implements Cloneable{
 
 	public String toString() {
 		return "[" + this.getName() + ", lv:" + level + "]";
+	}
+	
+	public void displayPokemon() {
+		System.out.println(this.toString() + " " + this.getStatus().toString());
+		System.out.println("[HP:" + this.getHP() +"/"+ this.getMaxHP() + ", XP:" + this.getExperience() + "]");
 	}
 
 	public void setName(String newName) {

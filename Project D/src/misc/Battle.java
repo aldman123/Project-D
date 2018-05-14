@@ -49,7 +49,6 @@ public class Battle {
 				new Ivysaur(18),
 				new Feraligatr(50)
 		};
-		
 	}
 	
 	public Battle(Pokemon[] yourPokemon, Pokemon[] foePokemon) {
@@ -100,12 +99,12 @@ public class Battle {
 				
 				//Display Foe
 				System.out.println("FOE Pokemon");
-				displayPokemon(foe);
+				foe.displayPokemon();
 				System.out.println("");
 
 				//Display User Pokemon
 				System.out.println("YOUR Pokemon");
-				displayPokemon(user);
+				user.displayPokemon();
 				
 				//Display active Pokemon's moves
 				System.out.println(user.getMoveList());
@@ -246,11 +245,6 @@ public class Battle {
 			}
 		}
 	}
-	
-	
-	private void displayPokemon(Pokemon pokemon) {
-		System.out.println(pokemon.toString() + " " + pokemon.getStatus().toString());
-		System.out.println("[HP:" + pokemon.getHP() +"/"+ pokemon.getMaxHP() + ", " + pokemon.getExperience() + "]");
-	}
+
 
 }

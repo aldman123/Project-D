@@ -32,9 +32,9 @@ public class Rage extends Move_Recurring {
 		
 	}
 
-	protected String effect(Pokemon self, Pokemon foe) {
+	protected void effect(Pokemon self, Pokemon foe) {
 		this.increaseRage();
-		return self.getName() + " is getting angrier!";
+		System.out.println(self.getName() + " is getting angrier!");
 	}
 	
 

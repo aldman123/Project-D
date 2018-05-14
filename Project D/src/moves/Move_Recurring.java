@@ -17,6 +17,7 @@ public abstract class Move_Recurring extends Move {
 		super(power, pp, accuracy, name, type, level, specialAttack);
 		this.maxTurns = maxTurns;
 		this.numberOfRepetitions = 0;
+		this.hidden = hidden;
 	}
 	
 	public boolean isActive() {
@@ -30,12 +31,12 @@ public abstract class Move_Recurring extends Move {
 	public void periodicEffect(Pokemon self, Pokemon foe) {
 		numberOfRepetitions++;
 		if (isActive()) {
-			System.out.println(this.effect(self, foe));
-		} else if (!hidden){
+			this.effect(self, foe);
+		} else if (!this.hidden){
 			System.out.println(self.getName() + "'s " + this.getName() + " has worn off!");
 		}
 	}
 	
-	protected abstract String effect(Pokemon self, Pokemon foe);
+	protected abstract void effect(Pokemon self, Pokemon foe);
 
 }

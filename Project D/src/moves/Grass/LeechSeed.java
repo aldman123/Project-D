@@ -10,7 +10,7 @@ public class LeechSeed extends Move_Recurring {
 		super(0, 10, 90, "Leech Seed", Type.GRASS, learnLevel, true, 12, false);
 	}
 
-	protected String effect(Pokemon self, Pokemon foe) {
+	protected void effect(Pokemon self, Pokemon foe) {
 		int absorbedHP = foe.getHP() / 8;
 		if (absorbedHP < 1) {
 			absorbedHP = 1;
@@ -22,7 +22,7 @@ public class LeechSeed extends Move_Recurring {
 		} else {
 			self.setHP(self.getHP() + absorbedHP);
 		}
-		return self.getName() + " absorbed " + foe.getName() + "'s health!";
+		System.out.println(self.getName() + " absorbed " + foe.getName() + "'s health!");
 	}
 
 }

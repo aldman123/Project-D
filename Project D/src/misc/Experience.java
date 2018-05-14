@@ -15,17 +15,18 @@ public enum Experience {
 	 * @return Minimum experience required
 	 */
 	public int getExperienceToLevelUp(int desiredLevel) {
-		if (this == Experience.FAST) {
+		switch (this) {
+		case FAST:
 			return (int) (4/5 * Math.pow(desiredLevel, 3));
-		} else if (this == Experience.MEDIUM_FAST) {
+		case MEDIUM_FAST:
 			return (int) (Math.pow(desiredLevel, 3));
-		} else if (this == Experience.MEDIUM_SLOW) {
-			return (int) ( 6/5 * Math.pow(desiredLevel, 3) - 15*Math.pow(desiredLevel, 2) + 100*desiredLevel - 140 );
-		} else if (this == Experience.SLOW) {
+		case MEDIUM_SLOW:
+			return (int) (6/5 * Math.pow(desiredLevel, 3) - 15*Math.pow(desiredLevel, 2) + 100*desiredLevel - 140);
+		case SLOW:
 			return (int) (5/4 * Math.pow(desiredLevel, 3));
-		} else if (this == Experience.ERRATIC) {
+		case ERRATIC:
 			return (int) (Math.pow(desiredLevel, 3) * (100 - desiredLevel) / 50);
-		} else if (this == Experience.FLUCTUATING) {
+		case FLUCTUATING:
 			if (desiredLevel < 16) {
 				return (int) (Math.pow(desiredLevel, 3) * ((desiredLevel+1)/3 + 24)/50);
 			} else if (desiredLevel < 37) {

@@ -4,6 +4,7 @@ import misc.Experience;
 import misc.Type;
 import moves.Move;
 import moves.Fire.Ember;
+import moves.Fire.FireSpin;
 import moves.Fire.FlameThrower;
 import moves.Flying.MirrorMove;
 import moves.Flying.Peck;
@@ -29,7 +30,7 @@ public class Torchic extends EvolveablePokemon {
 			new Ember(10),
 			new Peck(16),
 			new SandAttack(19),
-			//new FireSpin(25),
+			new FireSpin(25),
 			new QuickAttack(28),
 			new Slash(34),
 			new MirrorMove(37),

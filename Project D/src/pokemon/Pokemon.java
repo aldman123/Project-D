@@ -180,22 +180,45 @@ public abstract class Pokemon implements Cloneable{
 		}
 		return stat;
 	}
+	
+	public String getStatName(int statIndex) {
+		switch (statIndex) {
+		case 1:
+			return "Attack";
+		case 2:
+			return "Defence";
+		case 3:
+			return "Special Attack";
+		case 4:
+			return "Special Defence";
+		case 5:
+			return "Speed";
+		case 6:
+			return "Accuracy";
+		case 7:
+			return "Evasion";
+		case 8:
+			return "Critical Hit Ratio";
+		default:
+			return "Stat";
+		}
+	}
 
 	public void receiveDamageFrom(Pokemon pokemonAttacking, Move move) {
 		Type type = move.getType();
 		int power = move.getPower();
-		double modifier = type.against(typeA);
-
+		
 		//Get type effectiveness
+		double modifier = type.against(typeA);
 		if (typeA != typeB) {
-			modifier *= typeB.against(type);
+			modifier *= type.against(typeB);
 		}
 
 		if (modifier < 1) {
 			System.out.println("The move wasn't very effective.");
 		} else if (modifier > 1 && modifier <= 2) {
 			System.out.println("The move was quite effective!");
-		} else if (modifier < 4) {
+		} else if (modifier > 2) {
 			System.out.println("The move was super effective!");
 		}
 
@@ -322,7 +345,6 @@ public abstract class Pokemon implements Cloneable{
 	public void setDef(int newValue) {
 		statList[1] = newValue;
 	}
-
 
 	public void setAtk(int newValue) {
 		statList[2] = newValue;

@@ -7,7 +7,6 @@ import java.util.concurrent.TimeUnit;
 
 import moves.Move;
 import moves.Move_Recurring;
-import moves.Dark.Rage;
 import moves.Flying.MirrorMove;
 import moves.Grass.LeechSeed;
 import pokemon.*;
@@ -36,18 +35,18 @@ public class Battle {
 	public Battle() {
 		foesPokemon = new Pokemon[] {
 				new Pikachu(15),
-				new Totodile(15),
+				new Totodile(35),
 				new Torchic(15),
 				new Raichu(25),
 				new Combusken(20),
 				new Venausaur(50)
 		};
 		yourPokemon = new Pokemon[] {
-				new Ivysaur(18),
 				new Torchic(15),
 				new Croconaw(25),
 				new Raichu(27),
 				new Blaziken(29),
+				new Ivysaur(18),
 				new Feraligatr(50)
 		};
 		
@@ -69,7 +68,6 @@ public class Battle {
 			
 			if (user.isKnockedOut()) {
 				moveEffectsUser = new ArrayList<Move_Recurring>();
-				System.out.println(user.getName() + " was sent out!");
 				user = yourPokemon[6 - pokemonActiveUser];
 				System.out.println("Go " + user.getName() + "!");
 				user.resetStats();
@@ -83,7 +81,6 @@ public class Battle {
 			
 			if (foe.isKnockedOut()) {
 				moveEffectsFoe = new ArrayList<Move_Recurring>();
-				System.out.println(foe.getName() + " was knocked out!");
 				foe = foesPokemon[6 - pokemonActiveFoe];
 				System.out.println("Go " + foe.getName() + "!");
 				foe.resetStats();
@@ -95,6 +92,7 @@ public class Battle {
 				}
 			}
 			
+			System.out.println("");
 			
 			//Input selected move
 			selectedMoveUser = null;
@@ -103,7 +101,6 @@ public class Battle {
 				//Display Foe
 				System.out.println("FOE Pokemon");
 				displayPokemon(foe);
-				System.out.println(foe.getStatList());
 				System.out.println("");
 
 				//Display User Pokemon
@@ -112,7 +109,6 @@ public class Battle {
 				
 				//Display active Pokemon's moves
 				System.out.println(user.getMoveList());
-				System.out.println(user.getStatList());
 				
 				System.out.print("Select Move: ");
 				String input = scanner.next().trim().toUpperCase();
@@ -180,14 +176,14 @@ public class Battle {
 			
 			//Run Turn
 			if (userGoesFirst) {
-				System.out.println(selectedMoveUser.start(user, foe));
+				selectedMoveUser.doMove(user, foe);
 				TimeUnit.MILLISECONDS.sleep(WAIT_TIME);
-				System.out.println(selectedMoveFoe.start(foe, user));
+				selectedMoveFoe.doMove(foe, user);
 				TimeUnit.MILLISECONDS.sleep(WAIT_TIME);
 			} else {
-				System.out.println(selectedMoveFoe.start(foe, user));
+				selectedMoveFoe.doMove(foe, user);
 				TimeUnit.MILLISECONDS.sleep(WAIT_TIME);
-				System.out.println(selectedMoveUser.start(user, foe));
+				selectedMoveUser.doMove(user, foe);
 				TimeUnit.MILLISECONDS.sleep(WAIT_TIME);
 			}
 			
@@ -200,10 +196,10 @@ public class Battle {
 			}
 			
 			for (Move_Recurring effect: moveEffectsUser) {
-				System.out.println(effect.periodicEffect(user, foe));
+				effect.periodicEffect(user, foe);
 			}
 			for (Move_Recurring effect: moveEffectsFoe) {
-				System.out.println(effect.periodicEffect(foe, user));
+				effect.periodicEffect(foe, user);
 			}
 			
 			user.getStatus().endOfTurn(user);

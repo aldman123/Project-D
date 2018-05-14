@@ -36,235 +36,248 @@ public enum Type {
 			//Weakness
 			for (Type t : new Type[]{FIRE, ICE, POISON, FLYING, BUG}) {
 				if (p2 == t) {
-					output = 1/2;
+					output *= 1/2;
 				}
 			}
 			
 			//Strength
 			for (Type t : new Type[]{WATER, GROUND, ROCK}) {
 				if (p2 == t) {
-					output = 2;
+					output *= 2;
 				}
 			}
-			
+			break;
 		case ROCK:
 			//Weakness
 			for (Type t : new Type[]{WATER, GRASS, FIGHT, GROUND, STEEL}) {
 				if (p2 == t) {
-					output = 1/2;
+					output *= 1/2;
 				}
 			}
 			
 			//Strength
 			for (Type t : new Type[]{FIRE, ICE, FLYING, BUG}) {
 				if (p2 == t) {
-					output = 2;
+					output *= 2;
 				}
 			}
+			break;
 		case ICE:
 			//Weakness
 			for (Type t : new Type[]{FIRE, FIGHT, ROCK, STEEL}) {
 				if (p2 == t) {
-					output = 1/2;
+					output *= 1/2;
 				}
 			}
 			
 			//Strength
 			for (Type t : new Type[]{GRASS, GROUND, FLYING, DRAGON}) {
 				if (p2 == t) {
-					output = 2;
+					output *= 2;
 				}
 			}
+			break;
 		case DRAGON:
 			//Weakness
 			if (p2 == ICE) {
-				output = 1/2;
+				output *= 1/2;
 			}
 			
 			//Strength
 			if (p2 == DRAGON) {
-				output = 2;
+				output *= 2;
 			}
-			
+			break;
 		case DARK:
 			//Weakness
 			for (Type t : new Type[]{FIGHT, BUG}) {
 				if (p2 == t) {
-					output = 1/2;
+					output *= 1/2;
 				}
 			}
 			
 			//Strength
 			for (Type t : new Type[]{PSYCHIC, GHOST}) {
 				if (p2 == t) {
-					output = 2;
+					output *= 2;
 				}
 			}
+			break;
 		case PSYCHIC:
 			//Weakness
 			for (Type t : new Type[]{BUG, GHOST, DARK}) {
 				if (p2 == t) {
-					output = 1/2;
+					output *= 1/2;
 				}
 			}
 			
 			//Strength
 			for (Type t : new Type[]{FIGHT, POISON}) {
 				if (p2 == t) {
-					output = 2;
+					output *= 2;
 				}
 			}
+			break;
 			
 		case BUG:
 			//Weakness
 			for (Type t : new Type[]{FIRE, FLYING, ROCK}) {
 				if (p2 == t) {
-					output = 1/2;
+					output *= 1/2;
 				}
 			}
 			
 			//Strength
 			for (Type t : new Type[]{GRASS, PSYCHIC, DARK}) {
 				if (p2 == t) {
-					output = 2;
+					output *= 2;
 				}
 			}
+			break;
 		case FLYING:
 			//Weakness
 			for (Type t : new Type[]{ELECTRIC, ICE, ROCK}) {
 				if (p2 == t) {
-					output = 1/2;
+					output *= 1/2;
 				}
 			}
 			
 			//Strength
 			for (Type t : new Type[]{GRASS, FIGHT, BUG}) {
 				if (p2 == t) {
-					output = 2;
+					output *= 2;
 				}
 			}
+			break;
 			
 		case STEEL:
 			//Weakness
 			for (Type t : new Type[]{FIRE, FIGHT, GROUND}) {
 				if (p2 == t) {
-					output = 1/2;
+					output *= 1/2;
 				}
 			}
 			
 			//Strength
 			for (Type t : new Type[]{ICE, ROCK}) {
 				if (p2 == t) {
-					output = 2;
+					output *= 2;
 				}
 			}
+			break;
 			
 		case FIRE:
 			//Weakness
 			for (Type t : new Type[]{WATER, GROUND, ROCK}) {
 				if (p2 == t) {
-					output = 1/2;
+					output *= 1/2;
 				}
 			}
 			
 			//Strength
 			for (Type t : new Type[]{GRASS, ICE, BUG, STEEL}) {
 				if (p2 == t) {
-					output = 2;
+					output *= 2;
 				}
 			}
+			break;
 			
 		case FIGHT:
 			//Weakness
 			for (Type t : new Type[]{FLYING, PSYCHIC}) {
 				if (p2 == t) {
-					output = 1/2;
+					output *= 1/2;
 				}
 			}
 			
 			//Strength
 			for (Type t : new Type[]{NORMAL, ICE, ROCK, DARK, STEEL}) {
 				if (p2 == t) {
-					output = 2;
+					output *= 2;
 				}
 			}
+			break;
 			
 		case GROUND:
 			//Weakness
 			for (Type t : new Type[]{WATER, GRASS, ICE}) {
 				if (p2 == t) {
-					output = 1/2;
+					output *= 1/2;
 				}
 			}
 			
 			//Strength
 			for (Type t : new Type[]{FIRE, ELECTRIC, POISON, ROCK, STEEL}) {
 				if (p2 == t) {
-					output = 2;
+					output *= 2;
 				}
 			}
+			break;
 			
 		case GHOST:
 			//Weakness
 			if (p2 == DARK) {
-				output = 1/2;
+				output *= 1/2;
 			}
 			
 			//Strength
 			for (Type t : new Type[]{PSYCHIC, GHOST}) {
 				if (p2 == t) {
-					output = 2;
+					output *= 2;
 				}
 			}
+			break;
 			
 		case POISON:
 			//Weakness
 			for (Type t : new Type[]{GROUND, PSYCHIC}) {
 				if (p2 == t) {
-					output = 1/2;
+					output *= 1/2;
 				}
 			}
 			
 			//Strength
 			if (p2 == GRASS) {
-				output = 2;
+				output *= 2;
 			}
+			break;
 			
 		case WATER:
 			//Weakness
 			for (Type t : new Type[]{ELECTRIC, GRASS}) {
 				if (p2 == t) {
-					output = 1/2;
+					output *= 1/2;
 				}
 			}
 			
 			//Strength
 			for (Type t : new Type[]{FIRE, GROUND, ROCK}) {
 				if (p2 == t) {
-					output = 2;
+					output *= 2;
 				}
 			}
+			break;
 		case ELECTRIC:
 			//Weakness
 			if (p2 == GROUND) {
-				output = 1/2;
+				output *= 1/2;
 			}
 			
 			//Strength
 			for (Type t : new Type[]{WATER, FLYING}) {
 				if (p2 == t) {
-					output = 2;
+					output *= 2;
 				}
 			}
+			break;
 		case NORMAL:
 			if (p2 == FIGHT) {
-				output = 1/2;
+				output *= 1/2;
 			}
-			
+			break;
 		}
 		
 		return output;
-		
 		
 	}
 	

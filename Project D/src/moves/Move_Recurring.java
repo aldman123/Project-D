@@ -6,12 +6,14 @@ import pokemon.Pokemon;
 public abstract class Move_Recurring extends Move {
 	
 	private int maxTurns, numberOfRepetitions;
+	private boolean hidden;
 	
 	/**
 	 * 
 	 * @param maxTurns The maximum number of turns that this effect will last
+	 * @param hiddent Is the user notified when the effect terminates?
 	 */
-	public Move_Recurring(int power, int pp, int accuracy, String name, Type type, int level, boolean specialAttack, int maxTurns) {
+	public Move_Recurring(int power, int pp, int accuracy, String name, Type type, int level, boolean specialAttack, int maxTurns, boolean hidden) {
 		super(power, pp, accuracy, name, type, level, specialAttack);
 		this.maxTurns = maxTurns;
 		this.numberOfRepetitions = 0;
@@ -25,12 +27,12 @@ public abstract class Move_Recurring extends Move {
 		return this.numberOfRepetitions;
 	}
 	
-	public String periodicEffect(Pokemon self, Pokemon foe) {
+	public void periodicEffect(Pokemon self, Pokemon foe) {
 		numberOfRepetitions++;
 		if (isActive()) {
-			return this.effect(self, foe);
-		} else {
-			return self.getName() + "'s " + this.getName() + " has worn off!";
+			System.out.println(this.effect(self, foe));
+		} else if (!hidden){
+			System.out.println(self.getName() + "'s " + this.getName() + " has worn off!");
 		}
 	}
 	

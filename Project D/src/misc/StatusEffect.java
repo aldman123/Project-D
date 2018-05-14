@@ -83,16 +83,21 @@ public enum StatusEffect {
 			System.out.println(self.getName() + " was hurt by the BURN!");
 			self.reduceHP(self.getMaxHP() / 8);
 			wearOff(self, 5);
+			break;
 		case FREEZE:
 			wearOff(self, 10);
+			break;
 		case PARALYSIS:
 			wearOff(self, 5);
+			break;
 		case POISON:
 			System.out.println(self.getName() + " was hurt by the POISON!");
 			self.reduceHP(self.getMaxHP() / 8);
 			wearOff(self, 5);
+			break;
 		case SLEEP:
 			wearOff(self, 15);
+			break;
 		default:
 			break;
 		}

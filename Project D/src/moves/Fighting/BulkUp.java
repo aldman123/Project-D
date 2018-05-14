@@ -14,11 +14,11 @@ public class BulkUp extends Move_StatChange{
 		super(0, 20, 100, "Bulk Up", Type.FIGHT, level, false, 1, 1, true);
 	}
 	
-	public String start(Pokemon self, Pokemon foe) {
+	public void start(Pokemon self, Pokemon foe) {
 		this.setStatToChange(1);
-		System.out.println(super.start(self, foe));
+		super.start(self, foe);
 		this.setStatToChange(2);
-		return super.start(self, foe);
+		super.start(self, foe);
 	}
 
 }

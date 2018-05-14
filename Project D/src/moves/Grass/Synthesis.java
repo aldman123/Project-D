@@ -17,20 +17,19 @@ public class Synthesis extends Move {
 		super(0, 5, 100, "Synthesis", Type.GRASS, learnLevel, true);
 	}
 	
-	public String start(Pokemon self, Pokemon foe) {
+	protected void start(Pokemon self, Pokemon foe) {
 		double modifier;
 		int hour = Calendar.HOUR_OF_DAY;
-		int restoredHP;
 		if (hour >= 8 && hour <= 16) {
 			System.out.println("It's sunny outside!");
-			modifier = 1/4;
+			modifier = 1/2;
 		} else {
 			System.out.println("The sun isn't so bright right now");
-			modifier = 1/2;
+			modifier = 1/4;
 		}
 		
-		restoredHP = (int) (self.getMaxHP() * modifier);
+		int restoredHP = (int) (self.getMaxHP() * modifier);
 		self.setHP(self.getHP() + restoredHP);
-		return self.getName() + " restored " + restoredHP + " Hit Points!";
+		System.out.println(self.getName() + " restored " + restoredHP + " Hit Points!");
 	}
 }

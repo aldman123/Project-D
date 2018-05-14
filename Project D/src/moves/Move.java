@@ -40,34 +40,41 @@ public abstract class Move {
 		this.isFast = false;
 	}
 	
+	public void doMove(Pokemon self, Pokemon foe) {
+		if (self.isKnockedOut() || foe.isKnockedOut()) {
+			return;
+		}
+		
+		if (self.getStatus() == StatusEffect.SLEEP) {
+			System.out.println(self.getName() + " is still Sleeping!");
+			return;
+		} else if (self.getStatus() == StatusEffect.FREEZE) {
+			System.out.println(self.getName() + " is frozen solid!");
+			return;
+		} else if (self.getStatus() == StatusEffect.PARALYSIS) {
+			if (generator.nextInt(4) == 1) {
+				System.out.println(self.getName() + " is paralyzed and unable to move!");
+				return;
+			}
+		}
+		
+		if (!(this instanceof Move_MultyStrike)) {
+			pp--;
+		}
+		System.out.println(self.getName() + " used " + this.name + "!");
+		this.start(self, foe);
+	}
+	
 	/**
 	 * This method calculates and applies the effects of the move
 	 * @param self: Pokemon performing the move
 	 * @param foe:	Opponent Pokemon
 	 */
-	public String start(Pokemon self, Pokemon foe) {
-		
-		if (self.isKnockedOut() || foe.isKnockedOut()) {
-			return "";
-		} else if (!(this instanceof Move_MultyStrike)) {
-			pp--;
+	protected void start(Pokemon self, Pokemon foe) {
+		if (power != 0) {
+			foe.receiveDamageFrom(self, this);
 		}
-		
-		if (self.getStatus() == StatusEffect.SLEEP) {
-			return self.getName() + " is still Sleeping!";
-		} else if (self.getStatus() == StatusEffect.FREEZE) {
-			return self.getName() + " is frozen solid!";
-		} else if (self.getStatus() == StatusEffect.PARALYSIS) {
-			if (generator.nextInt(4) == 1) {
-				return self.getName() + " is paralyzed and unable to move!";
-			}
-		}
-
-		if (power == 0) {
-			return self.getName() + " used " + this.name + "!";
-		}
-		foe.receiveDamageFrom(self, this);
-		return self.getName() + " did damage to " + foe.getName() + "!";
+		return;
 
 	}
 	
@@ -76,6 +83,7 @@ public abstract class Move {
 			return this.getClass().getDeclaredConstructor(int.class).newInstance(this.getLearnLevel());
 		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
 				| NoSuchMethodException | SecurityException e) {
+			System.out.println(e.toString());
 			e.printStackTrace();
 			return null;
 		}

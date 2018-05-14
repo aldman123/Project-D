@@ -20,8 +20,8 @@ public abstract class Move_StatusEffect extends Move {
 		this.probability = probability;
 	}
 	
-	public String start(Pokemon self, Pokemon foe) {
-		System.out.println(super.start(self, foe));
+	protected void start(Pokemon self, Pokemon foe) {
+		super.start(self, foe);
 		Pokemon target;
 		if (onSelf) {
 			target = self;
@@ -31,10 +31,11 @@ public abstract class Move_StatusEffect extends Move {
 		
 		if (new Random().nextInt(100) <= probability) {
 			target.setStatus(newStatus);
-			return target.getName() + " was " + newStatus.getEffect() + "!";
+			System.out.println(target.getName() + " was " + newStatus.getEffect() + "!");
 		} else {
-			return target.getName() + " was not " + newStatus.getEffect().toLowerCase() + "...";
+			System.out.println(target.getName() + " was not " + newStatus.getEffect().toLowerCase() + "...");
 		}
+		return;
 	}
 
 }

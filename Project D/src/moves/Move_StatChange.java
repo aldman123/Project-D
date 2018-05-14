@@ -37,8 +37,8 @@ public abstract class Move_StatChange extends Move{
 		
 	}
 	
-	public String start(Pokemon self, Pokemon foe) {
-		System.out.println(super.start(self, foe));
+	protected void start(Pokemon self, Pokemon foe) {
+		super.start(self, foe);
 		
 		String output = "";
 		if (onSelf) {
@@ -48,33 +48,13 @@ public abstract class Move_StatChange extends Move{
 			output += foe.getName();
 			foe.modifyStat(statToChange, statChangeModifier);
 		}
-		output += "'s ";
-		if (statToChange == 1) {
-			output += "Attack";
-		} else if (statToChange == 2) {
-			output += "Defence";
-		} else if (statToChange == 3) {
-			output += "Special Attack";
-		} else if (statToChange == 4) {
-			output += "Special Defence";
-		} else if (statToChange == 5) {
-			output += "Speed";
-		} else if (statToChange  == 6) {
-			output += "Accuracy";
-		} else if (statToChange  == 7) {
-			output += "Evasion";
-		} else if (statToChange  == 8) {
-			output += "Critical Hit Ratio";
-		} else {
-			output += "Stat";
-		}
-		output += " was ";
+		output += "'s " + self.getStatName(statToChange) + " was ";
 		if (statChangeModifier < 0) {
 			output += "decreased!";
 		} else {
 			output += "increased!";
 		}
 		
-		return output;
+		System.out.println(output);
 	}
 }

@@ -4,27 +4,9 @@ import misc.Type;
 import pokemon.Pokemon;
 
 public abstract class Move_StatChange extends Move{
-	
 	private int statToChange, statChangeModifier;
-	public int getStatToChange() {
-		return statToChange;
-	}
-
-	public void setStatToChange(int statToChange) {
-		this.statToChange = statToChange;
-	}
-
-	public int getStatChangeModifier() {
-		return statChangeModifier;
-	}
-
-	public void setStatChangeModifier(int statChangeModifier) {
-		this.statChangeModifier = statChangeModifier;
-	}
-
-	private final boolean onSelf;
-	
-	/*
+	/**
+	 * This move will raise or lower an individual stat of a Pokemon during the turn
 	 * @param statToChange stat index to change [HP. Atk, Def, SpAtk, SpDef, Speed, Accuracy, Evasion, CriticalHit]
 	 */
 	public Move_StatChange(
@@ -57,4 +39,22 @@ public abstract class Move_StatChange extends Move{
 		
 		System.out.println(output);
 	}
+	
+	public int getStatToChange() {
+		return statToChange;
+	}
+
+	public void setStatToChange(int statToChange) {
+		this.statToChange = statToChange;
+	}
+
+	public int getStatChangeModifier() {
+		return statChangeModifier;
+	}
+
+	public void setStatChangeModifier(int statChangeModifier) {
+		this.statChangeModifier = statChangeModifier;
+	}
+
+	private final boolean onSelf;
 }

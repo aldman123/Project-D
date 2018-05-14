@@ -3,7 +3,6 @@ package pokemon.Grass;
 import misc.Experience;
 import misc.Type;
 import moves.Move;
-import moves.PoisonPowder;
 import moves.Grass.Growth;
 import moves.Grass.LeechSeed;
 import moves.Grass.RazorLeaf;
@@ -14,6 +13,7 @@ import moves.Grass.Synthesis;
 import moves.Grass.VineWhip;
 import moves.Normal.Growl;
 import moves.Normal.Tackle;
+import moves.Poison.PoisonPowder;
 import pokemon.Pokemon;
 
 public class Venausaur extends Pokemon {

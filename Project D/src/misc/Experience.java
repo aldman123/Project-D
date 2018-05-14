@@ -34,7 +34,8 @@ public enum Experience {
 			} else {
 				return (int) (Math.pow(desiredLevel, 3) * (desiredLevel/2 + 32)/50);
 			}
+		default:
+			return -1;
 		}
-		return -1;
 	}
 }

@@ -1,7 +1,12 @@
 package misc;
 
-//http://www.generalresumes.info/wp-content/uploads/2017/05/pokemon-type-chart-gen-3-odouges-1.jpg
-//I am not implementing FAIRY, because I have never played with any fairy Pokemon before
+
+/**
+ * Each Pokemon and Move has a type/types that are vulnerable or durable to some other types.
+ * I am not implementing FAIRY, because I have never played with any fairy Pokemon before
+ * @author 50108002
+ * http://www.generalresumes.info/wp-content/uploads/2017/05/pokemon-type-chart-gen-3-odouges-1.jpg
+ */
 public enum Type {
 	NORMAL,
 	FIGHT,
@@ -26,13 +31,15 @@ public enum Type {
 	 * @return The modifier for the damage from this onto p2
 	 */
 	public double against(Type p2) {
-		Type p1 = this;
-		
 		double output = 1;
 		
-		switch (p1) {
+		//Most Types are resistant to themselves
+		if (this == p2 && p2 != NORMAL && p2 != DRAGON) {
+			output *= 1/2;
+		}
+		
+		switch (this) {
 		case GRASS:
-			
 			//Weakness
 			for (Type t : new Type[]{FIRE, ICE, POISON, FLYING, BUG}) {
 				if (p2 == t) {

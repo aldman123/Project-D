@@ -1,7 +1,8 @@
-package moves;
+package moves.Poison;
 
 import misc.StatusEffect;
 import misc.Type;
+import moves.Move_StatusEffect;
 
 public class PoisonPowder extends Move_StatusEffect {
 

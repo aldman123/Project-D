@@ -11,6 +11,13 @@ public abstract class Move_StatusEffect extends Move {
 	private boolean onSelf = false;
 	private StatusEffect newStatus;
 	private int probability;
+	
+	/**
+	 * Changes the status of a Pokemon mid turn
+	 * @param newStatus
+	 * @param probability The probability in percent of the status change
+	 * @param onSelf Does it change the Pokemon hitting or being hit?
+	 */
 	public Move_StatusEffect(int power, int pp, int accuracy, String name, Type type, int level, boolean specialAttack,
 			StatusEffect newStatus, int probability, boolean onSelf) {
 		super(power, pp, accuracy, name, type, level, specialAttack);

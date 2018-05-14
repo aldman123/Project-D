@@ -2,7 +2,6 @@ package moves.Fire;
 
 import misc.StatusEffect;
 import misc.Type;
-import moves.Move;
 import moves.Move_StatusEffect;
 
 public class FirePunch extends Move_StatusEffect {

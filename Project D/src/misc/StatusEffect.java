@@ -4,6 +4,12 @@ import java.util.Random;
 
 import pokemon.Pokemon;
 
+/**
+ * These are lasting status effects that can be applied to Pokemon
+ * that affect their abilities during the game.
+ * @author Alexander Aldridge
+ *
+ */
 public enum StatusEffect {
 	BURN,
 	FREEZE,

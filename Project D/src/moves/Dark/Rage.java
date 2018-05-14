@@ -8,6 +8,10 @@ public class Rage extends Move_Recurring {
 	
 	static private int basePower = 20;
 	private boolean increaseRage;
+	/**
+	 * This move increases in power each turn
+	 * @param learnLevel
+	 */
 	public Rage(int learnLevel) {
 		super(basePower, 20, 100, "Rage", Type.DARK, learnLevel, false, 1, true);
 		this.resetRage();

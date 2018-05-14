@@ -11,6 +11,10 @@ public abstract class Move_MultyStrike extends Move {
 	private int numberOfRepeatsMax = 5;	//Standard Value
 	private String individualAttackDescription;
 	
+	/**
+	 * This is a type of move that strikes multiple times in the same turn
+	 * @param individualAttackDescription -> What to output each time you hit
+	 */
 	public Move_MultyStrike(int power, int pp, int accuracy, String name, Type type, int level, boolean specialAttack, String individualAttackDescription) {
 		super(power, pp, accuracy, name, type, level, specialAttack);
 		this.individualAttackDescription = individualAttackDescription;

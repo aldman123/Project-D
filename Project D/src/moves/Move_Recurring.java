@@ -9,7 +9,7 @@ public abstract class Move_Recurring extends Move {
 	private boolean hidden;
 	
 	/**
-	 * 
+	 * This type of move has a lasting effect over the next few turns
 	 * @param maxTurns The maximum number of turns that this effect will last
 	 * @param hiddent Is the user notified when the effect terminates?
 	 */
@@ -20,14 +20,23 @@ public abstract class Move_Recurring extends Move {
 		this.hidden = hidden;
 	}
 	
+	/**
+	 * Is the effect still active?
+	 */
 	public boolean isActive() {
 		return numberOfRepetitions <= maxTurns;
 	}
 	
+	/**
+	 * How many turns have passed?
+	 */
 	protected int getTurnNumber() {
 		return this.numberOfRepetitions;
 	}
 	
+	/**
+	 * Calculates the effects of the move each turn
+	 */
 	public void periodicEffect(Pokemon self, Pokemon foe) {
 		numberOfRepetitions++;
 		if (isActive()) {

@@ -13,16 +13,21 @@ import pokemon.*;
 import pokemon.Fire.Blaziken;
 import pokemon.Fire.Combusken;
 import pokemon.Fire.Torchic;
+import pokemon.Grass.Bulbasaur;
 import pokemon.Grass.Ivysaur;
 import pokemon.Grass.Venausaur;
 import pokemon.Water.Croconaw;
 import pokemon.Water.Feraligatr;
 import pokemon.Water.Totodile;
 
+/**
+ * This class is used for running a text based battle between two teams of six Pokemon or less
+ * @author Alexander Aldridge
+ *
+ */
 public class Battle {
 	
 	private final long WAIT_TIME = 1600;
-	
 	private Pokemon user, foe;
 	private Pokemon[] yourPokemon, foesPokemon;
 	private ArrayList<Move_Recurring> moveEffectsUser = new ArrayList<Move_Recurring>();
@@ -32,39 +37,62 @@ public class Battle {
 	Scanner scanner = new Scanner(System.in);
 	private Move selectedMoveUser, selectedMoveFoe, usersLastMove;
 	
+	/**
+	 * Creates default Pokemon for the battle
+	 */
 	public Battle() {
 		foesPokemon = new Pokemon[] {
-				new Pikachu(15),
-				new Totodile(35),
-				new Torchic(15),
-				new Raichu(25),
+				new Pikachu(8),
+				new Totodile(12),
+				new Bulbasaur(15),
 				new Combusken(20),
+				new Raichu(25),
 				new Venausaur(50)
 		};
 		yourPokemon = new Pokemon[] {
 				new Torchic(15),
-				new Croconaw(25),
-				new Raichu(27),
-				new Blaziken(29),
 				new Ivysaur(18),
-				new Feraligatr(50)
+				new Croconaw(20),
+				new Raichu(25),
+				new Blaziken(29),
+				new Feraligatr(40)
 		};
 	}
 	
+	/**
+	 * Input two teams of Pokemon to battle together
+	 * @param yourPokemon
+	 * @param foePokemon
+	 */
 	public Battle(Pokemon[] yourPokemon, Pokemon[] foePokemon) {
 		this.yourPokemon = yourPokemon;
 		this.foesPokemon = foePokemon;
 	}
-
+	
+	/**
+	 * Run the match between the two teams of Pokemon
+	 * @throws InterruptedException
+	 */
 	public void startMatch() throws InterruptedException {
-		//Input Pokemons
-		user = yourPokemon[0];
-		foe = foesPokemon[0];
+		//Get Active Pokemon
+		for (Pokemon selectedPokemon : yourPokemon) {
+			if (selectedPokemon != null) {
+				user = selectedPokemon;
+				break;
+			}
+		}
+		for (Pokemon selectedPokemon : foesPokemon) {
+			if (selectedPokemon != null) {
+				foe = selectedPokemon;
+				break;
+			}
+		}
 		calculateActivePokemon();
 
 		//Start game loop
 		while (pokemonActiveUser > 0 && pokemonActiveFoe > 0) {
 			
+			//Is the user's Pokemon knocked out?
 			if (user.isKnockedOut()) {
 				moveEffectsUser = new ArrayList<Move_Recurring>();
 				user = yourPokemon[6 - pokemonActiveUser];
@@ -78,6 +106,7 @@ public class Battle {
 				}
 			}
 			
+			//Is the foe Pokemon knocked out?
 			if (foe.isKnockedOut()) {
 				moveEffectsFoe = new ArrayList<Move_Recurring>();
 				foe = foesPokemon[6 - pokemonActiveFoe];
@@ -93,7 +122,7 @@ public class Battle {
 			
 			System.out.println("");
 			
-			//Input selected move
+			//Input selected move for the user's Pokemon to preform
 			selectedMoveUser = null;
 			while (selectedMoveUser == null) {
 				

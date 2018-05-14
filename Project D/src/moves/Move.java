@@ -15,11 +15,10 @@ public abstract class Move {
 	private int power, pp, maxPP;
 	private boolean highCriticalHit, isFast;
 	private static Random generator = new Random();
-	
-	
+
 	
 	/**
-	 * 
+	 * A basic move that deals damage to the other Pokemon
 	 * @param power: The Power of the move
 	 * @param pp: How many times you may use the move
 	 * @param accuracy: Likelihood of missing in percent
@@ -78,6 +77,9 @@ public abstract class Move {
 
 	}
 	
+	/**
+	 * Returns a cloned copy of the child class
+	 */
 	public final Move clone() {
 		try {
 			return this.getClass().getDeclaredConstructor(int.class).newInstance(this.getLearnLevel());

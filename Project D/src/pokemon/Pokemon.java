@@ -185,7 +185,12 @@ public abstract class Pokemon implements Cloneable{
 			return "Stat";
 		}
 	}
-
+	
+	/**
+	 * This method is called when a foe does damage to this Pokemon
+	 * @param pokemonAttacking The Foe's Pokemon
+	 * @param move	The move that is being used
+	 */
 	public void receiveDamageFrom(Pokemon pokemonAttacking, Move move) {
 		Type type = move.getType();
 		int power = move.getPower();
@@ -225,6 +230,10 @@ public abstract class Pokemon implements Cloneable{
 			damage = (int) Math.round(((2.0*pokemonAttacking.level/5.0 + 2.0)/50.0 * power * pokemonAttacking.getSpAtk() / this.getSpDef() + 2.0) * modifier);
 		} else {
 			damage = (int) Math.round(((2.0*pokemonAttacking.level/5.0 + 2.0)/50.0 * power * pokemonAttacking.getAtk() / this.getDef() + 2.0) * modifier);
+		}
+		
+		if (damage < 1) {
+			damage = 1;
 		}
 
 		//Apply damage

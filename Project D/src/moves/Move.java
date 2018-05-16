@@ -57,9 +57,7 @@ public abstract class Move {
 			}
 		}
 		
-		if (!(this instanceof Move_MultyStrike)) {
-			pp--;
-		}
+		pp--;
 		System.out.println(self.getName() + " used " + this.name + "!");
 		this.start(self, foe);
 	}

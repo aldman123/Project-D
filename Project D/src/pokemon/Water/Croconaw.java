@@ -22,7 +22,7 @@ public class Croconaw extends EvolveablePokemon {
 	static final String speciesName = "Croconaw";
 	static final Experience experienceType = Experience.MEDIUM_SLOW;
 	static final int baseExperienceYield = 143;
-	static final Class evolution = Feraligatr.class;
+	static final Class<?> evolution = Feraligatr.class;
 	static final int evolutionLevel = 30;
 	static final Move[] moveLearnset = new Move[]{
 			new Scratch(1),
@@ -36,6 +36,9 @@ public class Croconaw extends EvolveablePokemon {
 			new HydroPump(50)
 	};
 	
+	/**
+	 * Similar to Totodile, Croconaw is a larger alligator like Pokemon with large red fins on it's head and tail.
+	 */
 	public Croconaw(int level) {
 		super(baseStatList, level, typeA, typeB, moveLearnset, speciesName, experienceType, evolution, evolutionLevel);
 	}

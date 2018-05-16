@@ -6,6 +6,9 @@ import moves.Move_StatusEffect;
 
 public class PoisonPowder extends Move_StatusEffect {
 
+	/**
+	 * The foe is poisoned by the Pokemon
+	 */
 	public PoisonPowder(int learnLevel) {
 		super(0, 35, 75, "Poison Powder", Type.POISON, learnLevel, true, StatusEffect.POISON, 100, false);
 	}

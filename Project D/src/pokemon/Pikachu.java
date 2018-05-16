@@ -31,6 +31,10 @@ public class Pikachu extends EvolveablePokemon{
 			new Thunder(41)
 			};
 	
+	/**
+	 * The icon of the series, Pikachu is an electric rat like Pokemon, famous for it's bright yellow color.
+	 * @param level
+	 */
 	public Pikachu(int level) {
 		super(baseStats, level, Type.ELECTRIC, null, learnSet, speciesName, Experience.MEDIUM_FAST, Raichu.class, evolveLevel);
 	}

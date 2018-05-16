@@ -7,8 +7,7 @@ import moves.Move;
 import pokemon.Pokemon;
 
 /**
- * This move will restore health depending on the time of day
- * @author Alexander Aldridge
+ * This move will restore health depending on the time of day in the real world
  *
  */
 public class Synthesis extends Move {

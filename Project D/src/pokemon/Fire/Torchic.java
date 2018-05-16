@@ -37,6 +37,11 @@ public class Torchic extends EvolveablePokemon {
 			new FlameThrower(43)
 	};
 
+	/**
+	 * One of the three starting Pokemon from Pokemon Saffire, Ruby and Emerald, this firey bird Pokemon
+	 * has a red and yellow color scheme. It has a flame sac inside its belly that perpetually burns. It feels warm if it is hugged.
+	 * @param level
+	 */
 	public Torchic(int level) {
 		super(statList, level, typeA, typeB, moveLearnset, speciesName, experience, Combusken.class, evolutionLevel);
 		this.setBaseExperienceYield(baseExperienceYield);

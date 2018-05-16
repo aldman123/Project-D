@@ -8,10 +8,15 @@ import moves.Move;
 
 public abstract class EvolveablePokemon extends Pokemon {
 	private int evolveLevel;
-	private final Class evolution;
+	private final Class<?> evolution;
 	
+	/**
+	 * This is a Pokemon that can evolve into another at a certain level
+	 * @param evolution The class this Pokemon transforms into
+	 * @param evolveLevel The level at which this Pokemon may evolve
+	 */
 	public EvolveablePokemon(int[] baseStatList, int level, Type typeA, Type typeB, Move[] moveLearnset, String name,
-			Experience experienceType, Class evolution, int evolveLevel) {
+			Experience experienceType, Class<?> evolution, int evolveLevel) {
 		super(baseStatList, level, typeA, typeB, moveLearnset, name, experienceType);
 		this.evolution = evolution;
 		this.evolveLevel = evolveLevel;
@@ -21,7 +26,7 @@ public abstract class EvolveablePokemon extends Pokemon {
 		return evolveLevel;
 		
 	}
-	protected Class getEvolution() {
+	protected Class<?> getEvolution() {
 		return evolution;
 		
 	}
@@ -44,14 +49,5 @@ public abstract class EvolveablePokemon extends Pokemon {
 			System.out.println("The Pokemon evolved into " + me.getName() + "!");
 		}
 		return (Pokemon) me;
-	}
-	
-	protected void inputInheritedTraits(int level, Move[] moveLearnset, String name, int experience) {
-		this.setLevel(level);
-		for (int i = 0; i < moveLearnset.length; i++) {
-			this.setMove(moveLearnset[i], i);
-		}
-		this.setName(name);
-		this.setExperience(experience);
 	}
 }

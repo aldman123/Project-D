@@ -5,7 +5,12 @@ import moves.Move_Recurring;
 import pokemon.Pokemon;
 
 public class LeechSeed extends Move_Recurring {
-
+	
+	/**
+	 * This move plants seeds under the foe's Pokemon which enables
+	 * the user's Pokemon to absorbe health each round
+	 * @param learnLevel
+	 */
 	public LeechSeed(int learnLevel) {
 		super(0, 10, 90, "Leech Seed", Type.GRASS, learnLevel, true, 12, false);
 	}

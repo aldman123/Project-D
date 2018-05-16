@@ -39,6 +39,11 @@ public class Venausaur extends Pokemon {
 			
 	};
 	
+	/**
+	 * Venosaur is the final evolution in the Bulbasaur family, and has a
+	 * large flower on top it's back. Venosaur has a wide mouth and can be slow,
+	 * however it is a formidable opponent with it's Grass and Poison attacks
+	 */
 	public Venausaur(int level) {
 		super(baseStatList, level, typeA, typeB, moveLearnset, speciesName, experienceType);
 	}

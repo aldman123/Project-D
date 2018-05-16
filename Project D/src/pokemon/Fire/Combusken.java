@@ -44,6 +44,10 @@ public class Combusken extends EvolveablePokemon{
 			new SkyUppercut(50)
 			};
 	
+	/**
+	 * A bipedal chicken like Pokemon that evolves from Torchic. Combusken has three fingers that it uses as claws
+	 * when using it's fighting type moves
+	 */
 	public Combusken(int level) {
 		super(baseStatList, level, typeA, typeB, moveLearnset, speciesName, experience, Blaziken.class, evolutionLevel);
 		this.setBaseExperienceYield(baseExperienceYield);

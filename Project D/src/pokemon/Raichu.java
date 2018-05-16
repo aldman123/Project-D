@@ -20,6 +20,9 @@ public class Raichu extends Pokemon {
 			new ThunderBolt(0)
 			};
 	
+	/**
+	 * This Pokemon evolves from Pikachu, and has a mix of orange and yellow colors on it's rat like body
+	 */
 	public Raichu(int level) {
 		super(baseStatList, level, Type.ELECTRIC, null, moveLearnset, speciesName, Experience.MEDIUM_FAST);
 		this.setBaseExperienceYield(baseExperienceYield);

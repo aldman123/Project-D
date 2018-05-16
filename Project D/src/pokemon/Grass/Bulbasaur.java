@@ -50,6 +50,10 @@ public class Bulbasaur extends EvolveablePokemon {
 			new SolarBeam(46)
 	};
 	
+	/**
+	 * One of the original starter Pokemon from the games Pokemon Red and Blue,
+	 * Bulbasaur is a small, green, almost dinosaur like pokemon with a large seed like bulb on it's back.
+	 */
 	public Bulbasaur(int level) {
 		super(baseStatList, level, typeA, typeB, moveLearnset, speciesName, experienceType, evolution, evolutionLevel);
 	}

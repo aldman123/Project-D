@@ -34,6 +34,11 @@ public class Feraligatr extends Pokemon {
 			new HydroPump(50)
 	};
 	
+	/**
+	 * With much larger arms and tail than it's earlier evolutions, Feraligatr
+	 * is a large humanoid Pokemon that is adept at slashing and smashing it's foes
+	 * @param level
+	 */
 	public Feraligatr(int level) {
 		super(baseStatList, level, typeA, typeB, moveLearnset, speciesName, experienceType);
 	}

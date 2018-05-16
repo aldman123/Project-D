@@ -22,7 +22,7 @@ public class Totodile extends EvolveablePokemon {
 	static final String speciesName = "Totodile";
 	static final Experience experienceType = Experience.MEDIUM_SLOW;
 	static final int baseExperienceYield = 66;
-	static final Class evolution = Croconaw.class;
+	static final Class<?> evolution = Croconaw.class;
 	static final int evolutionLevel = 18;
 	static final Move[] moveLearnset = new Move[]{
 		new Scratch(1),
@@ -36,7 +36,10 @@ public class Totodile extends EvolveablePokemon {
 		new HydroPump(50)
 	};
 	
-
+	/**
+	 * Totodile is a Water Pokemon and one of the three starter Pokemon in Pokemon Gold and Silver
+	 * It is a blue, bipedal alligator Pokemon that enjoys biting it's foes.
+	 */
 	public Totodile(int level) {
 		super(baseStatList, level, typeA, typeB, moveLearnset, speciesName, experienceType, evolution, evolutionLevel);
 		this.setBaseExperienceYield(baseExperienceYield);

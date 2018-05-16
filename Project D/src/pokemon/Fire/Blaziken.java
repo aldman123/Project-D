@@ -42,6 +42,10 @@ public class Blaziken extends Pokemon {
 			new MirrorMove(49)
 			};
 	
+	/**
+	 * Blaziken is a bipedal fire Pokemon with long white hair and yellow fur towards it's feet.
+	 * It is well known for it's signature move Blaze Kick
+	 */
 	public Blaziken(int level) {
 		super(baseStatList, level, typeA, typeB, moveLearnset, speciesName, experience);
 		this.setBaseExperienceYield(baseExperienceYield);

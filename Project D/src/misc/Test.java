@@ -1,16 +1,22 @@
 package misc;
 
 import pokemon.Pokemon;
-import pokemon.Fire.Torchic;
+import pokemon.Grass.Venausaur;
 
 public class Test {
 	public static void main(String args[]) {
-		Pokemon torchic = new Torchic(15);
-		torchic.displayPokemon();
-		for (int i = 0; i < 4; i++) {
-			torchic.resetStats();
-			torchic.displayPokemon();
+		Pokemon[] foePokemon = new Pokemon[] {
+				new Venausaur(50)
+		};
+		
+		Pokemon[] yourPokemon = new Pokemon[] {
+				new Venausaur(50)
+		};
+		Battle game = new Battle(yourPokemon, foePokemon);
+		try {
+			game.startMatch();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
 		}
-		torchic.addExperience(100);
 	}
 }

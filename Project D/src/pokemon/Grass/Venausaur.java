@@ -35,7 +35,7 @@ public class Venausaur extends Pokemon {
 			new SweetScent(29),
 			new Growth(41),
 			new Synthesis(45),
-			new SolarBeam(65)
+			new SolarBeam(50)
 			
 	};
 	

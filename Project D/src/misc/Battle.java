@@ -42,15 +42,15 @@ public class Battle {
 	 */
 	public Battle() {
 		foesPokemon = new Pokemon[] {
-				new Pikachu(8),
 				new Totodile(12),
 				new Bulbasaur(15),
 				new Combusken(20),
 				new Raichu(25),
-				new Venausaur(50)
+				new Venausaur(50),
+				new Blaziken(50)
 		};
 		yourPokemon = new Pokemon[] {
-				new Torchic(15),
+				new Torchic(14),
 				new Ivysaur(18),
 				new Croconaw(20),
 				new Raichu(25),
@@ -204,23 +204,27 @@ public class Battle {
 			
 			//Run Turn
 			if (userGoesFirst) {
+				System.out.println("Your Pokemon " + user.getName() + " started it's turn");
 				selectedMoveUser.doMove(user, foe);
 				TimeUnit.MILLISECONDS.sleep(WAIT_TIME);
+				System.out.println("The foe's Pokemon " + foe.getName() + " started it's turn");
 				selectedMoveFoe.doMove(foe, user);
 				TimeUnit.MILLISECONDS.sleep(WAIT_TIME);
 			} else {
+				System.out.println("The foe's Pokemon " + foe.getName() + " started it's turn");
 				selectedMoveFoe.doMove(foe, user);
 				TimeUnit.MILLISECONDS.sleep(WAIT_TIME);
+				System.out.println("Your Pokemon " + user.getName() + " started it's turn");
 				selectedMoveUser.doMove(user, foe);
 				TimeUnit.MILLISECONDS.sleep(WAIT_TIME);
 			}
 			
 			//Is there any moves that have lasting effects?
 			if (selectedMoveUser instanceof Move_Recurring) {
-				moveEffectsUser.add((Move_Recurring) selectedMoveUser);
+				moveEffectsUser.add((Move_Recurring) selectedMoveUser.clone());
 			}
 			if (selectedMoveFoe instanceof Move_Recurring) {
-				moveEffectsFoe.add((Move_Recurring) selectedMoveFoe);
+				moveEffectsFoe.add((Move_Recurring) selectedMoveFoe.clone());
 			}
 			
 			for (Move_Recurring effect: moveEffectsUser) {

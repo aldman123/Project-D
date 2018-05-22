@@ -24,14 +24,14 @@ public abstract class Move {
 	 * @param accuracy: Likelihood of missing in percent
 	 * @param name: The name of the move
 	 * @param type: The Type of damage
-	 * @param level: When is the move learned?
+	 * @param learnLevel: When is the move learned?
 	 */
-	public Move(int power, int pp, int accuracy, String name, Type type, int level, boolean specialAttack) {
+	public Move(int power, int pp, int accuracy, String name, Type type, int learnLevel, boolean specialAttack) {
 		this.power = power;
 		this.accuracy = accuracy;
 		this.name = name;
 		this.type = type;
-		this.learnLevel = level;
+		this.learnLevel = learnLevel;
 		this.maxPP = pp;
 		this.pp = pp;
 		this.specialAttack = specialAttack;

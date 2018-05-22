@@ -3,8 +3,6 @@ package pokemon.Grass;
 import misc.Experience;
 import misc.Type;
 import moves.Move;
-import moves.Dark.Bite;
-import moves.Dark.Rage;
 import moves.Grass.Growth;
 import moves.Grass.LeechSeed;
 import moves.Grass.RazorLeaf;
@@ -14,17 +12,9 @@ import moves.Grass.SweetScent;
 import moves.Grass.Synthesis;
 import moves.Grass.VineWhip;
 import moves.Normal.Growl;
-import moves.Normal.Leer;
-import moves.Normal.ScaryFace;
-import moves.Normal.Scratch;
-import moves.Normal.Screech;
-import moves.Normal.Slash;
 import moves.Normal.Tackle;
 import moves.Poison.PoisonPowder;
-import moves.Water.HydroPump;
-import moves.Water.WaterGun;
 import pokemon.EvolveablePokemon;
-import pokemon.Water.Croconaw;
 
 public class Bulbasaur extends EvolveablePokemon {
 	
@@ -34,7 +24,7 @@ public class Bulbasaur extends EvolveablePokemon {
 	static final String speciesName = "Bulbasaur";
 	static final Experience experienceType = Experience.MEDIUM_SLOW;
 	static final int baseExperienceYield = 64;
-	static final Class evolution = Ivysaur.class;
+	static final Class<?> evolution = Ivysaur.class;
 	static final int evolutionLevel = 16;
 	static final Move[] moveLearnset = new Move[]{
 			new Tackle(1),

@@ -48,6 +48,6 @@ public abstract class EvolveablePokemon extends Pokemon {
 			
 			System.out.println("The Pokemon evolved into " + me.getName() + "!");
 		}
-		return (Pokemon) me;
+		return (Pokemon) super.levelUp();
 	}
 }
